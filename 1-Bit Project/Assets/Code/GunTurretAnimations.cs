@@ -11,6 +11,7 @@ public class GunTurretAnimations : MonoBehaviour
     private float frameTimer;
     private bool isPlayingReloadAnimation = false;
     private float cooldownTimer = 0f;
+    private bool isMouseHeld = false;
 
     void Start()
     {
@@ -29,10 +30,22 @@ public class GunTurretAnimations : MonoBehaviour
         }
 
         if (Input.GetMouseButtonDown(0) && !isPlayingReloadAnimation && cooldownTimer <= 0)
-        {
+        {            
             StartReloadAnimation();
         }
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            isMouseHeld = true;
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            isMouseHeld = false;
+        }
+        if (isMouseHeld && !isPlayingReloadAnimation && cooldownTimer <= 0)
+        {
+            StartReloadAnimation();
+        }
         if (isPlayingReloadAnimation)
         {
             PlayReloadAnimation();
