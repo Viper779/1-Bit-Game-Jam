@@ -524,7 +524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a357147c5f3ee9459d2ec567040bf48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frameRate: 0.2
+  frameRate: 0.16
   cooldownTime: 1.6
   reloadAnimation:
   - {fileID: 8754734600242262514, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
