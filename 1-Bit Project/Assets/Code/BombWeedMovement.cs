@@ -8,7 +8,7 @@ public class BouncingEnemyAI : MonoBehaviour
     public float bounceInterval = 2f;
     public float groundCheckDistance = 0.1f;
     public LayerMask groundLayer;
-    public int maxHealth = 100;
+    public int maxHealth = 50;
     public int currentHealth;
 
     public event Action OnEnemyDestroyed;

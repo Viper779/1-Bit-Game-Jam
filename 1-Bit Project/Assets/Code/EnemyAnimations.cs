@@ -3,7 +3,7 @@ using UnityEngine;
 public class BouncingEnemyAnimation : MonoBehaviour
 {
     [SerializeField] private float frameRate = 0.1f;
-    [SerializeField] private Sprite[] bounceAnimation;
+    [SerializeField] private Sprite[] BombWeedAnimation;
     private SpriteRenderer spriteRenderer;
     private int currentFrame;
     private float frameTimer;
@@ -14,11 +14,6 @@ public class BouncingEnemyAnimation : MonoBehaviour
         if (spriteRenderer == null)
         {
             Debug.LogError("SpriteRenderer component not found on this GameObject!");
-        }
-
-        if (bounceAnimation.Length == 0)
-        {
-            Debug.LogError("No sprites assigned to the bounce animation array!");
         }
     }
 
@@ -33,14 +28,32 @@ public class BouncingEnemyAnimation : MonoBehaviour
         if (frameTimer <= 0f)
         {
             frameTimer += frameRate;
-            if (currentFrame < bounceAnimation.Length)
+            if (currentFrame < 4)
             {
-                spriteRenderer.sprite = bounceAnimation[currentFrame];
+                spriteRenderer.sprite = BombWeedAnimation[currentFrame];
                 currentFrame++;
             }
             else
             {
                 currentFrame = 0; // Reset to the beginning of the animation
+            }
+        }
+    }
+    void PlayBombWeedDeath()
+    {
+        currentFrame = 5;
+        frameTimer -= Time.deltaTime;
+        if (frameTimer <= 0f)
+        {
+            frameTimer += frameRate;
+            if (currentFrame == 8)
+            {
+                spriteRenderer.sprite = BombWeedAnimation[8];
+            }
+            else
+            {
+                spriteRenderer.sprite = BombWeedAnimation[currentFrame];
+                currentFrame++;
             }
         }
     }
