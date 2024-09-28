@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletBehavior : MonoBehaviour
@@ -10,17 +8,15 @@ public class BulletBehavior : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
-        // Use the bullet's forward direction (based on its initial rotation)
         Vector2 direction = transform.right;
-
-        // Apply velocity in the forward direction
         rb.velocity = direction * force;
+
+        // Ensure the bullet has the "Bullet" tag
+        gameObject.tag = "Bullet";
     }
 
     void Update()
     {
-        // Optionally, you can update the bullet's rotation to match its velocity
         if (rb.velocity != Vector2.zero)
         {
             float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
