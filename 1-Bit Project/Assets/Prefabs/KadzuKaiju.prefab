@@ -10,12 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 832349720937439802}
   - component: {fileID: 2968811253073876371}
-  - component: {fileID: 1406700329671013575}
   - component: {fileID: 2037655309887545507}
-  - component: {fileID: 7448988622048976520}
   - component: {fileID: 6080051386525745298}
+  - component: {fileID: -9119792911855556619}
   m_Layer: 0
-  m_Name: BombWeed
+  m_Name: KadzuKaiju
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2552841701737744237, guid: 2208b402be4316f41b281d5ed4ac6b5a, type: 3}
+  m_Sprite: {fileID: 8256977548482669454, guid: c6f8458f1c988144ab4f4f6c9e1a4652, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -88,27 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1406700329671013575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5919916801216324133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01587084aaf180a459546a383f76718f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 3
-  bounceForce: 3
-  bounceInterval: 0.25
-  groundCheckDistance: 0.4
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  maxHealth: 20
-  currentHealth: 0
 --- !u!50 &2037655309887545507
 Rigidbody2D:
   serializedVersion: 4
@@ -136,8 +114,33 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &7448988622048976520
-CircleCollider2D:
+--- !u!114 &6080051386525745298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5919916801216324133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 276c893e1cd34d64fa2e390c84973669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frameRate: 0.2
+  BombWeedAnimation:
+  - {fileID: 8256977548482669454, guid: c6f8458f1c988144ab4f4f6c9e1a4652, type: 3}
+  - {fileID: -105531026195835464, guid: c6f8458f1c988144ab4f4f6c9e1a4652, type: 3}
+  - {fileID: 4345495757954706791, guid: c6f8458f1c988144ab4f4f6c9e1a4652, type: 3}
+  - {fileID: 6764232181117556772, guid: c6f8458f1c988144ab4f4f6c9e1a4652, type: 3}
+  - {fileID: -7460841466882040682, guid: c6f8458f1c988144ab4f4f6c9e1a4652, type: 3}
+  - {fileID: -3591932450063772725, guid: c6f8458f1c988144ab4f4f6c9e1a4652, type: 3}
+  - {fileID: -2744525827436114424, guid: c6f8458f1c988144ab4f4f6c9e1a4652, type: 3}
+  - {fileID: -4516707389339850353, guid: c6f8458f1c988144ab4f4f6c9e1a4652, type: 3}
+  - {fileID: -4345430097435774808, guid: c6f8458f1c988144ab4f4f6c9e1a4652, type: 3}
+  - {fileID: -3825119455780687724, guid: c6f8458f1c988144ab4f4f6c9e1a4652, type: 3}
+  - {fileID: 8905376062394124746, guid: c6f8458f1c988144ab4f4f6c9e1a4652, type: 3}
+--- !u!61 &-9119792911855556619
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -168,29 +171,16 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0076816417, y: 0.15801708}
+  m_Offset: {x: -0.019999996, y: 0.15}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5769231, y: 0}
+    oldSize: {x: 0.26, y: 0.3}
+    newSize: {x: 0.31, y: 0.29}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.07765528
---- !u!114 &6080051386525745298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5919916801216324133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 276c893e1cd34d64fa2e390c84973669, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  frameRate: 0.2
-  BombWeedAnimation:
-  - {fileID: -2552841701737744237, guid: 2208b402be4316f41b281d5ed4ac6b5a, type: 3}
-  - {fileID: -1023064157078306059, guid: 2208b402be4316f41b281d5ed4ac6b5a, type: 3}
-  - {fileID: 4312402752669001393, guid: 2208b402be4316f41b281d5ed4ac6b5a, type: 3}
-  - {fileID: 6102481381137664999, guid: 2208b402be4316f41b281d5ed4ac6b5a, type: 3}
-  - {fileID: 3264625896580607723, guid: 2208b402be4316f41b281d5ed4ac6b5a, type: 3}
-  - {fileID: -6412840275033230437, guid: 2208b402be4316f41b281d5ed4ac6b5a, type: 3}
-  - {fileID: 2849471816940238952, guid: 2208b402be4316f41b281d5ed4ac6b5a, type: 3}
-  - {fileID: -8886835802141541012, guid: 2208b402be4316f41b281d5ed4ac6b5a, type: 3}
-  - {fileID: -7089997550970973969, guid: 2208b402be4316f41b281d5ed4ac6b5a, type: 3}
+  m_Size: {x: 0.26, y: 0.3}
+  m_EdgeRadius: 0
