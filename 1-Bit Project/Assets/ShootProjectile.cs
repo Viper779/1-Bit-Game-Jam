@@ -13,6 +13,10 @@ public class ShootProjectile : MonoBehaviour
     private Camera mainCam;
     private Vector3 mousePos;
 
+    
+
+   
+
     // Start is called before the first frame update
     void Start()
     {       
@@ -23,6 +27,8 @@ public class ShootProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+            
+
         if (!canFire)
         {
             Timer += Time.deltaTime;
@@ -33,10 +39,13 @@ public class ShootProjectile : MonoBehaviour
             }
         }
 
-        if(Input.GetMouseButton(0) && canFire)
+        
+        if (Input.GetMouseButton(0) && canFire)
         {
             canFire = false;
-            Instantiate(BaseBullet, fireLocation.position, Quaternion.identity);            
+            Instantiate(BaseBullet, fireLocation.position, Quaternion.identity);          
         }
     }
+
+    
 }
