@@ -10,10 +10,27 @@ public class ShootProjectile : MonoBehaviour
     public float ShootingCD;
     private float Timer;
 
+    public AudioSource audioSource;
+    public AudioClip ShootSound;
+    public float SoundDelay = 2f;
+
     void Start()
     {
         canFire = true;
     }
+
+    void PlayShootSound()
+    {
+        if (ShootSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(ShootSound);
+        }
+        else
+        {
+            Debug.LogWarning("Shooting Sound or AudioSource is missing!");
+        }
+    }
+
 
     void Update()
     {
@@ -31,8 +48,10 @@ public class ShootProjectile : MonoBehaviour
         {
             canFire = false;
             // Instantiate the bullet with the fireLocation's rotation
+            PlayShootSound();
             Instantiate(BaseBullet, fireLocation.position, fireLocation.rotation);
         }
+      
     }
 }
 

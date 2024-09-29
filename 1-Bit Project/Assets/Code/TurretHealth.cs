@@ -7,6 +7,10 @@ public class TurretHealth : MonoBehaviour
     public int maxHealth = 1000;
     public int currentHealth;
 
+    public AudioSource audioSource;
+    public AudioClip GameOverSound;
+    public float SoundDelay = 2f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +23,18 @@ public class TurretHealth : MonoBehaviour
         
     }
 
+    void PlayGameOverSound()
+    {
+        if (GameOverSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(GameOverSound);
+        }
+        else
+        {
+            Debug.LogWarning("Game Over sound or AudioSource is missing!");
+        }
+    }
+
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
@@ -29,7 +45,8 @@ public class TurretHealth : MonoBehaviour
     }
 
     void GameOver()
-    {             
+    {
+        PlayGameOverSound();
         Destroy(gameObject);
     }
 }

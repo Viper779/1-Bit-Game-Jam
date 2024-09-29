@@ -29,8 +29,17 @@ public class BouncingEnemyAI : MonoBehaviour
     private float timeSinceLastBounce;
     private bool isExploding = false;
 
+    public AudioSource audioSource;
+    public AudioClip BombSound;
+    public float BombSoundDelay = 2f;
+
     void Start()
     {
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
         rb = GetComponent<Rigidbody2D>();
         turretTransform = GameObject.FindGameObjectWithTag("Turret")?.transform;
         if (turretTransform == null)
@@ -76,10 +85,21 @@ public class BouncingEnemyAI : MonoBehaviour
         isExploding = true;
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0;
-
+        PlayBombSound();
         yield return new WaitForSecondsRealtime(explosionDelay);
-
         Explode();
+    }
+
+    void PlayBombSound()
+    {
+        if (BombSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(BombSound);
+        }
+        else
+        {
+            Debug.LogWarning("BombWeed sound or AudioSource is missing!");
+        }
     }
 
     void Explode()

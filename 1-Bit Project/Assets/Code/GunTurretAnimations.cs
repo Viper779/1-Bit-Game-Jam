@@ -13,6 +13,10 @@ public class GunTurretAnimations : MonoBehaviour
     private float cooldownTimer = 0f;
     private bool isMouseHeld = false;
 
+    public AudioSource audioSource;
+    public AudioClip ChargeSound;
+    public float ChargeSoundDelay = 2f;
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -54,6 +58,18 @@ public class GunTurretAnimations : MonoBehaviour
         }
     }
 
+    void PlayChargeSound()
+    {
+        if (ChargeSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(ChargeSound);
+        }
+        else
+        {
+            Debug.LogWarning("Chargning Sound or AudioSource is missing!");
+        }
+    }
+
     void StartReloadAnimation()
     {
         if (reloadAnimation.Length == 0) return;
@@ -65,6 +81,7 @@ public class GunTurretAnimations : MonoBehaviour
 
     void PlayReloadAnimation()
     {
+        PlayChargeSound();
         frameTimer -= Time.deltaTime;
         if (frameTimer <= 0f)
         {
@@ -78,6 +95,7 @@ public class GunTurretAnimations : MonoBehaviour
             else
             {
                 isPlayingReloadAnimation = false;
+                audioSource.Stop();
                 currentFrame = 0;
             }
         }
