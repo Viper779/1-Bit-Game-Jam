@@ -7,7 +7,8 @@ public class WaveBasedEnemySpawner : MonoBehaviour
     [System.Serializable]
     public class EnemyType
     {
-        public GameObject enemyPrefab;
+        public GameObject bombWeedPrefab;
+        public GameObject kadzuKaijuPrefab;
         public int baseEnemyCount;
         [HideInInspector]
         public int currentEnemyCount;
@@ -47,7 +48,6 @@ public class WaveBasedEnemySpawner : MonoBehaviour
 
     IEnumerator SpawnWaves()
     {
-
         while (currentWaveIndex < waves.Count)
         {
             yield return StartCoroutine(SpawnWave(waves[currentWaveIndex]));
@@ -115,13 +115,23 @@ public class WaveBasedEnemySpawner : MonoBehaviour
             Random.Range(-spawnAreaSize.y / 2, spawnAreaSize.y / 2)
         );
 
-        GameObject newEnemy = Instantiate(enemyType.enemyPrefab, spawnPosition, Quaternion.identity);
-        enemyType.currentEnemyCount++;
+        // Randomly choose between bombWeedPrefab and kadzuKaijuPrefab
+        GameObject enemyPrefab = Random.value > 0.5f ? enemyType.bombWeedPrefab : enemyType.kadzuKaijuPrefab;
 
-        BouncingEnemyAI enemyAI = newEnemy.GetComponent<BouncingEnemyAI>();
-        if (enemyAI != null)
+        if (enemyPrefab != null)
         {
-            enemyAI.OnEnemyDestroyed += () => HandleEnemyDestroyed(enemyType);
+            GameObject newEnemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+            enemyType.currentEnemyCount++;
+
+            BouncingEnemyAI enemyAI = newEnemy.GetComponent<BouncingEnemyAI>();
+            if (enemyAI != null)
+            {
+                enemyAI.OnEnemyDestroyed += () => HandleEnemyDestroyed(enemyType);
+            }
+        }
+        else
+        {
+            Debug.LogError("Enemy prefab is missing!");
         }
     }
 
