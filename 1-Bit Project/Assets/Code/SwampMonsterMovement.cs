@@ -21,7 +21,7 @@ public class EnemyMovement : MonoBehaviour
             Debug.LogError("Turret not found. Make sure it's tagged correctly.");
         }
 
-        currentHealth = maxHealth;
+         currentHealth = maxHealth;
     }
 
     private void Update()

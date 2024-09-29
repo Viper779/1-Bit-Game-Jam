@@ -2,54 +2,116 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class EnemySpawner : MonoBehaviour
+public class WaveBasedEnemySpawner : MonoBehaviour
 {
     [System.Serializable]
     public class EnemyType
     {
         public GameObject enemyPrefab;
-        public float spawnInterval;
-        public int maxEnemies;
+        public int baseEnemyCount;
         [HideInInspector]
         public int currentEnemyCount;
     }
 
-    public List<EnemyType> enemyTypes;
+    [System.Serializable]
+    public class Wave
+    {
+        public List<EnemyType> enemies;
+        public float timeBetweenSpawns = 1f;
+        public float timeBeforeNextWave = 10f;
+    }
+
+    public List<Wave> waves;
     public Vector2 spawnAreaSize = new Vector2(5f, 2f);
+    public AudioSource audioSource;
+    public AudioClip preWaveSound;
+    public float preWaveSoundDelay = 2f;
+
+    private int currentWaveIndex = 0;
+    private int totalEnemiesInWave = 0;
+    private int defeatedEnemiesInWave = 0;
 
     void Start()
     {
-        // Start the spawning coroutine for each enemy type
-        foreach (var enemyType in enemyTypes)
+        if (audioSource == null)
         {
-            StartCoroutine(SpawnEnemies(enemyType));
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+        StartCoroutine(SpawnWaves());
+    }
+
+    IEnumerator SpawnWaves()
+    {
+        while (currentWaveIndex < waves.Count)
+        {
+            yield return StartCoroutine(SpawnWave(waves[currentWaveIndex]));
+
+            yield return new WaitUntil(() => defeatedEnemiesInWave >= totalEnemiesInWave);
+
+            defeatedEnemiesInWave = 0;
+            totalEnemiesInWave = 0;
+
+            if (currentWaveIndex < waves.Count - 1) // Check if it's not the last wave
+            {
+                float waitTime = waves[currentWaveIndex].timeBeforeNextWave;
+                if (waitTime > preWaveSoundDelay)
+                {
+                    yield return new WaitForSeconds(waitTime - preWaveSoundDelay);
+                    PlayPreWaveSound();
+                    yield return new WaitForSeconds(preWaveSoundDelay);
+                }
+                else
+                {
+                    PlayPreWaveSound();
+                    yield return new WaitForSeconds(waitTime);
+                }
+            }
+
+            currentWaveIndex++;
+        }
+
+        Debug.Log("All waves completed!");
+    }
+
+    void PlayPreWaveSound()
+    {
+        if (preWaveSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(preWaveSound);
+        }
+        else
+        {
+            Debug.LogWarning("Pre-wave sound or AudioSource is missing!");
         }
     }
 
-    IEnumerator SpawnEnemies(EnemyType enemyType)
+    IEnumerator SpawnWave(Wave wave)
     {
-        while (true)
+        Debug.Log($"Starting Wave {currentWaveIndex + 1}");
+
+        foreach (var enemyType in wave.enemies)
         {
-            if (enemyType.currentEnemyCount < enemyType.maxEnemies)
+            int enemiesToSpawn = enemyType.baseEnemyCount + currentWaveIndex;
+            totalEnemiesInWave += enemiesToSpawn;
+
+            for (int i = 0; i < enemiesToSpawn; i++)
             {
                 SpawnEnemy(enemyType);
-                enemyType.currentEnemyCount++;
+                yield return new WaitForSeconds(wave.timeBetweenSpawns);
             }
-            // Wait for the specified interval before the next spawn attempt
-            yield return new WaitForSeconds(enemyType.spawnInterval);
         }
     }
 
     void SpawnEnemy(EnemyType enemyType)
     {
-        // Calculate a random position within the spawn area
         Vector2 spawnPosition = (Vector2)transform.position + new Vector2(
             Random.Range(-spawnAreaSize.x / 2, spawnAreaSize.x / 2),
             Random.Range(-spawnAreaSize.y / 2, spawnAreaSize.y / 2)
         );
-        // Instantiate the enemy at the calculated position
+
         GameObject newEnemy = Instantiate(enemyType.enemyPrefab, spawnPosition, Quaternion.identity);
-        // Set up a listener to know when this enemy is destroyed
+        enemyType.currentEnemyCount++;
+
         BouncingEnemyAI enemyAI = newEnemy.GetComponent<BouncingEnemyAI>();
         if (enemyAI != null)
         {
@@ -60,9 +122,9 @@ public class EnemySpawner : MonoBehaviour
     void HandleEnemyDestroyed(EnemyType enemyType)
     {
         enemyType.currentEnemyCount--;
+        defeatedEnemiesInWave++;
     }
 
-    // Visualize the spawn area in the editor
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

@@ -109,6 +109,16 @@ MonoBehaviour:
     m_Bits: 64
   maxHealth: 20
   currentHealth: 0
+  explosionDelay: 2
+  explosionDamage: 100
+  explosionRadius: 2
+  frameRate: 0.2
+  explodeAnimation:
+  - {fileID: -8354365422335470886, guid: 7122a95f7e7db8942b874f748b3127ee, type: 3}
+  - {fileID: -7994494115741320190, guid: 7122a95f7e7db8942b874f748b3127ee, type: 3}
+  - {fileID: 8921213277904206280, guid: 7122a95f7e7db8942b874f748b3127ee, type: 3}
+  - {fileID: 8471915809298556489, guid: 7122a95f7e7db8942b874f748b3127ee, type: 3}
+  spriteRenderer: {fileID: 2968811253073876371}
 --- !u!50 &2037655309887545507
 Rigidbody2D:
   serializedVersion: 4

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections;
 
 public class BouncingEnemyAI : MonoBehaviour
 {
@@ -10,12 +11,23 @@ public class BouncingEnemyAI : MonoBehaviour
     public LayerMask groundLayer;
     public int maxHealth = 50;
     public int currentHealth;
-
     public event Action OnEnemyDestroyed;
+    public float explosionDelay = 2f;
+    public int explosionDamage = 100;
+    public float explosionRadius = 2f;
+
+    [SerializeField] private float frameRate = 0.1f;    
+    [SerializeField] private Sprite[] explodeAnimation;
+    private bool isPlayingExplodeAnimation = false;
+
+    public SpriteRenderer spriteRenderer;
+    private int currentFrame;
+    private float frameTimer;
 
     private Transform turretTransform;
     private Rigidbody2D rb;
     private float timeSinceLastBounce;
+    private bool isExploding = false;
 
     void Start()
     {
@@ -33,69 +45,143 @@ public class BouncingEnemyAI : MonoBehaviour
 
     void Update()
     {
+        if (isExploding) return;
+
         if (turretTransform != null)
         {
             Vector2 direction = (turretTransform.position - transform.position).normalized;
             rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);
+
+            // Check if the enemy has reached the turret
+            
         }
+
         timeSinceLastBounce += Time.deltaTime;
         if (timeSinceLastBounce >= bounceInterval && IsGrounded())
         {
             Bounce();
             timeSinceLastBounce = 0f;
         }
-        Debug.DrawRay(transform.position, Vector2.down * groundCheckDistance, Color.red);
+
+        if(isPlayingExplodeAnimation == true)
+        {
+            PlayReloadAnimation();
+        }
+    }
+
+    IEnumerator ExplodeAfterDelay()
+    {
+        isExploding = true;
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = 0;
+
+        yield return new WaitForSeconds(explosionDelay);
+
+        Explode();
+    }
+
+    void Explode()
+    {
+        // Deal damage to the turret
+        if (turretTransform != null)
+        {
+            TurretHealth turretHealth = turretTransform.GetComponent<TurretHealth>();
+            if (turretHealth != null)
+            {
+                turretHealth.TakeDamage(explosionDamage);
+            }
+        }
+
+        // Visual effect for explosion (you can replace this with a particle system)
+        Debug.Log("Enemy exploded!");
+
+        // Destroy the enemy
+        Die();
     }
 
     void Bounce()
     {
         rb.AddForce(Vector2.up * bounceForce, ForceMode2D.Impulse);
-        Debug.Log($"Bouncing! Force applied: {Vector2.up * bounceForce}");
     }
 
     bool IsGrounded()
     {
-        Vector2 raycastStart = transform.position;
-        RaycastHit2D hit = Physics2D.Raycast(raycastStart, Vector2.down, groundCheckDistance, groundLayer);
-        string hitInfo = hit.collider != null ?
-            $"Hit {hit.collider.gameObject.name} at distance {hit.distance}" :
-            "No hit";
-        Debug.Log($"Ground check from {raycastStart}, direction: down, distance: {groundCheckDistance}, result: {hitInfo}");
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer);
         return hit.collider != null;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log($"Collision detected with {collision.gameObject.name} on layer {collision.gameObject.layer}");
+        if (isExploding) return;
+
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            TakeDamage(50); // Assume each bullet deals 10 damage
+            TakeDamage(50); // Assume each bullet deals 50 damage
             Destroy(collision.gameObject); // Destroy the bullet on impact
         }
         else if (collision.contacts[0].normal.y < 0.1f)
         {
             Vector2 bounceDirection = Vector2.Reflect(rb.velocity, collision.contacts[0].normal);
             rb.velocity = bounceDirection.normalized * moveSpeed;
-            Debug.Log($"Wall bounce! New velocity: {rb.velocity}");
+        }
+        if (collision.gameObject.CompareTag("Turret"))
+        {
+            StartCoroutine(ExplodeAfterDelay());
         }
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        Debug.Log($"Enemy took {damage} damage. Current health: {currentHealth}");
-
         if (currentHealth <= 0)
         {
             Die();
         }
     }
 
-    void Die()
+    private IEnumerator DieCoroutine()
     {
+        StartReloadAnimation();
         Debug.Log("Enemy defeated!");
         OnEnemyDestroyed?.Invoke();
+
+        // Wait for a specific duration (e.g., 1 second) to allow the animation to play
+        yield return new WaitForSeconds(1f); // Adjust the time as needed
+
         Destroy(gameObject);
+    }
+
+    public void Die()
+    {
+        StartCoroutine(DieCoroutine());
+    }
+
+    void StartReloadAnimation()
+    {
+        if (explodeAnimation.Length == 0) return;
+        isPlayingExplodeAnimation = true;
+        currentFrame = 0;        
+        frameTimer = frameRate;
+    }
+
+    void PlayReloadAnimation()
+    {
+        frameTimer -= Time.deltaTime;
+        if (frameTimer <= 0f)
+        {
+            frameTimer += frameRate;
+
+            if (currentFrame < explodeAnimation.Length)
+            {
+                spriteRenderer.sprite = explodeAnimation[currentFrame];
+                currentFrame++;
+            }
+            else
+            {
+                isPlayingExplodeAnimation = false;
+                currentFrame = 0;
+            }
+        }
     }
 }
 
