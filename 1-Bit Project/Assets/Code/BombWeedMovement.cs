@@ -33,6 +33,8 @@ public class BouncingEnemyAI : MonoBehaviour
     public AudioClip BombSound;
     public float BombSoundDelay = 2f;
 
+    public GameObject explodePrefab;
+
     void Start()
     {
         if (audioSource == null)
@@ -164,12 +166,13 @@ public class BouncingEnemyAI : MonoBehaviour
     private IEnumerator DieCoroutine()
     {
         StartReloadAnimation();
+        
         Debug.Log("Enemy defeated!");
         OnEnemyDestroyed?.Invoke();
 
         // Wait for a specific duration (e.g., 1 second) to allow the animation to play
         yield return new WaitForSecondsRealtime(1f); // Adjust the time as needed
-
+        GameObject smallExplode = Instantiate(explodePrefab, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 

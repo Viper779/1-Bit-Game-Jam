@@ -15,12 +15,22 @@ public class BulletBehavior : MonoBehaviour
         gameObject.tag = "Bullet";
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+            {
+                Destroy(gameObject); // Destroy the bullet on impact with the ground
+            }
+    }
+
     void Update()
     {
         if (rb.velocity != Vector2.zero)
         {
             float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+
+           
         }
     }
 }

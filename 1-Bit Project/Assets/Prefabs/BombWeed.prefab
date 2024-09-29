@@ -122,6 +122,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   BombSound: {fileID: 8300000, guid: 5b37f0b39c7eb4644a2028e3af4f69ff, type: 3}
   BombSoundDelay: 4
+  explodePrefab: {fileID: 8164761126315784280, guid: 3dcdd80bf9a51db41afa52354f7b9c2e, type: 3}
 --- !u!50 &2037655309887545507
 Rigidbody2D:
   serializedVersion: 4
