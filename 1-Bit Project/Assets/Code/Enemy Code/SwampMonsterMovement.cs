@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -7,9 +8,12 @@ public class EnemyMovement : MonoBehaviour
     private Transform playerTower;
     private Rigidbody2D rb;
     private Transform turretTransform;
+    private bool isDying = false;
+    private bool touchTurret = false;
 
     public int maxHealth = 60;
     public int currentHealth;
+    public float deathDelay = 1f; // Time to delay before destroying the enemy after death
 
     public event Action OnEnemyDestroyed;
     public int attackDamage = 100;
@@ -29,27 +33,25 @@ public class EnemyMovement : MonoBehaviour
             Debug.LogError("Turret not found. Make sure it's tagged correctly.");
         }
 
-         currentHealth = maxHealth;
+        currentHealth = maxHealth;
     }
 
     private void Update()
     {
         if (SimplePauseManager.Instance.IsGamePaused()) return;
-        if (currentHealth > 0)
+        if (currentHealth > 0 && touchTurret == false)
         {
-          // Calculate direction towards the player tower
-          Vector3 direction = (playerTower.position - transform.position).normalized;
+            // Calculate direction towards the player tower
+            Vector3 direction = (playerTower.position - transform.position).normalized;
 
-          // Move the enemy
-          transform.position += direction * moveSpeed * Time.deltaTime;
-          PlayWalkAnimation();
+            // Move the enemy
+            transform.position += direction * moveSpeed * Time.deltaTime;
+            PlayWalkAnimation();
         }
-                     
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-
         if (collision.gameObject.CompareTag("Bullet"))
         {
             TakeDamage(50); // Assume each bullet deals 50 damage
@@ -62,6 +64,7 @@ public class EnemyMovement : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Turret"))
         {
+            touchTurret = true;
             PlayAttackAnimation();
 
             // Deal damage to the turret
@@ -70,6 +73,7 @@ public class EnemyMovement : MonoBehaviour
                 TurretHealth turretHealth = turretTransform.GetComponent<TurretHealth>();
                 if (turretHealth != null)
                 {
+                    Debug.Log("Attacking Turret");
                     turretHealth.TakeDamage(attackDamage);
                 }
             }
@@ -78,7 +82,6 @@ public class EnemyMovement : MonoBehaviour
 
     void PlayWalkAnimation()
     {
-     
         frameTimer -= Time.deltaTime;
         if (frameTimer <= 0f)
         {
@@ -94,9 +97,9 @@ public class EnemyMovement : MonoBehaviour
             }
         }
     }
+
     void PlayAttackAnimation()
     {
-        
         frameTimer -= Time.deltaTime;
         if (frameTimer <= 0f)
         {
@@ -115,7 +118,7 @@ public class EnemyMovement : MonoBehaviour
 
     void PlayDeathAnimation()
     {
-        
+        Debug.Log("Death Animation Trigger");
         frameTimer -= Time.deltaTime;
         if (frameTimer <= 0f)
         {
@@ -123,9 +126,17 @@ public class EnemyMovement : MonoBehaviour
             if (currentFrame == 10)
             {
                 spriteRenderer.sprite = KadzuAnimation[10];
+                Debug.Log("Death Animation Done");
+            }
+            if (currentFrame < 7)
+            {
+                Debug.Log("Death Animation Reposition");
+                currentFrame = 7;
+                spriteRenderer.sprite = KadzuAnimation[7];
             }
             else
             {
+                Debug.Log("Death Animation Execute");
                 spriteRenderer.sprite = KadzuAnimation[currentFrame];
                 currentFrame++;
             }
@@ -137,16 +148,25 @@ public class EnemyMovement : MonoBehaviour
         currentHealth -= damage;
         Debug.Log($"Enemy took {damage} damage. Current health: {currentHealth}");
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && isDying == false)
         {
-
-            Die();
+            isDying = true;
+            StartCoroutine(HandleDeath());
         }
+    }
+
+    IEnumerator HandleDeath()
+    {
+        PlayDeathAnimation();
+
+        // Wait for death animation to play before destroying the enemy
+        yield return new WaitForSeconds(deathDelay);
+
+        Die();
     }
 
     void Die()
     {
-        PlayDeathAnimation();
         Debug.Log("Enemy defeated!");
         OnEnemyDestroyed?.Invoke();
         Destroy(gameObject);
