@@ -45,6 +45,8 @@ public class BouncingEnemyAI : MonoBehaviour
 
     void Update()
     {
+        if (SimplePauseManager.Instance.IsGamePaused()) return;
+
         if (isExploding) return;
 
         if (turretTransform != null)
@@ -75,7 +77,7 @@ public class BouncingEnemyAI : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0;
 
-        yield return new WaitForSeconds(explosionDelay);
+        yield return new WaitForSecondsRealtime(explosionDelay);
 
         Explode();
     }
@@ -146,7 +148,7 @@ public class BouncingEnemyAI : MonoBehaviour
         OnEnemyDestroyed?.Invoke();
 
         // Wait for a specific duration (e.g., 1 second) to allow the animation to play
-        yield return new WaitForSeconds(1f); // Adjust the time as needed
+        yield return new WaitForSecondsRealtime(1f); // Adjust the time as needed
 
         Destroy(gameObject);
     }

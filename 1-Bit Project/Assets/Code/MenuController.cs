@@ -7,8 +7,7 @@ public class MenuController : MonoBehaviour
 {
     public void PlayGame()
     {
-        StartCoroutine(WaitOneSecond());
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        StartCoroutine(WaitOneSecond());       
     }
 
     IEnumerator WaitOneSecond()
@@ -18,6 +17,7 @@ public class MenuController : MonoBehaviour
 
         // Code to execute after the 1 second delay
         Debug.Log(".5 seconds has passed");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void QuitGame()

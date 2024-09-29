@@ -24,6 +24,8 @@ public class GunTurretAnimations : MonoBehaviour
 
     void Update()
     {
+        if (SimplePauseManager.Instance.IsGamePaused()) return;
+
         if (cooldownTimer > 0)
         {
             cooldownTimer -= Time.deltaTime;

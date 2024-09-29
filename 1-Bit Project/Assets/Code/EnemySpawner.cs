@@ -40,8 +40,14 @@ public class WaveBasedEnemySpawner : MonoBehaviour
         StartCoroutine(SpawnWaves());
     }
 
+    private void Update()
+    {
+        if (SimplePauseManager.Instance.IsGamePaused()) return;
+    }
+
     IEnumerator SpawnWaves()
     {
+
         while (currentWaveIndex < waves.Count)
         {
             yield return StartCoroutine(SpawnWave(waves[currentWaveIndex]));
@@ -56,14 +62,14 @@ public class WaveBasedEnemySpawner : MonoBehaviour
                 float waitTime = waves[currentWaveIndex].timeBeforeNextWave;
                 if (waitTime > preWaveSoundDelay)
                 {
-                    yield return new WaitForSeconds(waitTime - preWaveSoundDelay);
+                    yield return new WaitForSecondsRealtime(waitTime - preWaveSoundDelay);
                     PlayPreWaveSound();
-                    yield return new WaitForSeconds(preWaveSoundDelay);
+                    yield return new WaitForSecondsRealtime(preWaveSoundDelay);
                 }
                 else
                 {
                     PlayPreWaveSound();
-                    yield return new WaitForSeconds(waitTime);
+                    yield return new WaitForSecondsRealtime(waitTime);
                 }
             }
 
@@ -97,7 +103,7 @@ public class WaveBasedEnemySpawner : MonoBehaviour
             for (int i = 0; i < enemiesToSpawn; i++)
             {
                 SpawnEnemy(enemyType);
-                yield return new WaitForSeconds(wave.timeBetweenSpawns);
+                yield return new WaitForSecondsRealtime(wave.timeBetweenSpawns);
             }
         }
     }

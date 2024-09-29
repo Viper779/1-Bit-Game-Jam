@@ -26,6 +26,8 @@ public class EnemyMovement : MonoBehaviour
 
     private void Update()
     {
+        if (SimplePauseManager.Instance.IsGamePaused()) return;
+
         // Calculate direction towards the player tower
         Vector3 direction = (playerTower.position - transform.position).normalized;
 
