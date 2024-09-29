@@ -1421,34 +1421,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waves:
   - enemies:
-    - enemyPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
+    - bombWeedPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
+      kadzuKaijuPrefab: {fileID: 4386000277028358810, guid: 6b38773158f954240af7b6d543a7e8f5, type: 3}
       baseEnemyCount: 3
       currentEnemyCount: 0
     timeBetweenSpawns: 0.5
     timeBeforeNextWave: 8
   - enemies:
-    - enemyPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
+    - bombWeedPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
+      kadzuKaijuPrefab: {fileID: 4386000277028358810, guid: 6b38773158f954240af7b6d543a7e8f5, type: 3}
       baseEnemyCount: 6
       currentEnemyCount: 0
     timeBetweenSpawns: 0.5
     timeBeforeNextWave: 10
   - enemies:
-    - enemyPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
+    - bombWeedPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
+      kadzuKaijuPrefab: {fileID: 4386000277028358810, guid: 6b38773158f954240af7b6d543a7e8f5, type: 3}
       baseEnemyCount: 6
       currentEnemyCount: 0
     timeBetweenSpawns: 0.5
     timeBeforeNextWave: 60
   - enemies:
-    - enemyPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
+    - bombWeedPrefab: {fileID: 0}
+      kadzuKaijuPrefab: {fileID: 0}
       baseEnemyCount: 10
       currentEnemyCount: 0
     timeBetweenSpawns: 0.5
     timeBeforeNextWave: 30
   - enemies:
-    - enemyPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
+    - bombWeedPrefab: {fileID: 0}
+      kadzuKaijuPrefab: {fileID: 0}
       baseEnemyCount: 5
       currentEnemyCount: 0
-    - enemyPrefab: {fileID: 4386000277028358810, guid: 6b38773158f954240af7b6d543a7e8f5, type: 3}
+    - bombWeedPrefab: {fileID: 0}
+      kadzuKaijuPrefab: {fileID: 0}
       baseEnemyCount: 1
       currentEnemyCount: 0
     timeBetweenSpawns: 0.5
