@@ -10,6 +10,14 @@ public class PauseMenuController : MonoBehaviour
 
     public void ReturnToMenu()
     {
-        SceneManager.LoadScene(0);
+        SimplePauseManager.Instance.TogglePause();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1, LoadSceneMode.Single);
+
+        GameObject persistentObject = GameObject.FindWithTag("Destroy");  // Or by name: GameObject.Find("ObjectName")
+
+        if (persistentObject != null)
+        {
+           Destroy(persistentObject);
+        }
     }
 }
