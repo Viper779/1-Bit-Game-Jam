@@ -3,83 +3,133 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UpgradeController : MonoBehaviour
+public class UpgradeManager : MonoBehaviour
 {
-    [SerializeField] private List<Upgrade> allUpgrades;  // A list of all possible upgrades
-    [SerializeField] private GameObject upgradeMenuUI;   // The upgrade menu UI panel
-    [SerializeField] private Button[] upgradeButtons;    // The three buttons in the upgrade menu
+    [SerializeField] private List<Upgrade> allUpgrades = new List<Upgrade>();
+    [SerializeField] private GameObject upgradeMenuUI;
+    [SerializeField] private Button[] upgradeButtons;
+    [SerializeField] private GameObject turret;
+    [SerializeField] private Transform turretBase;
+    [SerializeField] private Vector3 moduleOffset = new Vector3(0, -1, 0);
+    [SerializeField] private float timeUntilUpgrade = 30f;
 
-    [SerializeField] private float timeUntilUpgrade = 30f; // Time until the upgrade menu pops up
+    public GameObject autoCannonPrefab;
+    public GameObject autoLoaderPrefab;
+    public GameObject ShieldGenPrefab;
 
-    private List<Upgrade> currentUpgrades = new List<Upgrade>();  // The current 3 randomized upgrades
+    private List<Upgrade> currentUpgrades = new List<Upgrade>();
+    private int moduleCount = 0;
 
     void Start()
     {
-        // Start the timer to show the upgrade menu after a set time
-        StartCoroutine(ShowUpgradesAfterTime());
+        InitializeUpgrades();
+        StartCoroutine(UpgradeLoop());
     }
 
-    IEnumerator ShowUpgradesAfterTime()
+    void InitializeUpgrades()
     {
-        // Wait for the specified time
-        yield return new WaitForSeconds(timeUntilUpgrade);
+        if (allUpgrades.Count == 0)
+        {
+            allUpgrades.Add(new Upgrade("Increase Health", "Increases your health by 500.", 500f));
+            allUpgrades.Add(new Upgrade("Increase Damage", "Increases your damage by 15.", 15f));
+            allUpgrades.Add(new Upgrade("Auto Cannon Module", "Adds an auto cannon module below the turret.", autoCannonPrefab));
+            allUpgrades.Add(new Upgrade("Auto Loader Module", "Adds an auto loader module below the turret.", autoLoaderPrefab));
+            allUpgrades.Add(new Upgrade("Shield Gen Module", "Adds a shield gen module below the turret.", ShieldGenPrefab));
+        }
+    }
 
-        // Randomly select 3 upgrades and show the menu
-        ShowUpgradeMenu();
+    IEnumerator UpgradeLoop()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(timeUntilUpgrade);
+            ShowUpgradeMenu();
+        }
     }
 
     void ShowUpgradeMenu()
     {
-        // Hide or pause the game
-        Time.timeScale = 0f;  // Optional: pauses the game when the menu pops up
-
-        // Randomize the 3 upgrades to display
+        Time.timeScale = 1f;
         currentUpgrades = GetRandomUpgrades(3);
-
-        // Assign each upgrade to the buttons
         for (int i = 0; i < upgradeButtons.Length; i++)
         {
             if (i < currentUpgrades.Count)
             {
-                upgradeButtons[i].GetComponentInChildren<Text>().text = currentUpgrades[i].upgradeName;
-                int index = i;  // Necessary to capture the correct index in the button click
+                Text buttonText = upgradeButtons[i].GetComponentInChildren<Text>();
+                if (buttonText != null)
+                {
+                    buttonText.text = currentUpgrades[i].upgradeName;
+                }
+                else
+                {
+                    Debug.LogWarning("Button " + i + " is missing Text component");
+                }
+
+                int index = i;
                 upgradeButtons[i].onClick.RemoveAllListeners();
                 upgradeButtons[i].onClick.AddListener(() => ApplyUpgrade(currentUpgrades[index]));
+                upgradeButtons[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                upgradeButtons[i].gameObject.SetActive(false);
             }
         }
-
-        // Show the upgrade menu UI
         upgradeMenuUI.SetActive(true);
     }
 
-    // Get a list of 'count' random upgrades from the pool
     List<Upgrade> GetRandomUpgrades(int count)
     {
         List<Upgrade> randomUpgrades = new List<Upgrade>();
-        List<Upgrade> availableUpgrades = new List<Upgrade>(allUpgrades); // Create a copy to avoid modifying the original list
-
-        // Select random upgrades from the available pool
-        for (int i = 0; i < count; i++)
+        List<Upgrade> availableUpgrades = new List<Upgrade>(allUpgrades);
+        for (int i = 0; i < count && availableUpgrades.Count > 0; i++)
         {
-            if (availableUpgrades.Count == 0) break;
-
             int randomIndex = Random.Range(0, availableUpgrades.Count);
             randomUpgrades.Add(availableUpgrades[randomIndex]);
-            availableUpgrades.RemoveAt(randomIndex);  // Ensure no duplicates
+            availableUpgrades.RemoveAt(randomIndex);
         }
-
         return randomUpgrades;
     }
 
-    // Apply the chosen upgrade and close the menu
     void ApplyUpgrade(Upgrade selectedUpgrade)
     {
-        // Logic to apply the selected upgrade (e.g., increase player health, damage, etc.)
-        Debug.Log("Applying upgrade: " + selectedUpgrade.upgradeName);
+        if (selectedUpgrade.modulePrefab != null)
+        {
+            Vector3 modulePosition = turretBase.position + moduleOffset * moduleCount;
+            GameObject newModule = Instantiate(selectedUpgrade.modulePrefab, modulePosition, Quaternion.identity, turret.transform);
+            moduleCount++;
+            Debug.Log("Added module: " + selectedUpgrade.upgradeName);
+        }
+        else
+        {
+            // Apply other upgrades (health, damage, etc.)
+            Debug.Log("Applying upgrade: " + selectedUpgrade.upgradeName);
+        }
 
-        // Hide the upgrade menu and resume the game
         upgradeMenuUI.SetActive(false);
-        Time.timeScale = 1f;  // Resume the game
+        StartCoroutine(UpgradeLoop()); // Restart the upgrade loop
+    }
+}
+
+public class Upgrade
+{
+    public string upgradeName;
+    public string description;
+    public float value;
+    public GameObject modulePrefab;
+
+    public Upgrade(string name, string desc, float val)
+    {
+        upgradeName = name;
+        description = desc;
+        value = val;
+    }
+
+    public Upgrade(string name, string desc, GameObject prefab)
+    {
+        upgradeName = name;
+        description = desc;
+        modulePrefab = prefab;
     }
 }
 
