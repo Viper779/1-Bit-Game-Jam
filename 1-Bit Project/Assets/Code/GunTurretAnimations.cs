@@ -10,6 +10,7 @@ public class GunTurretAnimations : MonoBehaviour
     private int currentFrame;
     private float frameTimer;
     private bool isPlayingReloadAnimation = false;
+    private bool isFiring = false;
     private float cooldownTimer = 0f;
     private bool isMouseHeld = false;
 
@@ -35,11 +36,6 @@ public class GunTurretAnimations : MonoBehaviour
             cooldownTimer -= Time.deltaTime;
         }
 
-        if (Input.GetMouseButtonDown(0) && !isPlayingReloadAnimation && cooldownTimer <= 0)
-        {            
-            StartReloadAnimation();
-        }
-
         if (Input.GetMouseButtonDown(0))
         {
             isMouseHeld = true;
@@ -48,13 +44,31 @@ public class GunTurretAnimations : MonoBehaviour
         {
             isMouseHeld = false;
         }
-        if (isMouseHeld && !isPlayingReloadAnimation && cooldownTimer <= 0)
+        if (!isMouseHeld && !isPlayingReloadAnimation)
+        {
+            spriteRenderer.sprite = reloadAnimation[0];
+            currentFrame = 0;
+            
+        }
+        if (Input.GetMouseButtonDown(0) && !isPlayingReloadAnimation && cooldownTimer <= 0)
         {
             StartReloadAnimation();
         }
-        if (isPlayingReloadAnimation)
+        if (isPlayingReloadAnimation && isMouseHeld)
         {
             PlayReloadAnimation();
+        }
+        if (isPlayingReloadAnimation && !isMouseHeld)
+        {
+            if (!isFiring)
+            {
+                Debug.LogWarning("set frame 6");
+                spriteRenderer.sprite = reloadAnimation[6];
+                currentFrame = 6;
+            }
+            isFiring = true;
+            PlayFiringAnimation();
+
         }
     }
 
@@ -87,6 +101,26 @@ public class GunTurretAnimations : MonoBehaviour
         {
             frameTimer += frameRate;
 
+            if (currentFrame < 6)
+            {
+                spriteRenderer.sprite = reloadAnimation[currentFrame];
+                currentFrame++;
+            }
+            if (currentFrame == 5)
+            {
+                audioSource.Stop();
+                currentFrame = 5;
+            }
+        }
+    }
+
+    void PlayFiringAnimation()
+    {
+        frameTimer -= Time.deltaTime;
+        if (frameTimer <= 0f)
+        {
+            frameTimer += frameRate;
+
             if (currentFrame < reloadAnimation.Length)
             {
                 spriteRenderer.sprite = reloadAnimation[currentFrame];
@@ -95,6 +129,7 @@ public class GunTurretAnimations : MonoBehaviour
             else
             {
                 isPlayingReloadAnimation = false;
+                isFiring = false;
                 audioSource.Stop();
                 currentFrame = 0;
             }

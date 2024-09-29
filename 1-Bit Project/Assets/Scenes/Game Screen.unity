@@ -984,7 +984,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -8418195878296979669, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
+  m_Sprite: {fileID: -2487029646971413728, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1004,7 +1004,7 @@ Transform:
   m_GameObject: {fileID: 712300918}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.54, y: -0.02000004, z: 0.019395275}
+  m_LocalPosition: {x: 0.03, y: -3.44, z: 0.019395275}
   m_LocalScale: {x: 2.9860988, y: 2.6718948, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1025,14 +1025,15 @@ MonoBehaviour:
   frameRate: 0.16
   cooldownTime: 1.6
   reloadAnimation:
-  - {fileID: 8754734600242262514, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
-  - {fileID: -6640649505862964113, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
-  - {fileID: -6194111676628741383, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
-  - {fileID: 6101238809794294604, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
-  - {fileID: 1315181321611120808, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
-  - {fileID: -8102063359058550449, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
-  - {fileID: -5909373292122232107, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
-  - {fileID: -8418195878296979669, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
+  - {fileID: -2487029646971413728, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
+  - {fileID: 6110389892029801017, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
+  - {fileID: -5022861280191299671, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
+  - {fileID: 2706742259201333587, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
+  - {fileID: 71341323308033141, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
+  - {fileID: 4462279267772258924, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
+  - {fileID: 4175135270693819490, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
+  - {fileID: 931826048924628263, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
+  - {fileID: -739257115154137712, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
   audioSource: {fileID: 712300925}
   ChargeSound: {fileID: 8300000, guid: bbc1ecfe9053c644a9cb23daf722d6c2, type: 3}
   ChargeSoundDelay: 2
