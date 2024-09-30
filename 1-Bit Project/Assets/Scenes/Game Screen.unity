@@ -1023,7 +1023,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameRate: 0.16
-  cooldownTime: 1.6
+  cooldownTime: 1.4
   reloadAnimation:
   - {fileID: -2487029646971413728, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
   - {fileID: 6110389892029801017, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
@@ -1294,10 +1294,10 @@ MonoBehaviour:
   BaseBullet: {fileID: 329379305069630311, guid: 4016c2a0d65249343a9a5bd1b6ba54d4, type: 3}
   fireLocation: {fileID: 383648308}
   canFire: 0
-  ShootingCD: 1.6
+  ShootingCD: 1.4
   audioSource: {fileID: 924319092}
   ShootSound: {fileID: 8300000, guid: 1a78fae8b2747c84d8649a9af83a18c1, type: 3}
-  SoundDelay: 2
+  minChargeTime: 0
 --- !u!1001 &921259576
 PrefabInstance:
   m_ObjectHideFlags: 0
