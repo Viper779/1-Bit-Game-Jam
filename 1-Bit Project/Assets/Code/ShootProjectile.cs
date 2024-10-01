@@ -15,7 +15,7 @@ public class ShootProjectile : MonoBehaviour
 
     private bool isMouseHeld = false;      // Is the mouse button held down
     private float chargeTime = 0f;         // Time the mouse button is held down
-    public float minChargeTime = 0.5f;     // Minimum time to consider as a charge
+    public float minChargeTime = 0f;     // Minimum time to consider as a charge
 
     void Start()
     {
