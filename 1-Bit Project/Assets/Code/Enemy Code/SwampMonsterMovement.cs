@@ -24,6 +24,8 @@ public class EnemyMovement : MonoBehaviour
     private int currentFrame;
     private float frameTimer;
 
+    public int BulletDamage = 50;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -34,6 +36,8 @@ public class EnemyMovement : MonoBehaviour
         }
 
         currentHealth = maxHealth;
+
+        BulletDamage = UpgradeManager.instance.upgradedBulletDamage;
     }
 
     private void Update()
@@ -54,7 +58,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            TakeDamage(50); // Assume each bullet deals 50 damage
+            TakeDamage(BulletDamage); // Assume each bullet deals 50 damage
             Destroy(collision.gameObject); // Destroy the bullet on impact
         }
         else if (collision.contacts[0].normal.y < 0.1f)

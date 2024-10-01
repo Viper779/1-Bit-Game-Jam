@@ -16,6 +16,8 @@ public class BouncingEnemyAI : MonoBehaviour
     public int explosionDamage = 100;
     public float explosionRadius = 2f;
 
+    public int BulletDamage = 50;
+
     [SerializeField] private float frameRate = 0.1f;    
     [SerializeField] private Sprite[] explodeAnimation;
     private bool isPlayingExplodeAnimation = false;
@@ -52,6 +54,8 @@ public class BouncingEnemyAI : MonoBehaviour
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         rb.freezeRotation = true;
         currentHealth = maxHealth;
+
+        BulletDamage = UpgradeManager.instance.upgradedBulletDamage;
     }
 
     void Update()
@@ -140,7 +144,7 @@ public class BouncingEnemyAI : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            TakeDamage(50); // Assume each bullet deals 50 damage
+            TakeDamage(BulletDamage); // Assume each bullet deals 50 damage
             Destroy(collision.gameObject); // Destroy the bullet on impact
         }
         else if (collision.contacts[0].normal.y < 0.1f)
