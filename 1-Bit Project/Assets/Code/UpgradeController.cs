@@ -30,11 +30,27 @@ public class UpgradeManager : MonoBehaviour
     {
         if (allUpgrades.Count == 0)
         {
-            allUpgrades.Add(new Upgrade("Increase Health", "Increases your health by 500.", 500f));
             allUpgrades.Add(new Upgrade("Increase Damage", "Increases your damage by 15.", 15f));
-            allUpgrades.Add(new Upgrade("Auto Cannon Module", "Adds an auto cannon module below the turret.", autoCannonPrefab));
-            allUpgrades.Add(new Upgrade("Auto Loader Module", "Adds an auto loader module below the turret.", autoLoaderPrefab));
+            allUpgrades.Add(new Upgrade("Increase Reload", "Increases your reload rate.", 5f));
+            allUpgrades.Add(new Upgrade("Increase Special Effect", "Increases your special effect.", 5f));
+
+            allUpgrades.Add(new Upgrade("Timed Fuse", "Adds a timed explosion effect to the shell.", 4));
+            allUpgrades.Add(new Upgrade("High Explosive", "Adds an exploding to the shell.", 3));
+            allUpgrades.Add(new Upgrade("Piercing Sabot", "Adds a piercing effect to the shell.", 2));
+
+
             allUpgrades.Add(new Upgrade("Shield Gen Module", "Adds a shield gen module below the turret.", ShieldGenPrefab));
+            allUpgrades.Add(new Upgrade("Shield Gen Upgrade", "Improves the shield gen.", 10f));
+
+            allUpgrades.Add(new Upgrade("Auto Cannon Module", "Adds an auto cannon module below the turret.", autoCannonPrefab));
+            allUpgrades.Add(new Upgrade("Auto Cannon Upgrade", "Improves the auto cannon.", 10f));
+
+            allUpgrades.Add(new Upgrade("Auto Loader Module", "Adds an auto loader module below the turret.", autoLoaderPrefab));
+            allUpgrades.Add(new Upgrade("Auto Loader Upgrade", "Improves the auto loader.", 10f));
+
+            allUpgrades.Add(new Upgrade("Robot Factory Module", "Adds a robot factory below the turret.", RobotFactPrefab));
+            allUpgrades.Add(new Upgrade("Robot Factory Upgrade", "Improves the robot factory.", 10f));
+
         }
     }
 
