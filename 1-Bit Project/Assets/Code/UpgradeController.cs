@@ -16,6 +16,7 @@ public class UpgradeManager : MonoBehaviour
     public GameObject autoCannonPrefab;
     public GameObject autoLoaderPrefab;
     public GameObject ShieldGenPrefab;
+    public GameObject RobotFactPrefab;
 
     private List<Upgrade> currentUpgrades = new List<Upgrade>();
     private int moduleCount = 0;
