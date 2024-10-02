@@ -39,7 +39,7 @@ public class BulletBehavior : MonoBehaviour
             Debug.LogError("Rigidbody2D not found!");
             return;
         }
-
+        //Render Projectile Sprite
         if (bulletType == 0)
         {
             spriteRenderer.sprite = BulletSprites[0];
@@ -83,8 +83,6 @@ public class BulletBehavior : MonoBehaviour
         {
             force = initForce; // Use initial force for lower charge
         }
-
-        Debug.Log($"Charge Time: {chargeTime}, Applied Force: {force} units");
     }
 
     private void ApplyForce()
@@ -142,7 +140,6 @@ public class BulletBehavior : MonoBehaviour
             Rigidbody2D smallBulletRb = smallBullet.GetComponent<Rigidbody2D>();
 
             // Apply velocity to the smaller bullet
-            Debug.Log($"flight path {bulletDirection}");
             smallBulletRb.velocity = bulletDirection * bulletSpeed;
         }
 
@@ -161,7 +158,7 @@ public class BulletBehavior : MonoBehaviour
                 rb.isKinematic = true;
             }
            
-            if (bulletType == 2)
+            if (bulletType == 2) //If Timed Fuse Imbed Shell Into Ground
             {
                 boxCollider.size = new Vector2(boxCollider.size.x * (specialStat * 5), boxCollider.size.y * (specialStat * 3));
                 if (!isExploding)
@@ -238,12 +235,12 @@ public class BulletBehavior : MonoBehaviour
             transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
         }
 
-        // If bulletType is 1 and Space key is pressed, start the explosion sequence
+        // If bulletType is HE start the explosion sequence
         if (bulletType == 1 && Input.GetKeyDown(KeyCode.Space))
         {
             StartCoroutine(ExplodeAndDestroy());
         }
-
+        // If bellet is Timed Fuse Spray smaller bullets
         if (bulletType == 4 && Input.GetKeyDown(KeyCode.Space))
         {
             SprayBullets();

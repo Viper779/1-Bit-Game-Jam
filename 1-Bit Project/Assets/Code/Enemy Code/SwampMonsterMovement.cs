@@ -133,7 +133,6 @@ public class EnemyMovement : MonoBehaviour
 
     void PlayDeathAnimation()
     {
-        Debug.Log("Death Animation Trigger");
         frameTimer -= Time.deltaTime;
         if (frameTimer <= 0f)
         {
@@ -141,18 +140,15 @@ public class EnemyMovement : MonoBehaviour
             if (currentFrame == 10)
             {
                 spriteRenderer.sprite = KadzuAnimation[10];
-                Debug.Log("Death Animation Done");
 
             }
             if (currentFrame < 7)
             {
-                Debug.Log("Death Animation Reposition");
                 currentFrame = 7;
                 spriteRenderer.sprite = KadzuAnimation[7];
             }
             if (currentFrame >= 7 && currentFrame != 10)
             {
-                Debug.Log("Death Animation Execute");
                 spriteRenderer.sprite = KadzuAnimation[currentFrame];
                 currentFrame++;
             }
