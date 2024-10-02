@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 6426471779487612326, guid: 9390b05de7184034a93d26c05c661e52, type: 3}
+  m_Sprite: {fileID: -3204605202704328522, guid: 9390b05de7184034a93d26c05c661e52, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,9 +99,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d643683e0aa39f428ffd7a5b4bfcb38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletType: 3
+  specialStat: 1
+  reloadRate: 0
   initForce: 3
-  chargeRate: 3
-  maxForce: 10
+  chargeRate: 4
+  maxForce: 15
+  BulletSprites:
+  - {fileID: 6426471779487612326, guid: 9390b05de7184034a93d26c05c661e52, type: 3}
+  - {fileID: 5393198997843058700, guid: 9390b05de7184034a93d26c05c661e52, type: 3}
+  - {fileID: 4686076046214912230, guid: 9390b05de7184034a93d26c05c661e52, type: 3}
+  - {fileID: 5797298280263140915, guid: 9390b05de7184034a93d26c05c661e52, type: 3}
+  spriteRenderer: {fileID: 8449795524593926374}
 --- !u!50 &-3823905477628007630
 Rigidbody2D:
   serializedVersion: 4
@@ -158,14 +167,14 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.04, y: 0.06}
+    oldSize: {x: 0.06, y: 0.12}
     newSize: {x: 0.04, y: 0.06}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

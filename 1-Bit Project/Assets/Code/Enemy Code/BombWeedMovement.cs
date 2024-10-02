@@ -145,7 +145,6 @@ public class BouncingEnemyAI : MonoBehaviour
         if (collision.gameObject.CompareTag("Bullet"))
         {
             TakeDamage(BulletDamage); // Assume each bullet deals 50 damage
-            Destroy(collision.gameObject); // Destroy the bullet on impact
         }
         else if (collision.contacts[0].normal.y < 0.1f)
         {
@@ -155,6 +154,14 @@ public class BouncingEnemyAI : MonoBehaviour
         if (collision.gameObject.CompareTag("Turret"))
         {
             StartCoroutine(ExplodeAfterDelay());
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D trigger)
+    {
+        if (trigger.gameObject.CompareTag("Bullet"))
+        {
+            TakeDamage(BulletDamage); // Assume each bullet deals 50 damage
         }
     }
 

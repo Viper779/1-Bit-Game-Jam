@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -2838744723988261164}
   m_Layer: 0
   m_Name: KadzuKaiju
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66,6 +66,7 @@ MonoBehaviour:
   - {fileID: -3825119455780687724, guid: c6f8458f1c988144ab4f4f6c9e1a4652, type: 3}
   - {fileID: 8905376062394124746, guid: c6f8458f1c988144ab4f4f6c9e1a4652, type: 3}
   spriteRenderer: {fileID: -5606552346911366946}
+  BulletDamage: 50
 --- !u!50 &5886639512258024264
 Rigidbody2D:
   serializedVersion: 4

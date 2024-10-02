@@ -56,16 +56,6 @@ public class EnemyMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Bullet"))
-        {
-            TakeDamage(BulletDamage); // Assume each bullet deals 50 damage
-            Destroy(collision.gameObject); // Destroy the bullet on impact
-        }
-        else if (collision.contacts[0].normal.y < 0.1f)
-        {
-            Vector2 bounceDirection = Vector2.Reflect(rb.velocity, collision.contacts[0].normal);
-            rb.velocity = bounceDirection.normalized * moveSpeed;
-        }
         if (collision.gameObject.CompareTag("Turret"))
         {
             touchTurret = true;
@@ -81,6 +71,19 @@ public class EnemyMovement : MonoBehaviour
                     turretHealth.TakeDamage(attackDamage);
                 }
             }
+        }
+        else if (collision.contacts[0].normal.y < 0.1f)
+        {
+            Vector2 bounceDirection = Vector2.Reflect(rb.velocity, collision.contacts[0].normal);
+            rb.velocity = bounceDirection.normalized * moveSpeed;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D trigger)
+    {
+        if (trigger.gameObject.CompareTag("Bullet"))
+        {
+            TakeDamage(BulletDamage); // Assume each bullet deals 50 damage
         }
     }
 

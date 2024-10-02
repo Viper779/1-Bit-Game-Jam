@@ -1,57 +1,142 @@
 using UnityEngine;
+using System;
+using System.Collections;
 
 public class BulletBehavior : MonoBehaviour
 {
+    public int bulletType = 0; //1 for time fuse //2 for HE //3 for sabot
+    public int specialStat = 0;
+    public int reloadRate = 0;
+
+    private float chargeAdjust = 0f;
+
     private float chargeTime; // Store the charge time
-    public float initForce; // Base force for the bullet
-    public float chargeRate = 8;
-    public float maxForce = 20;
+    public float initForce = 5f; // Base force for the bullet
+    public float chargeRate = 8f;
+    public float maxForce = 20f;
     private Rigidbody2D rb; // Rigidbody for bullet physics
-    private float force = 0; // Final force applied to the bullet
+    private float force = 0f; // Final force applied to the bullet
+
+    [SerializeField] private Sprite[] BulletSprites;
+    public SpriteRenderer spriteRenderer;
+    private int currentFrame;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody2D not found!");
+            return;
+        }
 
-        // Use the initialized force based on charge time
-        Vector2 direction = transform.right;
-        rb.velocity = direction * (force + initForce); // Set initial velocity
-        Debug.Log($"Applied Force: {force + initForce} units");
+        if (bulletType == 0)
+        {
+            spriteRenderer.sprite = BulletSprites[0];
+        }
+
+        if (bulletType == 1)
+        {
+            spriteRenderer.sprite = BulletSprites[11];
+        }
+
+        if (bulletType == 2)
+        {
+            spriteRenderer.sprite = BulletSprites[2];
+        }
+
+        if (bulletType == 3)
+        {
+            spriteRenderer.sprite = BulletSprites[3];
+        }
+
+        ApplyForce();
     }
+
 
     public void Initialize(float charge)
     {
         chargeTime = charge; // Store the charge time
-        
+
         // Determine the force based on charge time
-        if (chargeTime > 1f) // Example condition for high charge
+        if (chargeTime > 0f) // Example condition for high charge
         {
-            if (force < maxForce) 
-            {
-                force = initForce * chargeRate; 
-            }
-            else
-            {
-                force = maxForce;
-            }
-            // Increase force for higher charge
-            
+            force = Mathf.Clamp(initForce + (chargeRate * chargeTime), initForce, maxForce);
         }
         else
         {
             force = initForce; // Use initial force for lower charge
         }
 
-        // Set the bullet's velocity based on the calculated force
-        Vector2 direction = transform.right;
-        rb.velocity = direction * force; // Apply the calculated velocity
+        Debug.Log($"Charge Time: {chargeTime}, Applied Force: {force} units");
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void ApplyForce()
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        //edit bullet speed based on projectile type
+        if (bulletType == 0)
+        {
+            chargeAdjust = 1f;
+        }
+
+        if (bulletType == 1)
+        {
+            chargeAdjust = 0.7f;
+        }
+
+        if (bulletType == 2)
+        {
+            chargeAdjust = 0.7f;
+        }
+
+        if (bulletType == 3)
+        {
+            chargeAdjust = 1.5f;
+        }
+
+        // Apply the calculated force to the bullet
+        Vector2 direction = transform.right;
+        rb.velocity = direction * force * chargeAdjust; // Apply the calculated velocity
+    }
+
+    void OnTriggerEnter2D(Collider2D trigger)
+    {
+        if (trigger.gameObject.CompareTag("Ground"))
         {
             Destroy(gameObject); // Destroy the bullet on impact with the ground
+        }
+
+        if (trigger.gameObject.CompareTag("Enemy")) // Destroy the bullet on impact with the enemy
+        {
+            Debug.Log("Hit");
+            if (bulletType == 0)
+            {
+                Destroy(gameObject);
+            }
+
+            if (bulletType == 1)
+            {
+                Destroy(gameObject);
+            }
+
+            if (bulletType == 2)
+            {
+                Destroy(gameObject);
+            }
+
+            if (bulletType == 3) // Piercing Projectile Logic
+            {
+                if (specialStat < 0)
+                {
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    specialStat--;
+                    Debug.Log($"SpecStat: {specialStat}");
+                }
+
+            }
         }
     }
 
