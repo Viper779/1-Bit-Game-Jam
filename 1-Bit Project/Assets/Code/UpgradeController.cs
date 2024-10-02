@@ -53,7 +53,7 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] private Button Upgrade_button3;
 
     public static UpgradeManager instance; // Singleton instance
-    public static UpgradeRequest = false; //Request for upgrade from wave controller
+    public static bool UpgradeRequest = false; //Request for upgrade from wave controller
     public static bool DisplayUpgrades = false; //Request for cards to show
     public static int card1Index;
     public static int card2Index;

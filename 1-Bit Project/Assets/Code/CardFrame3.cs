@@ -13,7 +13,7 @@ public class CardFrame : MonoBehaviour
     // Start is called before the first frame update
     //void Start()
     //{
-        
+
     //}
 
     // Update is called once per frame
@@ -31,7 +31,7 @@ public class CardFrame : MonoBehaviour
         {
             spriteRenderer.sortingOrder = 0;
         }
-        
+    }
 
     private void SetUpgradeIndex()
     {
