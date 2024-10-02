@@ -25,6 +25,8 @@ public class EnemyMovement : MonoBehaviour
     private float frameTimer;
 
     public int BulletDamage = 50;
+    public float critChance = 0.2f; // 20% chance to crit
+    public float critMultiplier = 1.5f; 
 
     private void Start()
     {
@@ -38,6 +40,8 @@ public class EnemyMovement : MonoBehaviour
         currentHealth = maxHealth;
 
         BulletDamage = UpgradeManager.instance.upgradedBulletDamage;
+        critChance = UpgradeManager.instance.upgradedCritMult;
+        critMultiplier = UpgradeManager.instance.upgradedCritDmg;
     }
 
     private void Update()
@@ -161,8 +165,16 @@ public class EnemyMovement : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        Debug.Log($"Enemy took {damage} damage. Current health: {currentHealth}");
+        // Check if this hit is a critical hit
+        if (UnityEngine.Random.value < critChance)  // Random.value returns a float between 0.0 and 1.0
+        {
+            damage = Mathf.RoundToInt(damage * critMultiplier); // Apply crit multiplier
+            Debug.Log("Critical Hit!");
+        }
+
+        // Apply the damage
+        currentHealth -= damage;                  
+        
         if (currentHealth <= 0 && isDying == false)
         {
             isDying = true;

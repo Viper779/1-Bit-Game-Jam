@@ -17,6 +17,8 @@ public class BouncingEnemyAI : MonoBehaviour
     public float explosionRadius = 2f;
 
     public int BulletDamage = 50;
+    public float critChance = 0.2f; // 20% chance to crit
+    public float critMultiplier = 1.5f;
 
     [SerializeField] private float frameRate = 0.1f;    
     [SerializeField] private Sprite[] explodeAnimation;
@@ -56,6 +58,8 @@ public class BouncingEnemyAI : MonoBehaviour
         currentHealth = maxHealth;
 
         BulletDamage = UpgradeManager.instance.upgradedBulletDamage;
+        critChance = UpgradeManager.instance.upgradedCritMult;
+        critMultiplier = UpgradeManager.instance.upgradedCritDmg;
     }
 
     void Update()
@@ -167,7 +171,17 @@ public class BouncingEnemyAI : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+
+        // Check if this hit is a critical hit
+        if (UnityEngine.Random.value < critChance)  // Random.value returns a float between 0.0 and 1.0
+        {
+            damage = Mathf.RoundToInt(damage * critMultiplier); // Apply crit multiplier
+            Debug.Log("Critical Hit!");
+        }
+
+        // Apply the damage
         currentHealth -= damage;
+
         if (currentHealth <= 0)
         {
             Die();

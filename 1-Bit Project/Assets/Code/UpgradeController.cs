@@ -52,7 +52,12 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] private Button Upgrade_button3;
 
     public static UpgradeManager instance; // Singleton instance
-    public int upgradedBulletDamage = 25;
+
+    public int upgradedBulletDamage = 50;
+    public float upgradedCritDmg = 1.5f;
+    public float upgradedCritMult = 0.2f;
+
+    TurretHealth turretHealth;
 
     void Awake()
     {
@@ -71,6 +76,8 @@ public class UpgradeManager : MonoBehaviour
     private void Start()
     {
         ButtonsSet();
+
+        turretHealth = GameObject.Find("Turret").GetComponent<TurretHealth>();
     }
 
     public void ButtonsSet()
@@ -107,15 +114,16 @@ public class UpgradeManager : MonoBehaviour
         }
         else if (Upgrade_chosen == "Increase Health")
         {
-            Debug.Log("Increase Health");
+            // Increase the turret's current health
+            turretHealth.currentHealth += 1500;           
         }
         else if (Upgrade_chosen == "Crit Chance")
         {
-            Debug.Log("Crit Chance");
+            upgradedCritMult += .2f;
         }
         else if (Upgrade_chosen == "Crit Multiplier")
         {
-            Debug.Log("Crit Multiplier");
+            upgradedCritDmg += .5f;
         }
         else if (Upgrade_chosen == "Piercing Sabot")
         {
