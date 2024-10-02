@@ -108,6 +108,11 @@ public class BulletBehavior : MonoBehaviour
     {
         if (trigger.gameObject.CompareTag("Ground"))
         {
+            if (bulletType == 1)
+            {
+                rb.velocity = Vector2.zero;
+                rb.isKinematic = true;
+            }
            
             if (bulletType == 2)
             {
@@ -119,8 +124,9 @@ public class BulletBehavior : MonoBehaviour
                 }
                 yield return new WaitForSeconds(0.2f);
                 Destroy(gameObject);
-            }
-            else
+            }  
+            
+            if (bulletType == 0 || bulletType == 3)
             {
                 Destroy(gameObject); // Destroy the bullet on impact with the ground
             }
@@ -179,18 +185,29 @@ public class BulletBehavior : MonoBehaviour
             transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
         }
 
+        // If bulletType is 1 and Space key is pressed, start the explosion sequence
         if (bulletType == 1 && Input.GetKeyDown(KeyCode.Space))
         {
-            boxCollider.size = new Vector2(boxCollider.size.x * (specialStat * 6), boxCollider.size.y * (specialStat * 4));
-            if (!isExploding)
-            {
-                GameObject smallExplode = Instantiate(explodePrefab, transform.position, transform.rotation);
-                isExploding = true;
-            }
-
-
-            //yield return new WaitForSeconds(0.2f);
-            Destroy(gameObject);
+            StartCoroutine(ExplodeAndDestroy());
         }
     }
+
+    // Coroutine to handle the explosion and destruction
+    IEnumerator ExplodeAndDestroy()
+    {
+        rb.isKinematic = false;
+        boxCollider.size = new Vector2(boxCollider.size.x * (specialStat * 6), boxCollider.size.y * (specialStat * 6));
+
+        if (!isExploding)
+        {
+            GameObject smallExplode = Instantiate(explodePrefab, transform.position, transform.rotation);
+            isExploding = true;
+        }
+
+        // Wait for 0.2 seconds before destroying the object
+        yield return new WaitForSeconds(0.2f);
+
+        Destroy(gameObject);
+    }
+
 }
