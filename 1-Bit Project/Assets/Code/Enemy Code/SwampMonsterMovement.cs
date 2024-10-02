@@ -142,6 +142,7 @@ public class EnemyMovement : MonoBehaviour
             {
                 spriteRenderer.sprite = KadzuAnimation[10];
                 Debug.Log("Death Animation Done");
+
             }
             if (currentFrame < 7)
             {
@@ -149,7 +150,7 @@ public class EnemyMovement : MonoBehaviour
                 currentFrame = 7;
                 spriteRenderer.sprite = KadzuAnimation[7];
             }
-            else
+            if (currentFrame >= 7 && currentFrame != 10)
             {
                 Debug.Log("Death Animation Execute");
                 spriteRenderer.sprite = KadzuAnimation[currentFrame];

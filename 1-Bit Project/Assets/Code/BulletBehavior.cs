@@ -111,7 +111,7 @@ public class BulletBehavior : MonoBehaviour
            
             if (bulletType == 2)
             {
-                boxCollider.size = new Vector2(boxCollider.size.x * (specialStat * 6), boxCollider.size.y * (specialStat * 4));
+                boxCollider.size = new Vector2(boxCollider.size.x * (specialStat * 5), boxCollider.size.y * (specialStat * 3));
                 if (!isExploding)
                 {
                     GameObject smallExplode = Instantiate(explodePrefab, transform.position, transform.rotation);
@@ -142,7 +142,7 @@ public class BulletBehavior : MonoBehaviour
 
             if (bulletType == 2)
             {
-                boxCollider.size = new Vector2(boxCollider.size.x * (specialStat*6), boxCollider.size.y * (specialStat*4));
+                boxCollider.size = new Vector2(boxCollider.size.x * (specialStat*5), boxCollider.size.y * (specialStat*3));
                 if (!isExploding) 
                 { 
                     GameObject smallExplode = Instantiate(explodePrefab, transform.position, transform.rotation);
@@ -177,6 +177,20 @@ public class BulletBehavior : MonoBehaviour
         {
             float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+        }
+
+        if (bulletType == 1 && Input.GetKeyDown(KeyCode.Space))
+        {
+            boxCollider.size = new Vector2(boxCollider.size.x * (specialStat * 6), boxCollider.size.y * (specialStat * 4));
+            if (!isExploding)
+            {
+                GameObject smallExplode = Instantiate(explodePrefab, transform.position, transform.rotation);
+                isExploding = true;
+            }
+
+
+            //yield return new WaitForSeconds(0.2f);
+            Destroy(gameObject);
         }
     }
 }
