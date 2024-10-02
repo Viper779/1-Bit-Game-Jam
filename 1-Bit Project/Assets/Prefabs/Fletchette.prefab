@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5671263211559671561}
   - component: {fileID: 8449795524593926374}
-  - component: {fileID: 7503064072693017023}
   - component: {fileID: -3823905477628007630}
   - component: {fileID: 1652928814778985597}
+  - component: {fileID: 6752364552477534130}
   m_Layer: 0
-  m_Name: BasicBullet
+  m_Name: Fletchette
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 329379305069630311}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: 0.7071068, w: -0.7071068}
-  m_LocalPosition: {x: -12.64, y: 0.4942873, z: -0.01710238}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalPosition: {x: -12.8274, y: 0.4943, z: -0.01710238}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,48 +76,17 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2961934553315889034, guid: 9390b05de7184034a93d26c05c661e52, type: 3}
+  m_Sprite: {fileID: -1054007611360401563, guid: 9390b05de7184034a93d26c05c661e52, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.06, y: 0.12}
+  m_Size: {x: 0.05, y: 0.09}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7503064072693017023
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 329379305069630311}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d643683e0aa39f428ffd7a5b4bfcb38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletType: 4
-  specialStat: 3
-  reloadRate: 0
-  spreadAngle: 30
-  smallBulletPrefab: {fileID: 329379305069630311, guid: f91b8241727a57645afe1e18abe1f40b, type: 3}
-  initForce: 3
-  bulletSpeed: 10
-  chargeRate: 4
-  maxForce: 15
-  BulletSprites:
-  - {fileID: -1207100237855031225, guid: 9390b05de7184034a93d26c05c661e52, type: 3}
-  - {fileID: 586142625637093222, guid: 9390b05de7184034a93d26c05c661e52, type: 3}
-  - {fileID: -401416035031132923, guid: 9390b05de7184034a93d26c05c661e52, type: 3}
-  - {fileID: -1054007611360401563, guid: 9390b05de7184034a93d26c05c661e52, type: 3}
-  - {fileID: 8144602755185621172, guid: 9390b05de7184034a93d26c05c661e52, type: 3}
-  spriteRenderer: {fileID: 8449795524593926374}
-  explodePrefab: {fileID: 8164761126315784280, guid: 3dcdd80bf9a51db41afa52354f7b9c2e, type: 3}
-  isExploding: 0
-  numberOfBullets: 3
 --- !u!50 &-3823905477628007630
 Rigidbody2D:
   serializedVersion: 4
@@ -177,16 +146,30 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0047367467, y: 0.07608321}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 0.06, y: 0.12}
-    newSize: {x: 0.06, y: 0.12}
+    pivot: {x: 0.6, y: -0.33333334}
+    oldSize: {x: 0.05, y: 0.09}
+    newSize: {x: 0.05, y: 0.09}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.04, y: 0.06}
+  m_Size: {x: 0.030526506, y: 0.091973305}
   m_EdgeRadius: 0
+--- !u!114 &6752364552477534130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329379305069630311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d05e84dad93fd340933eeed3cd5033a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initForce: 5
+  bulletSpeed: 5

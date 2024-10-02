@@ -7,11 +7,14 @@ public class BulletBehavior : MonoBehaviour
     public int bulletType = 0; //1 for time fuse //2 for HE //3 for sabot
     public int specialStat = 0;
     public int reloadRate = 0;
+    public float spreadAngle = 30f;
+    public GameObject smallBulletPrefab;
 
     private float chargeAdjust = 0f;
 
     private float chargeTime; // Store the charge time
     public float initForce = 5f; // Base force for the bullet
+    public float bulletSpeed = 5f;
     public float chargeRate = 8f;
     public float maxForce = 20f;
     private Rigidbody2D rb; // Rigidbody for bullet physics
@@ -23,9 +26,11 @@ public class BulletBehavior : MonoBehaviour
     private int currentFrame;
     public GameObject explodePrefab;
     public bool isExploding = false;
+    public int numberOfBullets = 3;
 
     void Start()
     {
+        numberOfBullets = 3 + specialStat;
         isExploding = false;
         boxCollider = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
@@ -54,6 +59,12 @@ public class BulletBehavior : MonoBehaviour
         {
             spriteRenderer.sprite = BulletSprites[3];
         }
+
+        if (bulletType == 4)
+        {
+            spriteRenderer.sprite = BulletSprites[4];
+        }
+
 
         ApplyForce();
     }
@@ -99,10 +110,46 @@ public class BulletBehavior : MonoBehaviour
             chargeAdjust = 1.5f;
         }
 
+        if (bulletType == 4)
+        {
+            chargeAdjust = 0.7f;
+        }
+
         // Apply the calculated force to the bullet
         Vector2 direction = transform.right;
         rb.velocity = direction * force * chargeAdjust; // Apply the calculated velocity
     }
+
+    void SprayBullets()
+    {
+        float angleStep = spreadAngle / (numberOfBullets - 1); // The angle difference between each bullet
+        float startAngle = -spreadAngle / 2; // Starting angle for the spray
+
+        // Rotate the starting angle by 90 degrees CCW
+        float rotationOffset = 90f; // 90 degrees in CCW
+
+        for (int i = 0; i < numberOfBullets; i++)
+        {
+            float currentAngle = startAngle + (i * angleStep) + rotationOffset; // Add rotation offset
+
+            // Calculate bullet direction with the rotation applied
+            float bulletDirX = transform.right.x * Mathf.Cos(currentAngle * Mathf.Deg2Rad) - transform.right.y * Mathf.Sin(currentAngle * Mathf.Deg2Rad);
+            float bulletDirY = transform.right.x * Mathf.Sin(currentAngle * Mathf.Deg2Rad) + transform.right.y * Mathf.Cos(currentAngle * Mathf.Deg2Rad);
+            Vector2 bulletDirection = new Vector2(bulletDirX, bulletDirY).normalized;
+
+            // Instantiate the smaller bullet
+            GameObject smallBullet = Instantiate(smallBulletPrefab, transform.position, Quaternion.identity);
+            Rigidbody2D smallBulletRb = smallBullet.GetComponent<Rigidbody2D>();
+
+            // Apply velocity to the smaller bullet
+            Debug.Log($"flight path {bulletDirection}");
+            smallBulletRb.velocity = bulletDirection * bulletSpeed;
+        }
+
+        Destroy(gameObject);
+    }
+
+
 
     IEnumerator OnTriggerEnter2D(Collider2D trigger)
     {
@@ -126,7 +173,7 @@ public class BulletBehavior : MonoBehaviour
                 Destroy(gameObject);
             }  
             
-            if (bulletType == 0 || bulletType == 3)
+            if (bulletType == 0 || bulletType == 3 || bulletType == 4)
             {
                 Destroy(gameObject); // Destroy the bullet on impact with the ground
             }
@@ -135,7 +182,6 @@ public class BulletBehavior : MonoBehaviour
 
         if (trigger.gameObject.CompareTag("Enemy")) // Destroy the bullet on impact with the enemy
         {
-            Debug.Log("Hit");
             if (bulletType == 0)
             {
                 Destroy(gameObject);
@@ -146,7 +192,7 @@ public class BulletBehavior : MonoBehaviour
                 Destroy(gameObject);
             }
 
-            if (bulletType == 2)
+            if (bulletType == 2) //Exploding Shell Logic
             {
                 boxCollider.size = new Vector2(boxCollider.size.x * (specialStat*5), boxCollider.size.y * (specialStat*3));
                 if (!isExploding) 
@@ -173,6 +219,13 @@ public class BulletBehavior : MonoBehaviour
                 }
 
             }
+
+            if (bulletType == 4)
+            {
+                SprayBullets();
+                yield return new WaitForSeconds(0.2f);
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -189,6 +242,11 @@ public class BulletBehavior : MonoBehaviour
         if (bulletType == 1 && Input.GetKeyDown(KeyCode.Space))
         {
             StartCoroutine(ExplodeAndDestroy());
+        }
+
+        if (bulletType == 4 && Input.GetKeyDown(KeyCode.Space))
+        {
+            SprayBullets();
         }
     }
 

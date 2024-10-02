@@ -71,7 +71,7 @@ ScriptedImporter:
     textureFormatSet: 0
     applyGammaDecoding: 0
   previousAsepriteImporterSettings:
-    fileImportMode: 0
+    fileImportMode: 1
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
@@ -84,7 +84,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   asepriteImporterSettings:
-    fileImportMode: 0
+    fileImportMode: 1
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
@@ -97,7 +97,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638630641202947074
+  platformSettingsDirtyTick: 0
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -132,7 +132,7 @@ ScriptedImporter:
       y: 4
       width: 6
       height: 12
-    spriteID: 7f1cb49b89cad8041a92139c82ed51fb
+    spriteID: e486f205f88977548a04a94f81ff301c
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -149,10 +149,10 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 18
-      y: 21
+      y: 36
       width: 4
       height: 6
-    spriteID: 6ce2efe5704c6534c937f4a7a0df5620
+    spriteID: fa60d104db82fb441b99bebfed749586
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -160,7 +160,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 18, y: 21}
+    uvTransform: {x: 18, y: 36}
   - name: Frame_2
     originalName: 
     pivot: {x: 0.6, y: -0.33333334}
@@ -172,7 +172,7 @@ ScriptedImporter:
       y: 4
       width: 5
       height: 9
-    spriteID: 463e8b6c6d8e1ba40b767389f720c460
+    spriteID: 153f38d700650534594060a6e31efb67
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -192,7 +192,7 @@ ScriptedImporter:
       y: 42
       width: 6
       height: 8
-    spriteID: 9c45a41e4eb4b374dbbb3571e79585da
+    spriteID: ba2477fbdcedd884da1e1cc4663d4e50
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -212,7 +212,7 @@ ScriptedImporter:
       y: 24
       width: 6
       height: 10
-    spriteID: 46a00ada099f3df448ecdf94261de31a
+    spriteID: 5e47ff2a7ca430044b87590440fe003d
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -221,79 +221,18 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 24}
-  spriteSheetImportData:
-  - name: Gun_Shell_0
+  - name: Frame_5
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 42
-      width: 6
-      height: 8
-    spriteID: d032c67f929cea34994dbf47cc6d4595
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: Gun_Shell_1
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 24
-      width: 6
-      height: 10
-    spriteID: 046dbeb2ab56329449549db18f74ba7a
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: Gun_Shell_2
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
+    pivot: {x: 0.5, y: -0.5714286}
+    alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 18
       y: 21
-      width: 4
-      height: 6
-    spriteID: 30b7daeb04fc8b849ab82e5ca50e0621
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: Gun_Shell_3
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 4
       width: 6
-      height: 12
-    spriteID: b35ad45f0fbbf724d9068c1b9021f314
+      height: 7
+    spriteID: af21a03207304e14aa02da41a3680d37
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -301,27 +240,8 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
-  - name: Gun_Shell_4
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 18
-      y: 4
-      width: 5
-      height: 9
-    spriteID: 0d5b305bf928405459be28c22209d66a
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
+    uvTransform: {x: 18, y: 21}
+  spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
     guid: -1248587991
@@ -338,7 +258,7 @@ ScriptedImporter:
         y: 0
         width: 6
         height: 12
-      spriteId: 7f1cb49b89cad8041a92139c82ed51fb
+      spriteId: e486f205f88977548a04a94f81ff301c
     - name: Frame_1
       frameIndex: 1
       additiveSortOrder: 0
@@ -347,7 +267,7 @@ ScriptedImporter:
         y: 6
         width: 4
         height: 6
-      spriteId: 6ce2efe5704c6534c937f4a7a0df5620
+      spriteId: fa60d104db82fb441b99bebfed749586
     - name: Frame_2
       frameIndex: 2
       additiveSortOrder: 0
@@ -356,7 +276,7 @@ ScriptedImporter:
         y: 3
         width: 5
         height: 9
-      spriteId: 463e8b6c6d8e1ba40b767389f720c460
+      spriteId: 153f38d700650534594060a6e31efb67
     - name: Frame_3
       frameIndex: 3
       additiveSortOrder: 0
@@ -365,7 +285,7 @@ ScriptedImporter:
         y: 4
         width: 6
         height: 8
-      spriteId: 9c45a41e4eb4b374dbbb3571e79585da
+      spriteId: ba2477fbdcedd884da1e1cc4663d4e50
     - name: Frame_4
       frameIndex: 4
       additiveSortOrder: 0
@@ -374,7 +294,16 @@ ScriptedImporter:
         y: 1
         width: 6
         height: 10
-      spriteId: 46a00ada099f3df448ecdf94261de31a
+      spriteId: 5e47ff2a7ca430044b87590440fe003d
+    - name: Frame_5
+      frameIndex: 5
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 4
+        width: 6
+        height: 7
+      spriteId: af21a03207304e14aa02da41a3680d37
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -385,42 +314,6 @@ ScriptedImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: DefaultTexturePlatform
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: Standalone
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: WebGL
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
     compressionQuality: 50
     forceMaximumCompressionQuality_BC6H_BC7: 0
     crunchedCompression: 0
