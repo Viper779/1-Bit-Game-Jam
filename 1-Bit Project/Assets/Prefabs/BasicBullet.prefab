@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d643683e0aa39f428ffd7a5b4bfcb38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletType: 3
-  specialStat: 1
+  bulletType: 2
+  specialStat: 3
   reloadRate: 0
   initForce: 3
   chargeRate: 4
@@ -111,6 +111,7 @@ MonoBehaviour:
   - {fileID: 4686076046214912230, guid: 9390b05de7184034a93d26c05c661e52, type: 3}
   - {fileID: 5797298280263140915, guid: 9390b05de7184034a93d26c05c661e52, type: 3}
   spriteRenderer: {fileID: 8449795524593926374}
+  explodePrefab: {fileID: 8164761126315784280, guid: 3dcdd80bf9a51db41afa52354f7b9c2e, type: 3}
 --- !u!50 &-3823905477628007630
 Rigidbody2D:
   serializedVersion: 4

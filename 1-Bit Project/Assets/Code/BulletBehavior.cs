@@ -15,14 +15,19 @@ public class BulletBehavior : MonoBehaviour
     public float chargeRate = 8f;
     public float maxForce = 20f;
     private Rigidbody2D rb; // Rigidbody for bullet physics
+    private BoxCollider2D boxCollider;
     private float force = 0f; // Final force applied to the bullet
 
     [SerializeField] private Sprite[] BulletSprites;
     public SpriteRenderer spriteRenderer;
     private int currentFrame;
+    public GameObject explodePrefab;
+    public bool isExploding = false;
 
     void Start()
     {
+        isExploding = false;
+        boxCollider = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         if (rb == null)
         {
@@ -37,7 +42,7 @@ public class BulletBehavior : MonoBehaviour
 
         if (bulletType == 1)
         {
-            spriteRenderer.sprite = BulletSprites[11];
+            spriteRenderer.sprite = BulletSprites[1];
         }
 
         if (bulletType == 2)
@@ -99,11 +104,27 @@ public class BulletBehavior : MonoBehaviour
         rb.velocity = direction * force * chargeAdjust; // Apply the calculated velocity
     }
 
-    void OnTriggerEnter2D(Collider2D trigger)
+    IEnumerator OnTriggerEnter2D(Collider2D trigger)
     {
         if (trigger.gameObject.CompareTag("Ground"))
         {
-            Destroy(gameObject); // Destroy the bullet on impact with the ground
+           
+            if (bulletType == 2)
+            {
+                boxCollider.size = new Vector2(boxCollider.size.x * (specialStat * 6), boxCollider.size.y * (specialStat * 4));
+                if (!isExploding)
+                {
+                    GameObject smallExplode = Instantiate(explodePrefab, transform.position, transform.rotation);
+                    isExploding = true;
+                }
+                yield return new WaitForSeconds(0.2f);
+                Destroy(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject); // Destroy the bullet on impact with the ground
+            }
+
         }
 
         if (trigger.gameObject.CompareTag("Enemy")) // Destroy the bullet on impact with the enemy
@@ -121,6 +142,15 @@ public class BulletBehavior : MonoBehaviour
 
             if (bulletType == 2)
             {
+                boxCollider.size = new Vector2(boxCollider.size.x * (specialStat*6), boxCollider.size.y * (specialStat*4));
+                if (!isExploding) 
+                { 
+                    GameObject smallExplode = Instantiate(explodePrefab, transform.position, transform.rotation);
+                    isExploding = true;
+                }
+
+               
+                yield return new WaitForSeconds(0.2f);
                 Destroy(gameObject);
             }
 
