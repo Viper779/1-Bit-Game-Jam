@@ -52,6 +52,15 @@ public class EnemyMovement : MonoBehaviour
             transform.position += direction * moveSpeed * Time.deltaTime;
             PlayWalkAnimation();
         }
+        if (currentHealth <= 0)
+        {
+            PlayDeathAnimation();
+        }
+
+        if (currentHealth > 0 && touchTurret == true)
+        {
+            PlayAttackAnimation();
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -59,18 +68,6 @@ public class EnemyMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Turret"))
         {
             touchTurret = true;
-            PlayAttackAnimation();
-
-            // Deal damage to the turret
-            if (turretTransform != null)
-            {
-                TurretHealth turretHealth = turretTransform.GetComponent<TurretHealth>();
-                if (turretHealth != null)
-                {
-                    Debug.Log("Attacking Turret");
-                    turretHealth.TakeDamage(attackDamage);
-                }
-            }
         }
         else if (collision.contacts[0].normal.y < 0.1f)
         {
@@ -111,9 +108,20 @@ public class EnemyMovement : MonoBehaviour
         if (frameTimer <= 0f)
         {
             frameTimer += frameRate;
-            if (currentFrame < 8)
+            if (currentFrame == 8)
             {
+                currentFrame = 4;
                 spriteRenderer.sprite = KadzuAnimation[4];
+
+                if (turretTransform != null)
+                {
+                    TurretHealth turretHealth = turretTransform.GetComponent<TurretHealth>();
+                    if (turretHealth != null)
+                    {
+                        Debug.Log("Attacking Turret");
+                        turretHealth.TakeDamage(attackDamage);
+                    }
+                }
             }
             else
             {
@@ -154,17 +162,17 @@ public class EnemyMovement : MonoBehaviour
     {
         currentHealth -= damage;
         Debug.Log($"Enemy took {damage} damage. Current health: {currentHealth}");
-
         if (currentHealth <= 0 && isDying == false)
         {
             isDying = true;
+            
             StartCoroutine(HandleDeath());
         }
     }
 
     IEnumerator HandleDeath()
     {
-        PlayDeathAnimation();
+        
 
         // Wait for death animation to play before destroying the enemy
         yield return new WaitForSeconds(deathDelay);
