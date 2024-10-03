@@ -39,6 +39,10 @@ public class BulletBehavior : MonoBehaviour
             Debug.LogError("Rigidbody2D not found!");
             return;
         }
+
+        reloadRate = UpgradeManager.instance.upgradedReloadRate;
+        specialStat = UpgradeManager.instance.upgradedSpecStat;
+        bulletType = UpgradeManager.instance.BulletType;
         //Render Projectile Sprite
         if (bulletType == 0)
         {
@@ -64,8 +68,7 @@ public class BulletBehavior : MonoBehaviour
         {
             spriteRenderer.sprite = BulletSprites[4];
         }
-
-
+        
         ApplyForce();
     }
 

@@ -39,6 +39,7 @@ public class EnemyMovement : MonoBehaviour
 
         currentHealth = maxHealth;
 
+
         BulletDamage = UpgradeManager.instance.upgradedBulletDamage;
         critChance = UpgradeManager.instance.upgradedCritMult;
         critMultiplier = UpgradeManager.instance.upgradedCritDmg;

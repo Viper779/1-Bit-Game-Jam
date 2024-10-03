@@ -55,21 +55,25 @@ public class UpgradeManager : MonoBehaviour
     public static UpgradeManager instance; // Singleton instance
     public static bool DisplayUpgrades = false; //Request for cards to show
     public bool upgradeRequest = false;
-
-
+    
     public static int card1Index;
     public static int card2Index;
     public static int card3Index;
 
-    public int upgradedBulletDamage = 25;
+    public int BulletType = 0;
+    public int upgradedSpecStat = 0;
+    public int upgradedReloadRate = 0;
+
+    public int upgradedBulletDamage = 50;
+    public float upgradedCritMult = 0.2f;
+    public float upgradedCritDmg = 0.5f;
 
     void Awake()
     {
         // Ensure there's only one instance of the UpgradeManager
         if (instance == null)
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject); // Persist through scenes
+            instance = this;            
         }
         else
         {
@@ -79,7 +83,7 @@ public class UpgradeManager : MonoBehaviour
 
     private void Start()
     {
-        ButtonsSet();
+        ButtonsSet();        
     }
 
     void update()
@@ -104,7 +108,6 @@ public class UpgradeManager : MonoBehaviour
         Upgrade Upgrade_1 = _Upgrades[availableUpgrades[0]];
         Upgrade Upgrade_2 = _Upgrades[availableUpgrades[1]];
         Upgrade Upgrade_3 = _Upgrades[availableUpgrades[2]];
-
 
         // Setting text
         //Upgrade_button1.transform.GetChild(0).GetComponent<Text>().text = Upgrade_1.Name;
@@ -187,53 +190,70 @@ public class UpgradeManager : MonoBehaviour
         if (Upgrade_chosen == "Increase Damage")
         {
             upgradedBulletDamage += 25;
+            //Will need to UpgradeButtons in WaveBasedEnemySpawner to SetActive(false)
         }
         else if (Upgrade_chosen == "Increase Reload")
         {
-            Debug.Log("Increase Reload");
+            upgradedReloadRate++;
+            //Will need to UpgradeButtons in WaveBasedEnemySpawner to SetActive(false)
         }
         else if (Upgrade_chosen == "Increase Special")
         {
-            Debug.Log("Increase Special");
+            upgradedSpecStat++;
+            //Will need to UpgradeButtons in WaveBasedEnemySpawner to SetActive(false)
         }
         else if (Upgrade_chosen == "Crit Chance")
         {
-            Debug.Log("Crit Chance");
+            upgradedCritMult += 0.2f;
+            //Will need to UpgradeButtons in WaveBasedEnemySpawner to SetActive(false)
         }
         else if (Upgrade_chosen == "Crit Multiplier")
         {
-            Debug.Log("Crit Multiplier");
+            upgradedCritDmg += 0.5f;
+            //Will need to UpgradeButtons in WaveBasedEnemySpawner to SetActive(false)
         }
         else if (Upgrade_chosen == "Piercing Sabot")
         {
+            BulletType = 3;
+            //Will need to UpgradeButtons in WaveBasedEnemySpawner to SetActive(false)
             Debug.Log("Piercing Sabot");
         }
         else if (Upgrade_chosen == "High Explosive")
         {
+            BulletType = 2;
+            //Will need to UpgradeButtons in WaveBasedEnemySpawner to SetActive(false)
             Debug.Log("High Explosive");
         }
         else if (Upgrade_chosen == "Timed Fuse")
         {
+            BulletType = 1;
+            //Will need to UpgradeButtons in WaveBasedEnemySpawner to SetActive(false)
             Debug.Log("Timed Fuse");
         }
-        else if (Upgrade_chosen == "FourthBullet")
+        else if (Upgrade_chosen == "FragBullet")
         {
+            BulletType = 4;
+            //Will need to UpgradeButtons in WaveBasedEnemySpawner to SetActive(false)
             Debug.Log("Frag Shell");
         }
         else if (Upgrade_chosen == "Robot Factory Module")
         {
+            //Will need to UpgradeButtons in WaveBasedEnemySpawner to SetActive(false)
             Debug.Log("Robot Factory Module");
         }
         else if (Upgrade_chosen == "Auto Cannon Module")
         {
+            //Will need to UpgradeButtons in WaveBasedEnemySpawner to SetActive(false)
             Debug.Log("Auto Cannon Module");
         }
         else if (Upgrade_chosen == "Auto Loader Module")
         {
+            //Will need to UpgradeButtons in WaveBasedEnemySpawner to SetActive(false)
             Debug.Log("Auto Loader Module");
         }
         else if (Upgrade_chosen == "Shield Gen Module")
         {
+            //Will need to UpgradeButtons in WaveBasedEnemySpawner to SetActive(false)
             Debug.Log("Shield Gen Module");
         }
     }
