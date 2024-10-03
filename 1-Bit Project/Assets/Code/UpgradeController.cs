@@ -53,8 +53,10 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] private Button Upgrade_button3;
 
     public static UpgradeManager instance; // Singleton instance
-    public static bool UpgradeRequest = false; //Request for upgrade from wave controller
     public static bool DisplayUpgrades = false; //Request for cards to show
+    public bool upgradeRequest = false;
+
+
     public static int card1Index;
     public static int card2Index;
     public static int card3Index;
@@ -83,7 +85,7 @@ public class UpgradeManager : MonoBehaviour
     void update()
     {
         //Run only once per upgrade, fetch three upgrades, show menu
-        if(UpgradeRequest && !DisplayUpgrades)
+        if(upgradeRequest && !DisplayUpgrades) //change to WaveBasedEnemySpawner.UpgradeRequest when able
         {
             ButtonsSet();
             DisplayUpgrades = true;
