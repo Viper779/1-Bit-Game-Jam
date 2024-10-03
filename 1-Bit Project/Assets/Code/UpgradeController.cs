@@ -30,15 +30,16 @@ public class UpgradeManager : MonoBehaviour
     {
         //Stat Upgrade
         new Upgrade { Name = "Increase Damage"},
-        new Upgrade { Name = "Increase Health"},
+        new Upgrade { Name = "Increase Reload"},
+        new Upgrade { Name = "Increase Special"},
         new Upgrade { Name = "Crit Chance"},
         new Upgrade { Name = "Crit Multiplier"},
 
         //Bullet Type
-        new Upgrade { Name = "Piercing Sabot"},
-        new Upgrade { Name = "High Explosive"},
         new Upgrade { Name = "Timed Fuse"},
-        new Upgrade { Name = "FourthBullet"},
+        new Upgrade { Name = "High Explosive"},
+        new Upgrade { Name = "Piercing Sabot"},
+        new Upgrade { Name = "Frag Shell"},
                 
         //Tower Modules
         new Upgrade { Name = "Robot Factory Module" },
@@ -52,12 +53,15 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] private Button Upgrade_button3;
 
     public static UpgradeManager instance; // Singleton instance
+    public static bool DisplayUpgrades = false; //Request for cards to show
+    public bool upgradeRequest = false;
 
-    public int upgradedBulletDamage = 50;
-    public float upgradedCritDmg = 1.5f;
-    public float upgradedCritMult = 0.2f;
 
-    TurretHealth turretHealth;
+    public static int card1Index;
+    public static int card2Index;
+    public static int card3Index;
+
+    public int upgradedBulletDamage = 25;
 
     void Awake()
     {
@@ -76,10 +80,17 @@ public class UpgradeManager : MonoBehaviour
     private void Start()
     {
         ButtonsSet();
-
-        turretHealth = GameObject.Find("Turret").GetComponent<TurretHealth>();
     }
 
+    void update()
+    {
+        //Run only once per upgrade, fetch three upgrades, show menu
+        if(upgradeRequest && !DisplayUpgrades) //change to WaveBasedEnemySpawner.UpgradeRequest when able
+        {
+            ButtonsSet();
+            DisplayUpgrades = true;
+        }
+    }
     public void ButtonsSet()
     {
         // CHOOSING UPGRADE FROM UPGRADE ARRAY
@@ -92,17 +103,82 @@ public class UpgradeManager : MonoBehaviour
         ShuffleList(availableUpgrades);
         Upgrade Upgrade_1 = _Upgrades[availableUpgrades[0]];
         Upgrade Upgrade_2 = _Upgrades[availableUpgrades[1]];
-        Upgrade Upgrade_3 = _Upgrades[availableUpgrades[2]];        
+        Upgrade Upgrade_3 = _Upgrades[availableUpgrades[2]];
+
 
         // Setting text
-        Upgrade_button1.transform.GetChild(0).GetComponent<Text>().text = Upgrade_1.Name;
-        Upgrade_button2.transform.GetChild(0).GetComponent<Text>().text = Upgrade_2.Name;
-        Upgrade_button3.transform.GetChild(0).GetComponent<Text>().text = Upgrade_3.Name;       
+        //Upgrade_button1.transform.GetChild(0).GetComponent<Text>().text = Upgrade_1.Name;
+        //Upgrade_button2.transform.GetChild(0).GetComponent<Text>().text = Upgrade_2.Name;
+        //Upgrade_button3.transform.GetChild(0).GetComponent<Text>().text = Upgrade_3.Name;
+
+        card1Index = translateFrameIndex(Upgrade_1.Name);
+        card2Index = translateFrameIndex(Upgrade_2.Name);
+        card3Index = translateFrameIndex(Upgrade_3.Name);
 
         //// Replacing the X with increase value
         //Upgrade_DescriptionText1.text = Upgrade_1.Description.Replace("X", Upgrade_1.Increase.ToString());
         //Upgrade_DescriptionText2.text = Upgrade_2.Description.Replace("X", Upgrade_2.Increase.ToString());
         //Upgrade_DescriptionText3.text = Upgrade_3.Description.Replace("X", Upgrade_3.Increase.ToString());             
+    }
+    //Turn String Into Frame Number for Cards
+    public int translateFrameIndex(string Upgrade_chosen)
+    {
+        if (Upgrade_chosen == "Increase Damage")
+        {
+            return 1;
+        }
+        else if (Upgrade_chosen == "Increase Reload")
+        {
+            return 2;
+        }
+        else if (Upgrade_chosen == "Increase Special")
+        {
+            return 3;
+        }
+        else if (Upgrade_chosen == "Crit Chance")
+        {
+            return 0;
+        }
+        else if (Upgrade_chosen == "Crit Multiplier")
+        {
+            return 0;
+        }
+        else if (Upgrade_chosen == "Piercing Sabot")
+        {
+            return 6;
+        }
+        else if (Upgrade_chosen == "High Explosive")
+        {
+            return 5;
+        }
+        else if (Upgrade_chosen == "Timed Fuse")
+        {
+            return 7;
+        }
+        else if (Upgrade_chosen == "Frag Shell")
+        {
+            return 4;
+        }
+        else if (Upgrade_chosen == "Robot Factory Module")
+        {
+            return 14;
+        }
+        else if (Upgrade_chosen == "Auto Cannon Module")
+        {
+            return 10;
+        }
+        else if (Upgrade_chosen == "Auto Loader Module")
+        {
+            return 12;
+        }
+        else if (Upgrade_chosen == "Shield Gen Module")
+        {
+            return 8;
+        }
+
+        //Return 0 if something wrong or not made yet
+        Debug.Log("No Upgrade Selected");
+        return 0;
     }
 
     // UPGRADES
@@ -112,18 +188,21 @@ public class UpgradeManager : MonoBehaviour
         {
             upgradedBulletDamage += 25;
         }
-        else if (Upgrade_chosen == "Increase Health")
+        else if (Upgrade_chosen == "Increase Reload")
         {
-            // Increase the turret's current health
-            turretHealth.currentHealth += 1500;           
+            Debug.Log("Increase Reload");
+        }
+        else if (Upgrade_chosen == "Increase Special")
+        {
+            Debug.Log("Increase Special");
         }
         else if (Upgrade_chosen == "Crit Chance")
         {
-            upgradedCritMult += .2f;
+            Debug.Log("Crit Chance");
         }
         else if (Upgrade_chosen == "Crit Multiplier")
         {
-            upgradedCritDmg += .5f;
+            Debug.Log("Crit Multiplier");
         }
         else if (Upgrade_chosen == "Piercing Sabot")
         {
@@ -139,7 +218,7 @@ public class UpgradeManager : MonoBehaviour
         }
         else if (Upgrade_chosen == "FourthBullet")
         {
-            Debug.Log("FourthBullet");
+            Debug.Log("Frag Shell");
         }
         else if (Upgrade_chosen == "Robot Factory Module")
         {
