@@ -32,7 +32,7 @@ public class WaveBasedEnemySpawner : MonoBehaviour
     private int currentWaveIndex = 0;
     private int totalEnemiesInWave = 0;
     private int defeatedEnemiesInWave = 0;
-
+    public static bool UpgradeRequest = false;
 
 
     void Start()
@@ -55,7 +55,7 @@ public class WaveBasedEnemySpawner : MonoBehaviour
         {
             yield return StartCoroutine(SpawnWave(waves[currentWaveIndex]));
 
-            Wave.UpgradeRequest = false;
+            WaveBasedEnemySpawner.UpgradeRequest = false;
 
             yield return new WaitUntil(() => defeatedEnemiesInWave >= totalEnemiesInWave);
 
@@ -63,7 +63,7 @@ public class WaveBasedEnemySpawner : MonoBehaviour
             defeatedEnemiesInWave = 0;
             totalEnemiesInWave = 0;
 
-            Wave.UpgradeRequest = true;
+            WaveBasedEnemySpawner.UpgradeRequest = true;
 
             if (currentWaveIndex < waves.Count - 1) // Check if it's not the last wave
             {
