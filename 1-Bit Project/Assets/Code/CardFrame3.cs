@@ -21,6 +21,7 @@ public class CardFrame : MonoBehaviour
     {
         if (UpgradeManager.DisplayUpgrades == true)
         {
+            //SetActive(true);
             SetUpgradeIndex();
             currentFrame = selectedUpgradeIndex;
             Debug.Log($"card {cardNumber} frame: {currentFrame}");
@@ -29,6 +30,7 @@ public class CardFrame : MonoBehaviour
         }
         else
         {
+            //SetActive(false);
             spriteRenderer.sortingOrder = 0;
         }
     }

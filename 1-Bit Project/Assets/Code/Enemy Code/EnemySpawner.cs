@@ -31,7 +31,7 @@ public class WaveBasedEnemySpawner : MonoBehaviour
     private int currentWaveIndex = 0;
     private int totalEnemiesInWave = 0;
     private int defeatedEnemiesInWave = 0;
-    public bool UpgradeRequest = true;
+    public static bool UpgradeRequest = false;
     
     void Start()
     {
@@ -44,6 +44,7 @@ public class WaveBasedEnemySpawner : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log($"enemyvars {defeatedEnemiesInWave} , {totalEnemiesInWave}");
         if (SimplePauseManager.Instance.IsGamePaused()) return;
     }
 
@@ -57,7 +58,6 @@ public class WaveBasedEnemySpawner : MonoBehaviour
 
             yield return new WaitUntil(() => defeatedEnemiesInWave >= totalEnemiesInWave);
 
-            
             defeatedEnemiesInWave = 0;
             totalEnemiesInWave = 0;
 
@@ -134,10 +134,17 @@ public class WaveBasedEnemySpawner : MonoBehaviour
             GameObject newEnemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
             enemyType.currentEnemyCount++;
 
-            BouncingEnemyAI enemyAI = newEnemy.GetComponent<BouncingEnemyAI>();
-            if (enemyAI != null)
+            BouncingEnemyAI bombWeedAI = newEnemy.GetComponent<BouncingEnemyAI>();
+            EnemyMovement KadzuAI = newEnemy.GetComponent<EnemyMovement>();
+
+            if (bombWeedAI != null)
             {
-                enemyAI.OnEnemyDestroyed += () => HandleEnemyDestroyed(enemyType);
+                bombWeedAI.OnEnemyDestroyed += () => HandleEnemyDestroyed(enemyType);
+            }
+
+            if (KadzuAI != null)
+            {
+                KadzuAI.OnEnemyDestroyed += () => HandleEnemyDestroyed(enemyType);
             }
         }
         else

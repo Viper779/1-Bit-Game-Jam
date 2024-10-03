@@ -54,7 +54,6 @@ public class UpgradeManager : MonoBehaviour
 
     public static UpgradeManager instance; // Singleton instance
     public static bool DisplayUpgrades = false; //Request for cards to show
-    public bool upgradeRequest = false;
     
     public static int card1Index;
     public static int card2Index;
@@ -86,15 +85,33 @@ public class UpgradeManager : MonoBehaviour
         ButtonsSet();        
     }
 
-    void update()
+    void Update()
     {
-        //Run only once per upgrade, fetch three upgrades, show menu
-        if(upgradeRequest && !DisplayUpgrades) //change to WaveBasedEnemySpawner.UpgradeRequest when able
+        //Debug.Log($"Showing {WaveBasedEnemySpawner.UpgradeRequest} , {DisplayUpgrades}");
+        //Run only once per upgrade, fetch three upgrades, show menu-
+        if (WaveBasedEnemySpawner.UpgradeRequest && !DisplayUpgrades) //change to WaveBasedEnemySpawner.UpgradeRequest when able
         {
+            Debug.Log("Showing Cards");
             ButtonsSet();
             DisplayUpgrades = true;
         }
     }
+
+    public void Card1Select()
+    {
+        UpgradeChosen(_Upgrades[card1Index].Name);
+    }
+
+    public void Card2Select()
+    {
+        UpgradeChosen(_Upgrades[card1Index].Name);
+    }
+
+    public void Card3Select()
+    {
+        UpgradeChosen(_Upgrades[card1Index].Name);
+    }
+
     public void ButtonsSet()
     {
         // CHOOSING UPGRADE FROM UPGRADE ARRAY
@@ -110,8 +127,8 @@ public class UpgradeManager : MonoBehaviour
         Upgrade Upgrade_3 = _Upgrades[availableUpgrades[2]];
 
         // Setting text
-        //Upgrade_button1.transform.GetChild(0).GetComponent<Text>().text = Upgrade_1.Name;
-        //Upgrade_button2.transform.GetChild(0).GetComponent<Text>().text = Upgrade_2.Name;
+       // Upgrade_button1.transform.GetChild(0).GetComponent<Text>().text = Upgrade_1.Name;
+       // Upgrade_button2.transform.GetChild(0).GetComponent<Text>().text = Upgrade_2.Name;
         //Upgrade_button3.transform.GetChild(0).GetComponent<Text>().text = Upgrade_3.Name;
 
         card1Index = translateFrameIndex(Upgrade_1.Name);
@@ -256,6 +273,7 @@ public class UpgradeManager : MonoBehaviour
             //Will need to UpgradeButtons in WaveBasedEnemySpawner to SetActive(false)
             Debug.Log("Shield Gen Module");
         }
+        DisplayUpgrades = false;
     }
 
     // SHUFFLE LIST
