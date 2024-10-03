@@ -59,6 +59,8 @@ public class UpgradeManager : MonoBehaviour
     public static int card2Index;
     public static int card3Index;
 
+    public static int towerTier = 0;
+
     public int BulletType = 0;
     public int upgradedSpecStat = 0;
     public int upgradedReloadRate = 0;
