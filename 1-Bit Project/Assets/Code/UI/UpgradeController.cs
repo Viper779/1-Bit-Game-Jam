@@ -182,7 +182,7 @@ public class UpgradeManager : MonoBehaviour
         }
         else if (Upgrade_chosen == "Crit Chance")
         {
-            return 0;
+            return 9;
         }
         else if (Upgrade_chosen == "Crit Multiplier")
         {
@@ -206,7 +206,7 @@ public class UpgradeManager : MonoBehaviour
         }
         else if (Upgrade_chosen == "Robot Factory Module")
         {
-            return 14;
+            return 11;
         }
         else if (Upgrade_chosen == "Auto Cannon Module")
         {
