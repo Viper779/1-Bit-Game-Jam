@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; // Import UI namespace
 
 public class CardFrame : MonoBehaviour
 {
     [SerializeField] private Sprite[] CardFaces;
     [SerializeField] private int cardNumber;
-    public SpriteRenderer spriteRenderer;
+    public Image imageComponent;
     private int currentFrame;
     int selectedUpgradeIndex;
 
@@ -25,14 +26,9 @@ public class CardFrame : MonoBehaviour
             SetUpgradeIndex();
             currentFrame = selectedUpgradeIndex;
             Debug.Log($"card {cardNumber} frame: {currentFrame}");
-            spriteRenderer.sprite = CardFaces[currentFrame];
-            spriteRenderer.sortingOrder = 1;
-        }
-        else if (UpgradeManager.DisplayUpgrades == false)
-        {
-            //SetActive(false);
-            spriteRenderer.sortingOrder = 0;
-        }
+            imageComponent.sprite = CardFaces[currentFrame]; // Assign sprite to the Image component
+            imageComponent.transform.SetAsLastSibling(); // Brings the card to the front if needed
+        }       
     }
 
     private void SetUpgradeIndex()

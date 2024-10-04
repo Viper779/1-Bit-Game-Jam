@@ -58,7 +58,7 @@ public class UpgradeManager : MonoBehaviour
     public static int card1Index;
     public static int card2Index;
     public static int card3Index;
-
+    public GameObject UpgradesMenu;
     public static int towerTier = 0;
 
     public int BulletType = 0;
@@ -84,7 +84,8 @@ public class UpgradeManager : MonoBehaviour
 
     private void Start()
     {
-        ButtonsSet();        
+        ButtonsSet();
+        UpgradesMenu.SetActive(false);
     }
 
     void Update()
@@ -96,24 +97,49 @@ public class UpgradeManager : MonoBehaviour
             Debug.Log("Showing Cards");
             ButtonsSet();
             DisplayUpgrades = true;
+            UpgradesMenu.SetActive(true);
+        }
+        if(WaveBasedEnemySpawner.UpgradeRequest == false)
+        {
+            UpgradesMenu.SetActive(false);
         }
     }
 
     public void Card1Select()
     {
-        UpgradeChosen(_Upgrades[card1Index].Name);
+        if (card1Index >= 0 && card1Index < _Upgrades.Length)
+        {
+            UpgradeChosen(_Upgrades[card1Index].Name);
+        }
+        else
+        {
+            Debug.LogError($"Invalid card1Index: {card1Index}. _Upgrades length: {_Upgrades.Length}");
+        }
     }
 
     public void Card2Select()
     {
-        UpgradeChosen(_Upgrades[card2Index].Name);
+        if (card2Index >= 0 && card2Index < _Upgrades.Length)
+        {
+            UpgradeChosen(_Upgrades[card2Index].Name);
+        }
+        else
+        {
+            Debug.LogError($"Invalid card2Index: {card2Index}. _Upgrades length: {_Upgrades.Length}");
+        }
     }
 
     public void Card3Select()
     {
-        UpgradeChosen(_Upgrades[card3Index].Name);
+        if (card3Index >= 0 && card3Index < _Upgrades.Length)
+        {
+            UpgradeChosen(_Upgrades[card3Index].Name);
+        }
+        else
+        {
+            Debug.LogError($"Invalid card3Index: {card3Index}. _Upgrades length: {_Upgrades.Length}");
+        }
     }
-
     public void ButtonsSet()
     {
         // CHOOSING UPGRADE FROM UPGRADE ARRAY
@@ -123,24 +149,21 @@ public class UpgradeManager : MonoBehaviour
             availableUpgrades.Add(i);
         }
 
-        ShuffleList(availableUpgrades);
-        Upgrade Upgrade_1 = _Upgrades[availableUpgrades[0]];
-        Upgrade Upgrade_2 = _Upgrades[availableUpgrades[1]];
-        Upgrade Upgrade_3 = _Upgrades[availableUpgrades[2]];
+        if (availableUpgrades.Count >= 3)
+        {
+            ShuffleList(availableUpgrades);
 
-        // Setting text
-       // Upgrade_button1.transform.GetChild(0).GetComponent<Text>().text = Upgrade_1.Name;
-       // Upgrade_button2.transform.GetChild(0).GetComponent<Text>().text = Upgrade_2.Name;
-        //Upgrade_button3.transform.GetChild(0).GetComponent<Text>().text = Upgrade_3.Name;
+            // Ensure we're not exceeding array bounds
+            card1Index = translateFrameIndex(_Upgrades[availableUpgrades[0]].Name);
+            card2Index = translateFrameIndex(_Upgrades[availableUpgrades[1]].Name);
+            card3Index = translateFrameIndex(_Upgrades[availableUpgrades[2]].Name);
 
-        card1Index = translateFrameIndex(Upgrade_1.Name);
-        card2Index = translateFrameIndex(Upgrade_2.Name);
-        card3Index = translateFrameIndex(Upgrade_3.Name);
-
-        //// Replacing the X with increase value
-        //Upgrade_DescriptionText1.text = Upgrade_1.Description.Replace("X", Upgrade_1.Increase.ToString());
-        //Upgrade_DescriptionText2.text = Upgrade_2.Description.Replace("X", Upgrade_2.Increase.ToString());
-        //Upgrade_DescriptionText3.text = Upgrade_3.Description.Replace("X", Upgrade_3.Increase.ToString());             
+            Debug.Log($"Set indices: {card1Index}, {card2Index}, {card3Index}");
+        }
+        else
+        {
+            Debug.LogError($"Not enough upgrades available. Current count: {availableUpgrades.Count}");
+        }
     }
     //Turn String Into Frame Number for Cards
     public int translateFrameIndex(string Upgrade_chosen)
@@ -209,73 +232,72 @@ public class UpgradeManager : MonoBehaviour
         if (Upgrade_chosen == "Increase Damage")
         {
             upgradedBulletDamage += 25;
-            DisplayUpgrades = false;
+            UpgradesMenu.SetActive(false);
         }
         else if (Upgrade_chosen == "Increase Reload")
         {
             upgradedReloadRate++;
-            DisplayUpgrades = false;
+            UpgradesMenu.SetActive(false);
         }
         else if (Upgrade_chosen == "Increase Special")
         {
             upgradedSpecStat++;
-            DisplayUpgrades = false;
+            UpgradesMenu.SetActive(false);
         }
         else if (Upgrade_chosen == "Crit Chance")
         {
             upgradedCritMult += 0.2f;
-            DisplayUpgrades = false;
+            UpgradesMenu.SetActive(false);
         }
         else if (Upgrade_chosen == "Crit Multiplier")
         {
             upgradedCritDmg += 0.5f;
-            DisplayUpgrades = false;
+            UpgradesMenu.SetActive(false);
         }
         else if (Upgrade_chosen == "Piercing Sabot")
         {
             BulletType = 3;
-            DisplayUpgrades = false;
+            UpgradesMenu.SetActive(false);
             Debug.Log("Piercing Sabot");
         }
         else if (Upgrade_chosen == "High Explosive")
         {
             BulletType = 2;
-            DisplayUpgrades = false;
+            UpgradesMenu.SetActive(false);
             Debug.Log("High Explosive");
         }
         else if (Upgrade_chosen == "Timed Fuse")
         {
             BulletType = 1;
-            DisplayUpgrades = false;
+            UpgradesMenu.SetActive(false);
             Debug.Log("Timed Fuse");
         }
         else if (Upgrade_chosen == "FragBullet")
         {
             BulletType = 4;
-            DisplayUpgrades = false;
+            UpgradesMenu.SetActive(false);
             Debug.Log("Frag Shell");
         }
         else if (Upgrade_chosen == "Robot Factory Module")
         {
-            DisplayUpgrades = false;
+            UpgradesMenu.SetActive(false);
             Debug.Log("Robot Factory Module");
         }
         else if (Upgrade_chosen == "Auto Cannon Module")
         {
-            DisplayUpgrades = false;
+            UpgradesMenu.SetActive(false);
             Debug.Log("Auto Cannon Module");
         }
         else if (Upgrade_chosen == "Auto Loader Module")
         {
-            DisplayUpgrades = false;
+            UpgradesMenu.SetActive(false);
             Debug.Log("Auto Loader Module");
         }
         else if (Upgrade_chosen == "Shield Gen Module")
         {
-            DisplayUpgrades = false;
+            UpgradesMenu.SetActive(false);
             Debug.Log("Shield Gen Module");
-        }
-        
+        }        
     }
 
     // SHUFFLE LIST

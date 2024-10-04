@@ -1033,7 +1033,7 @@ MonoBehaviour:
   - {fileID: 7126457674689484297, guid: ec75d5c013947854d9de12ee4d797a96, type: 3}
   - {fileID: 3478526479962516810, guid: ec75d5c013947854d9de12ee4d797a96, type: 3}
   cardNumber: 1
-  spriteRenderer: {fileID: 0}
+  imageComponent: {fileID: 894027153}
 --- !u!95 &894027150
 Animator:
   serializedVersion: 5
@@ -1099,7 +1099,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1631468350}
         m_TargetAssemblyTypeName: UpgradeManager, Assembly-CSharp
         m_MethodName: Card1Select
         m_Mode: 1
@@ -1215,7 +1215,7 @@ MonoBehaviour:
       baseEnemyCount: 6
       currentEnemyCount: 0
     timeBetweenSpawns: 0.5
-    timeBeforeNextWave: 60
+    timeBeforeNextWave: 10
   - enemies:
     - bombWeedPrefab: {fileID: 0}
       kadzuKaijuPrefab: {fileID: 0}
@@ -2310,6 +2310,7 @@ MonoBehaviour:
   Upgrade_button1: {fileID: 894027151}
   Upgrade_button2: {fileID: 2138727293}
   Upgrade_button3: {fileID: 1704603738}
+  UpgradesMenu: {fileID: 66710709}
   BulletType: 0
   upgradedSpecStat: 0
   upgradedReloadRate: 0
@@ -2424,7 +2425,7 @@ MonoBehaviour:
   - {fileID: 7126457674689484297, guid: ec75d5c013947854d9de12ee4d797a96, type: 3}
   - {fileID: 3478526479962516810, guid: ec75d5c013947854d9de12ee4d797a96, type: 3}
   cardNumber: 3
-  spriteRenderer: {fileID: 0}
+  imageComponent: {fileID: 1704603740}
 --- !u!95 &1704603737
 Animator:
   serializedVersion: 5
@@ -2490,9 +2491,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1631468350}
         m_TargetAssemblyTypeName: UpgradeManager, Assembly-CSharp
-        m_MethodName: Card1Select
+        m_MethodName: Card3Select
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2984,7 +2985,7 @@ MonoBehaviour:
   - {fileID: 7126457674689484297, guid: ec75d5c013947854d9de12ee4d797a96, type: 3}
   - {fileID: 3478526479962516810, guid: ec75d5c013947854d9de12ee4d797a96, type: 3}
   cardNumber: 2
-  spriteRenderer: {fileID: 0}
+  imageComponent: {fileID: 2138727295}
 --- !u!95 &2138727292
 Animator:
   serializedVersion: 5
@@ -3050,9 +3051,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1631468350}
         m_TargetAssemblyTypeName: UpgradeManager, Assembly-CSharp
-        m_MethodName: Card1Select
+        m_MethodName: Card2Select
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
