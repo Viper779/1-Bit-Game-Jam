@@ -61,15 +61,17 @@ public class WaveBasedEnemySpawner : MonoBehaviour
             defeatedEnemiesInWave = 0;
             totalEnemiesInWave = 0;
 
-            UpgradeRequest = true;
+            
 
             if (currentWaveIndex < waves.Count - 1) // Check if it's not the last wave
             {
+                UpgradeRequest = true;
                 float waitTime = waves[currentWaveIndex].timeBeforeNextWave;
                 if (waitTime > preWaveSoundDelay)
                 {
                     yield return new WaitForSecondsRealtime(waitTime - preWaveSoundDelay);
                     PlayPreWaveSound();
+                    UpgradeRequest = false;
                     yield return new WaitForSecondsRealtime(preWaveSoundDelay);
                 }
                 else
