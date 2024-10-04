@@ -92,15 +92,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b61284f3ce35b854aa7f3779ef743e56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frameRate: 0.1
+  frameRate: 0.3
   Dakka:
   - {fileID: -1058064933238967520, guid: 44d9ea4531487d749bc21b237739b3ff, type: 3}
   - {fileID: 1368374525271568935, guid: 44d9ea4531487d749bc21b237739b3ff, type: 3}
   - {fileID: 6037859032201730300, guid: 44d9ea4531487d749bc21b237739b3ff, type: 3}
   - {fileID: -5628492935036876908, guid: 44d9ea4531487d749bc21b237739b3ff, type: 3}
   spriteRenderer: {fileID: 13972796132934416}
-  bulletSpeed: 10
-  fireDelay: 0.5
+  bulletSpeed: 15
+  fireDelay: 1
   yOffset: 1
   smallBulletPrefab: {fileID: 329379305069630311, guid: f91b8241727a57645afe1e18abe1f40b, type: 3}
 --- !u!212 &13972796132934416

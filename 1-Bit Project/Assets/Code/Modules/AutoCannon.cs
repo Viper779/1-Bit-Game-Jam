@@ -11,6 +11,7 @@ public class NearestEnemyDetector : MonoBehaviour
     public float bulletSpeed = 10f;
     public float fireDelay = 0.5f; // Delay between shots
     public float yOffset = 1.0f; // Y offset for projectiles
+    private bool isFiring = false;
 
     private float nextFireTime = 0f; // Time when the next shot can be fired
 
@@ -23,11 +24,15 @@ public class NearestEnemyDetector : MonoBehaviour
         if (nearestEnemy != null && Time.time >= nextFireTime)
         {
             Vector3 directionToEnemy = GetDirectionToEnemy(nearestEnemy);
-
+            
             // Start coroutine to fire bullets with delay
             FireAtEnemy(directionToEnemy);
-
-            PlayAnimation();
+            if (!isFiring)
+            {
+                isFiring = true;
+                PlayAnimation();
+            }
+            
         }
         else if (nearestEnemy == null)
         {
@@ -88,6 +93,7 @@ public class NearestEnemyDetector : MonoBehaviour
             else
             {
                 currentFrame = 0; // Reset to the beginning of the animation
+                isFiring = false;
             }
         }
     }
