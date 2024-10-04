@@ -28,7 +28,7 @@ public class CardFrame : MonoBehaviour
             spriteRenderer.sprite = CardFaces[currentFrame];
             spriteRenderer.sortingOrder = 1;
         }
-        else
+        else if (UpgradeManager.DisplayUpgrades == false)
         {
             //SetActive(false);
             spriteRenderer.sortingOrder = 0;
