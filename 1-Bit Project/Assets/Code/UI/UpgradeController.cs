@@ -90,17 +90,19 @@ public class UpgradeManager : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log($"Showing {WaveBasedEnemySpawner.UpgradeRequest} , {DisplayUpgrades}");
-        //Run only once per upgrade, fetch three upgrades, show menu-
-        if (WaveBasedEnemySpawner.UpgradeRequest && !DisplayUpgrades) //change to WaveBasedEnemySpawner.UpgradeRequest when able
+        // Ensure the Upgrade Menu is only activated once when an upgrade is requested
+        if (WaveBasedEnemySpawner.UpgradeRequest && !DisplayUpgrades)
         {
             Debug.Log("Showing Cards");
             ButtonsSet();
             DisplayUpgrades = true;
             UpgradesMenu.SetActive(true);
         }
-        if(WaveBasedEnemySpawner.UpgradeRequest == false)
+        else if (!WaveBasedEnemySpawner.UpgradeRequest && DisplayUpgrades)
         {
+            // Close the upgrades menu after it's been shown and upgrades are applied
+            Debug.Log("Hiding Cards");
+            DisplayUpgrades = false;
             UpgradesMenu.SetActive(false);
         }
     }

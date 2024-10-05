@@ -1353,28 +1353,30 @@ MonoBehaviour:
     timeBetweenSpawns: 0.5
     timeBeforeNextWave: 10
   - enemies:
-    - bombWeedPrefab: {fileID: 0}
-      kadzuKaijuPrefab: {fileID: 0}
+    - bombWeedPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
+      kadzuKaijuPrefab: {fileID: 4386000277028358810, guid: 6b38773158f954240af7b6d543a7e8f5, type: 3}
       baseEnemyCount: 10
       currentEnemyCount: 0
     timeBetweenSpawns: 0.5
-    timeBeforeNextWave: 30
+    timeBeforeNextWave: 10
   - enemies:
-    - bombWeedPrefab: {fileID: 0}
-      kadzuKaijuPrefab: {fileID: 0}
-      baseEnemyCount: 5
-      currentEnemyCount: 0
-    - bombWeedPrefab: {fileID: 0}
-      kadzuKaijuPrefab: {fileID: 0}
-      baseEnemyCount: 1
+    - bombWeedPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
+      kadzuKaijuPrefab: {fileID: 4386000277028358810, guid: 6b38773158f954240af7b6d543a7e8f5, type: 3}
+      baseEnemyCount: 10
       currentEnemyCount: 0
     timeBetweenSpawns: 0.5
-    timeBeforeNextWave: 30
+    timeBeforeNextWave: 10
+  - enemies:
+    - bombWeedPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
+      kadzuKaijuPrefab: {fileID: 4386000277028358810, guid: 6b38773158f954240af7b6d543a7e8f5, type: 3}
+      baseEnemyCount: 12
+      currentEnemyCount: 0
+    timeBetweenSpawns: 0.5
+    timeBeforeNextWave: 10
   spawnAreaSize: {x: 1, y: 1}
   audioSource: {fileID: 924319092}
   preWaveSound: {fileID: 8300000, guid: 1467f7cb51a08e84cb19ed142d753435, type: 3}
-  preWaveSoundDelay: 2
-  UpgradeButtons: {fileID: 0}
+  currentWaveIndex: 0
 --- !u!82 &924319092
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2153,7 +2155,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -285.29, y: -265.03}
+  m_AnchoredPosition: {x: -280.1, y: -262}
   m_SizeDelta: {x: 187.3826, y: 26.9045}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1393207820
@@ -2976,7 +2978,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -278.1, y: -171}
+  m_AnchoredPosition: {x: -273.2, y: -167.6}
   m_SizeDelta: {x: 135.0545, y: 79.8956}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2087420718
