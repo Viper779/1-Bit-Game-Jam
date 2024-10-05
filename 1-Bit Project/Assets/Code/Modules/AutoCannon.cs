@@ -79,7 +79,7 @@ public class NearestEnemyDetector : MonoBehaviour
     }
 
     // Plays the frame animation
-    void PlayAnimation()
+    IEnumerator PlayAnimation()
     {
         frameTimer -= Time.deltaTime;
         if (frameTimer <= 0f)
@@ -93,7 +93,10 @@ public class NearestEnemyDetector : MonoBehaviour
             else
             {
                 currentFrame = 0; // Reset to the beginning of the animation
+                spriteRenderer.sprite = Dakka[currentFrame];
                 isFiring = false;
+
+                yield return new WaitForSeconds(fireDelay);
             }
         }
     }
