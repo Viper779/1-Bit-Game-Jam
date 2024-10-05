@@ -153,7 +153,7 @@ public class UpgradeManager : MonoBehaviour
         {
             ShuffleList(availableUpgrades);
 
-            // Ensure we're not exceeding array bounds
+            
             card1Index = translateFrameIndex(_Upgrades[availableUpgrades[0]].Name);
             card2Index = translateFrameIndex(_Upgrades[availableUpgrades[1]].Name);
             card3Index = translateFrameIndex(_Upgrades[availableUpgrades[2]].Name);
@@ -198,11 +198,11 @@ public class UpgradeManager : MonoBehaviour
         }
         else if (Upgrade_chosen == "Timed Fuse")
         {
-            return 7;
+            return 4;
         }
         else if (Upgrade_chosen == "Frag Shell")
         {
-            return 4;
+            return 7;
         }
         else if (Upgrade_chosen == "Robot Factory Module")
         {
@@ -233,71 +233,89 @@ public class UpgradeManager : MonoBehaviour
         {
             upgradedBulletDamage += 25;
             UpgradesMenu.SetActive(false);
+            DisplayUpgrades = false;
+
         }
         else if (Upgrade_chosen == "Increase Reload")
         {
             upgradedReloadRate++;
             UpgradesMenu.SetActive(false);
+            DisplayUpgrades = false;
+
         }
         else if (Upgrade_chosen == "Increase Special")
         {
             upgradedSpecStat++;
             UpgradesMenu.SetActive(false);
+            DisplayUpgrades = false;
         }
         else if (Upgrade_chosen == "Crit Chance")
         {
             upgradedCritMult += 0.2f;
             UpgradesMenu.SetActive(false);
+            DisplayUpgrades = false;
         }
         else if (Upgrade_chosen == "Crit Multiplier")
         {
             upgradedCritDmg += 0.5f;
             UpgradesMenu.SetActive(false);
+            DisplayUpgrades = false;
         }
         else if (Upgrade_chosen == "Piercing Sabot")
         {
             BulletType = 3;
             UpgradesMenu.SetActive(false);
             Debug.Log("Piercing Sabot");
+            DisplayUpgrades = false;
         }
         else if (Upgrade_chosen == "High Explosive")
         {
             BulletType = 2;
             UpgradesMenu.SetActive(false);
             Debug.Log("High Explosive");
+            DisplayUpgrades = false;
         }
         else if (Upgrade_chosen == "Timed Fuse")
         {
             BulletType = 1;
             UpgradesMenu.SetActive(false);
             Debug.Log("Timed Fuse");
+            DisplayUpgrades = false;
         }
         else if (Upgrade_chosen == "FragBullet")
         {
             BulletType = 4;
             UpgradesMenu.SetActive(false);
             Debug.Log("Frag Shell");
+            DisplayUpgrades = false;
         }
         else if (Upgrade_chosen == "Robot Factory Module")
         {
             UpgradesMenu.SetActive(false);
             Debug.Log("Robot Factory Module");
+            DisplayUpgrades = false;
         }
         else if (Upgrade_chosen == "Auto Cannon Module")
         {
             UpgradesMenu.SetActive(false);
             Debug.Log("Auto Cannon Module");
+            DisplayUpgrades = false;
         }
         else if (Upgrade_chosen == "Auto Loader Module")
         {
             UpgradesMenu.SetActive(false);
             Debug.Log("Auto Loader Module");
+            DisplayUpgrades = false;
         }
         else if (Upgrade_chosen == "Shield Gen Module")
         {
             UpgradesMenu.SetActive(false);
             Debug.Log("Shield Gen Module");
-        }        
+            DisplayUpgrades = false;
+
+        }
+        Debug.Log("Display False");
+        DisplayUpgrades = false;
     }
 
     // SHUFFLE LIST
