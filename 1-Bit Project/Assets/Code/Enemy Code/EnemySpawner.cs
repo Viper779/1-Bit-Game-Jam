@@ -26,9 +26,8 @@ public class WaveBasedEnemySpawner : MonoBehaviour
     public Vector2 spawnAreaSize = new Vector2(5f, 2f);
     public AudioSource audioSource;
     public AudioClip preWaveSound;
-    public float preWaveSoundDelay = 2f;
-    public GameObject UpgradeButtons;
-    private int currentWaveIndex = 0;
+    private float preWaveSoundDelay = 2f;    
+    public int currentWaveIndex = 0;
     private int totalEnemiesInWave = 0;
     private int defeatedEnemiesInWave = 0;
     public static bool UpgradeRequest = false;
@@ -53,43 +52,40 @@ public class WaveBasedEnemySpawner : MonoBehaviour
         {
             yield return StartCoroutine(SpawnWave(waves[currentWaveIndex]));
 
-            UpgradeRequest = false;
-
             yield return new WaitUntil(() => defeatedEnemiesInWave >= totalEnemiesInWave);
 
             defeatedEnemiesInWave = 0;
             totalEnemiesInWave = 0;
 
-            
-
-            if (currentWaveIndex < waves.Count - 1) // Check if it's not the last wave
+            // Check if the current wave is even and show upgrade request
+            if (currentWaveIndex % 2 == 1 && currentWaveIndex < waves.Count - 1)
             {
                 UpgradeRequest = true;
-                
-                float waitTime = waves[currentWaveIndex].timeBeforeNextWave;
-                if (waitTime > preWaveSoundDelay)
-                {
-                    yield return new WaitForSecondsRealtime(waitTime - preWaveSoundDelay);
-                    PlayPreWaveSound();
-                    
-                    yield return new WaitForSecondsRealtime(preWaveSoundDelay);
-                }
-                else
-                {
-                    PlayPreWaveSound();
-                    yield return new WaitForSecondsRealtime(waitTime);
-                }
+                Debug.Log($"Upgrade requested after wave {currentWaveIndex + 1}");
+            }
+            else
+            {
+                UpgradeRequest = false;  // Only reset if not showing upgrades
+            }
+
+            float waitTime = waves[currentWaveIndex].timeBeforeNextWave;
+            if (waitTime > preWaveSoundDelay)
+            {
+                yield return new WaitForSecondsRealtime(waitTime - preWaveSoundDelay);
+                PlayPreWaveSound();
+
+                yield return new WaitForSecondsRealtime(preWaveSoundDelay);
+            }
+            else
+            {
+                PlayPreWaveSound();
+                yield return new WaitForSecondsRealtime(waitTime);
             }
 
             currentWaveIndex++;
         }
 
         Debug.Log("All waves completed!");
-
-        if(UpgradeRequest == true)
-        {
-            UpgradeButtons.SetActive(true);
-        }
     }
 
     void PlayPreWaveSound()
