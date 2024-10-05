@@ -113,6 +113,8 @@ MonoBehaviour:
   explosionDamage: 100
   explosionRadius: 2
   BulletDamage: 50
+  critChance: 0.2
+  critMultiplier: 1.5
   frameRate: 0.2
   explodeAnimation:
   - {fileID: -8354365422335470886, guid: 7122a95f7e7db8942b874f748b3127ee, type: 3}
