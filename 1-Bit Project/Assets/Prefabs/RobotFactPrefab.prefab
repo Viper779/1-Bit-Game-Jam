@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameRate: 0.1
-  animation:
+  factoryAnimation:
   - {fileID: 7150008467685638082, guid: 9c50f9c9345fe124ebd8366365d76733, type: 3}
   - {fileID: -542326716132668532, guid: 9c50f9c9345fe124ebd8366365d76733, type: 3}
   - {fileID: 4807754574170130741, guid: 9c50f9c9345fe124ebd8366365d76733, type: 3}
@@ -166,3 +166,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 496417965ed180047a3aacaea7c1878a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentTier: 0
+  yMove: 0.34
+  buildSpeed: 0.5

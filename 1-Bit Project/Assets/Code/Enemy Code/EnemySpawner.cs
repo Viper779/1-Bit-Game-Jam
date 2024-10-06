@@ -53,7 +53,7 @@ public class WaveBasedEnemySpawner : MonoBehaviour
             yield return StartCoroutine(SpawnWave(waves[currentWaveIndex]));
 
             yield return new WaitUntil(() => defeatedEnemiesInWave >= totalEnemiesInWave);
-
+            UpgradeRequest = true;
             defeatedEnemiesInWave = 0;
             totalEnemiesInWave = 0;
 

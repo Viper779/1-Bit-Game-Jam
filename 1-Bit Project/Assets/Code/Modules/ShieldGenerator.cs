@@ -4,7 +4,7 @@ using System.Collections;
 public class ShieldGenerator : MonoBehaviour
 {
     [SerializeField] private float frameRate = 0.1f;
-    [SerializeField] private Sprite[] animation;
+    [SerializeField] private Sprite[] shieldAnimation;
     public SpriteRenderer spriteRenderer;
     private int currentFrame;
     private float frameTimer;
@@ -28,15 +28,15 @@ public class ShieldGenerator : MonoBehaviour
         if (frameTimer <= 0f)
         {
             frameTimer += frameRate;
-            if (currentFrame < animation.Length)
+            if (currentFrame < shieldAnimation.Length)
             {
-                spriteRenderer.sprite = animation[currentFrame];
+                spriteRenderer.sprite = shieldAnimation[currentFrame];
                 currentFrame++;
             }
             else
             {
                 currentFrame = 0; // Reset to the beginning of the animation
-                spriteRenderer.sprite = animation[currentFrame];
+                spriteRenderer.sprite = shieldAnimation[currentFrame];
             }
         }
     }

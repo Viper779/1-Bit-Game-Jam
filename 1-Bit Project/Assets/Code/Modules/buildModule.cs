@@ -11,6 +11,10 @@ public class moduleUpgrade : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (currentTier < UpgradeManager.towerTier)
+        {
+            currentTier = UpgradeManager.towerTier - 1;
+        }
     }
 
     // Update is called once per frame

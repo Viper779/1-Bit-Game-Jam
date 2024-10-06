@@ -4,7 +4,7 @@ using System.Collections;
 public class BotFactory : MonoBehaviour
 {
     [SerializeField] private float frameRate = 0.1f;
-    [SerializeField] private Sprite[] animation;
+    [SerializeField] private Sprite[] factoryAnimation;
     public SpriteRenderer spriteRenderer;
     private int currentFrame;
     private float frameTimer;
@@ -34,7 +34,7 @@ public class BotFactory : MonoBehaviour
         else if (nearestEnemy == null)
         {
             Debug.Log("No enemies present.");
-            spriteRenderer.sprite = animation[0]; // Display default frame when no enemies
+            spriteRenderer.sprite = factoryAnimation[0]; // Display default frame when no enemies
         }
     }
 
@@ -61,15 +61,15 @@ public class BotFactory : MonoBehaviour
             {
                 frameTimer += frameRate;
 
-                if (currentFrame < animation.Length)
+                if (currentFrame < factoryAnimation.Length)
                 {
-                    spriteRenderer.sprite = animation[currentFrame];
+                    spriteRenderer.sprite = factoryAnimation[currentFrame];
                     currentFrame++;
                 }
                 else
                 {
                     currentFrame = 0; // Reset to the beginning of the animation
-                    spriteRenderer.sprite = animation[currentFrame]; // Reset the sprite to the first frame
+                    spriteRenderer.sprite = factoryAnimation[currentFrame]; // Reset the sprite to the first frame
                     isFiring = false; // Stop firing
                     yield break; // Exit the coroutine
                 }
