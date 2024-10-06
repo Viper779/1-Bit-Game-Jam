@@ -17,7 +17,7 @@ public class BotBehavior : MonoBehaviour
     void Start()
     {
         // Optionally find the player's tower if it's tagged
-        playerTower = GameObject.FindGameObjectWithTag("PlayerTower").transform;
+        playerTower = GameObject.FindGameObjectWithTag("Tower").transform;
 
         // Initialize the Rigidbody2D component
         rb = GetComponent<Rigidbody2D>();

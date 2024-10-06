@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1021818364797804742}
   - component: {fileID: 4451472536292633442}
+  - component: {fileID: -7303811733970795635}
   m_Layer: 0
   m_Name: AutoLoaderPrefab
   m_TagString: Turret
@@ -78,6 +79,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.66}
   m_EdgeRadius: 0
+--- !u!114 &-7303811733970795635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4741660756580445592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 496417965ed180047a3aacaea7c1878a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5136137536845060587
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class BaseTurretUpgrade : MonoBehaviour
+public class moduleUpgrade : MonoBehaviour
 {
     public int currentTier = 0;
     public float yMove = 0.34f;
@@ -11,7 +11,6 @@ public class BaseTurretUpgrade : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.transform.position = new Vector3(-16, -4.5f, 0); // Reset to initial position
     }
 
     // Update is called once per frame

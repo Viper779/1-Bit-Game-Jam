@@ -35,7 +35,7 @@ public class CardFrame : MonoBehaviour
         {
             imageComponent.enabled = true;
             SetUpgradeIndex(); // Set the current upgrade index
-            currentFrame = selectedUpgradeIndex-1; // Update current frame with selected upgrade index
+            currentFrame = selectedUpgradeIndex; // Update current frame with selected upgrade index
             //Debug.LogError($"Showing Frame: {selectedUpgradeIndex}");
             // Update the Image component to display the correct card face
             imageComponent.sprite = CardFaces[currentFrame];

@@ -69,6 +69,11 @@ public class UpgradeManager : MonoBehaviour
     public float upgradedCritMult = 0.2f;
     public float upgradedCritDmg = 0.5f;
 
+    public GameObject autoCannonPrefab;
+    public GameObject autoLoaderPrefab;
+    public GameObject shieldGenPrefab;
+    public GameObject botFactPrefab;
+
     void Awake()
     {
         // Ensure there's only one instance of the UpgradeManager
@@ -104,6 +109,10 @@ public class UpgradeManager : MonoBehaviour
             Debug.Log("Hiding Cards");
             DisplayUpgrades = false;
             UpgradesMenu.SetActive(false);
+        }
+        if (Input.GetKeyDown(KeyCode.I)) //FOR TESTING ONLY REMOVE FOR FINAL BUILD
+        {
+            WaveBasedEnemySpawner.UpgradeRequest = true;
         }
     }
 
@@ -192,35 +201,35 @@ public class UpgradeManager : MonoBehaviour
         }
         else if (Upgrade_chosen == "Piercing Sabot")
         {
-            return 6;
+            return 7;
         }
         else if (Upgrade_chosen == "High Explosive")
         {
-            return 5;
+            return 6;
         }
         else if (Upgrade_chosen == "Timed Fuse")
         {
-            return 4;
+            return 5;
         }
         else if (Upgrade_chosen == "Frag Shell")
         {
-            return 7;
+            return 8;
         }
         else if (Upgrade_chosen == "Robot Factory Module")
         {
-            return 11;
+            return 15;
         }
         else if (Upgrade_chosen == "Auto Cannon Module")
         {
-            return 10;
+            return 11;
         }
         else if (Upgrade_chosen == "Auto Loader Module")
         {
-            return 12;
+            return 13;
         }
         else if (Upgrade_chosen == "Shield Gen Module")
         {
-            return 8;
+            return 9;
         }
 
         //Return 0 if something wrong or not made yet
@@ -235,48 +244,57 @@ public class UpgradeManager : MonoBehaviour
         {
             upgradedBulletDamage += 25;
             UpgradesMenu.SetActive(false);
+            Debug.Log("DMG Up");
         }
         else if (Upgrade_chosen == "Increase Reload")
         {
             upgradedReloadRate++;
             UpgradesMenu.SetActive(false);
+            Debug.Log("Rel Up");
         }
         else if (Upgrade_chosen == "Increase Special")
         {
             upgradedSpecStat++;
             UpgradesMenu.SetActive(false);
+            Debug.Log("Spec Up");
         }
         else if (Upgrade_chosen == "Crit Chance")
         {
             upgradedCritMult += 0.2f;
             UpgradesMenu.SetActive(false);
+            Debug.Log("Crit ChanceUp");
         }
         else if (Upgrade_chosen == "Crit Multiplier")
         {
             upgradedCritDmg += 0.5f;
             UpgradesMenu.SetActive(false);
+            Debug.Log("Crit Up");
         }
         else if (Upgrade_chosen == "Piercing Sabot")
         {
             BulletType = 3;
+            upgradedSpecStat++;
             UpgradesMenu.SetActive(false);
             Debug.Log("Piercing Sabot");
         }
         else if (Upgrade_chosen == "High Explosive")
         {
             BulletType = 2;
+            upgradedSpecStat++;
             UpgradesMenu.SetActive(false);
             Debug.Log("High Explosive");
         }
         else if (Upgrade_chosen == "Timed Fuse")
         {
             BulletType = 1;
+            upgradedSpecStat++;
             UpgradesMenu.SetActive(false);
             Debug.Log("Timed Fuse");
         }
         else if (Upgrade_chosen == "FragBullet")
         {
             BulletType = 4;
+            upgradedSpecStat++;
             UpgradesMenu.SetActive(false);
             Debug.Log("Frag Shell");
         }
@@ -284,21 +302,36 @@ public class UpgradeManager : MonoBehaviour
         {
             UpgradesMenu.SetActive(false);
             Debug.Log("Robot Factory Module");
+            towerTier++;
+            Vector3 moduleSpawn = new Vector3(-16, -6.2f, 0);
+            GameObject smallExplode = Instantiate(botFactPrefab, moduleSpawn, Quaternion.identity);
         }
         else if (Upgrade_chosen == "Auto Cannon Module")
         {
             UpgradesMenu.SetActive(false);
             Debug.Log("Auto Cannon Module");
+            towerTier++;
+            Vector3 moduleSpawn = new Vector3(-16, -6.2f, 0);
+            GameObject smallExplode = Instantiate(autoCannonPrefab, moduleSpawn, Quaternion.identity);
         }
         else if (Upgrade_chosen == "Auto Loader Module")
         {
             UpgradesMenu.SetActive(false);
             Debug.Log("Auto Loader Module");
+            towerTier++;
+            Vector3 moduleSpawn = new Vector3(-16, -6.2f, 0);
+            GameObject smallExplode = Instantiate(autoLoaderPrefab, moduleSpawn, Quaternion.identity);
         }
         else if (Upgrade_chosen == "Shield Gen Module")
         {
             UpgradesMenu.SetActive(false);
+            Debug.Log("Shield Gen Module");
+            towerTier++;
+            Vector3 moduleSpawn = new Vector3(-16, -6.2f, 0);
+            GameObject smallExplode = Instantiate(shieldGenPrefab, moduleSpawn, Quaternion.identity);
         }
+        WaveBasedEnemySpawner.UpgradeRequest = false;
+        DisplayUpgrades = false;
     }
 
     // SHUFFLE LIST

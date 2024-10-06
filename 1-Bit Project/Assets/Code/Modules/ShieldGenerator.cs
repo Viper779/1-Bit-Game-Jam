@@ -9,7 +9,6 @@ public class ShieldGenerator : MonoBehaviour
     private int currentFrame;
     private float frameTimer;
     public GameObject shieldPrefab;
-    private float shieldTime = 5;
 
     // Update is called once per frame
     void Update()
