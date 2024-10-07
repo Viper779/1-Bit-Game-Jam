@@ -10,20 +10,14 @@ public class BotBehavior : MonoBehaviour
 
     public float moveSpeed = 2f; // Speed of the bot
     private Transform playerTower; // Reference to the player's tower
-    private Rigidbody2D rb; // Reference to the Rigidbody2D component
     public float currentHealth = 100f; // Health of the bot
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         // Optionally find the player's tower if it's tagged
         playerTower = GameObject.FindGameObjectWithTag("Turret").transform;
-
-        // Initialize the Rigidbody2D component
-        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     private void Update()
     {
         if (SimplePauseManager.Instance.IsGamePaused()) return;
@@ -36,11 +30,13 @@ public class BotBehavior : MonoBehaviour
                 return; // Early exit if the tower is not set
             }
 
-            // Calculate direction away from the player tower
-            Vector3 direction = (transform.position - playerTower.position).normalized;
+            // Calculate direction toward the player tower
+            Vector3 direction = (playerTower.position - transform.position).normalized;
 
-            // Move the enemy using Rigidbody2D for better physics interaction
-            rb.MovePosition(rb.position + new Vector2(direction.x, direction.y) * moveSpeed * Time.deltaTime);
+            // Move the bot using Transform.Translate
+            transform.Translate(direction * moveSpeed * Time.deltaTime);
+
+            UpdateAnimation(); // Update animation frames
         }
         else
         {
@@ -52,6 +48,28 @@ public class BotBehavior : MonoBehaviour
             {
                 Debug.LogError("SpriteRenderer is not assigned.");
             }
+        }
+    }
+
+    // Method to handle taking damage
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0; // Clamp health to 0
+            // Optionally trigger death behavior
+        }
+    }
+
+    // Update the bot's animation
+    private void UpdateAnimation()
+    {
+        if (currentHealth > 0)
+        {
+            // Example logic for frame update (adjust based on your animation timing)
+            currentFrame = (currentFrame + 1) % botAnimation.Length; // Cycle through frames
+            spriteRenderer.sprite = botAnimation[currentFrame];
         }
     }
 }

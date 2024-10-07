@@ -36,7 +36,7 @@ public class CardFrame : MonoBehaviour
         {
             imageComponent.enabled = true;
             SetUpgradeIndex(); // Set the current upgrade index
-            if (manualOveride = true) 
+            if (manualOveride == true) 
             {
                 if (selectedUpgradeIndex == 2) 
                 {

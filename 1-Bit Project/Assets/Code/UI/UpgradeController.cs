@@ -132,33 +132,33 @@ public class UpgradeManager : MonoBehaviour
 
 
     public void ButtonsSet()
+{
+    List<int> availableUpgrades = new List<int>();
+    for (int i = 0; i < _Upgrades.Length; i++)
     {
-        List<int> availableUpgrades = new List<int>();
-        for (int i = 0; i < _Upgrades.Length; i++)
-        {
-            availableUpgrades.Add(i);
-        }
-
-        if (availableUpgrades.Count >= 3)
-        {
-            ShuffleList(availableUpgrades);
-
-            // Log the selected upgrades and their indices
-            card1Index = availableUpgrades[0];
-            card2Index = availableUpgrades[1];
-            card3Index = availableUpgrades[2];
-
-            Debug.Log($"Upgrade 1: {_Upgrades[card1Index].Name} at index {card1Index}");
-            Debug.Log($"Upgrade 2: {_Upgrades[card2Index].Name} at index {card2Index}");
-            Debug.Log($"Upgrade 3: {_Upgrades[card3Index].Name} at index {card3Index}");
-
-            Debug.Log($"Set indices: card1Index={card1Index}, card2Index={card2Index}, card3Index={card3Index}");
-        }
-        else
-        {
-            Debug.LogError($"Not enough upgrades available. Current count: {availableUpgrades.Count}");
-        }
+        availableUpgrades.Add(i);
     }
+
+    if (availableUpgrades.Count >= 3)
+    {
+        ShuffleList(availableUpgrades);
+
+        // Log the selected upgrades and their indices
+        card1Index = availableUpgrades[0];
+        card2Index = availableUpgrades[1];
+        card3Index = availableUpgrades[2];
+
+        Debug.Log($"Upgrade 1: {_Upgrades[card1Index].Name} at index {card1Index}");
+        Debug.Log($"Upgrade 2: {_Upgrades[card2Index].Name} at index {card2Index}");
+        Debug.Log($"Upgrade 3: {_Upgrades[card3Index].Name} at index {card3Index}");
+
+        Debug.Log($"Set indices: card1Index={card1Index}, card2Index={card2Index}, card3Index={card3Index}");
+    }
+    else
+    {
+        Debug.LogError($"Not enough upgrades available. Current count: {availableUpgrades.Count}");
+    }
+}
 
 
 
@@ -172,51 +172,51 @@ public class UpgradeManager : MonoBehaviour
         }
         else if (Upgrade_chosen == "Increase Reload")
         {
-            index = 1;
+            index = 2;
         }
         else if (Upgrade_chosen == "Increase Special")
         {
-            index = 2;
+            index = 3;
         }
         else if (Upgrade_chosen == "Crit Chance")
         {
-            index = 3;
+            index = 4;
         }
         else if (Upgrade_chosen == "Crit Multiplier")
         {
-            index = 4;
+            index = 5;
         }
         else if (Upgrade_chosen == "Piercing Sabot")
         {
-            index = 5;
+            index = 8;
         }
         else if (Upgrade_chosen == "High Explosive")
         {
-            index = 8;
+            index = 7;
         }
         else if (Upgrade_chosen == "Timed Fuse")
         {
-            index = 7;
+            index = 6;
         }
         else if (Upgrade_chosen == "Frag Shell")
         {
-            index = 6;
+            index = 9;
         }
         else if (Upgrade_chosen == "Robot Factory Module")
         {
-            index = 9;
+            index = 16;
         }
         else if (Upgrade_chosen == "Auto Cannon Module")
         {
-            index = 16;
+            index = 12;
         }
         else if (Upgrade_chosen == "Auto Loader Module")
         {
-            index = 12;
+            index = 14;
         }
         else if (Upgrade_chosen == "Shield Gen Module")
         {
-            index = 14;
+            index = 10;
         }
 
         // Ensure the index is within bounds
