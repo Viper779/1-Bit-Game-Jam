@@ -9,6 +9,7 @@ public class CardFrame : MonoBehaviour
     public Image imageComponent; // The Image component to display card face
     private int currentFrame; // The current frame to display
     int selectedUpgradeIndex; // The index of the selected upgrade for the card
+    public bool manualOveride = true;
 
     // Update is called once per frame
     void Start()
@@ -35,6 +36,68 @@ public class CardFrame : MonoBehaviour
         {
             imageComponent.enabled = true;
             SetUpgradeIndex(); // Set the current upgrade index
+            if (manualOveride = true) 
+            {
+                if (selectedUpgradeIndex == 2) 
+                {
+                    selectedUpgradeIndex = 1;
+                }
+
+                if (selectedUpgradeIndex == 3)
+                {
+                    selectedUpgradeIndex = 2;
+                }
+
+                if (selectedUpgradeIndex == 4)
+                {
+                    selectedUpgradeIndex = 3;
+                }
+
+                if (selectedUpgradeIndex == 5)
+                {
+                    selectedUpgradeIndex = 4;
+                }
+
+                if (selectedUpgradeIndex == 8)
+                {
+                    selectedUpgradeIndex = 5;
+                }
+
+                if (selectedUpgradeIndex == 7)
+                {
+                    selectedUpgradeIndex = 8;
+                }
+
+                if (selectedUpgradeIndex == 6)
+                {
+                    selectedUpgradeIndex = 7;
+                }
+
+                if (selectedUpgradeIndex == 9)
+                {
+                    selectedUpgradeIndex = 6;
+                }
+
+                if (selectedUpgradeIndex == 16)
+                {
+                    selectedUpgradeIndex = 9;
+                }
+
+                if (selectedUpgradeIndex == 12)
+                {
+                    selectedUpgradeIndex = 16;
+                }
+
+                if (selectedUpgradeIndex == 14)
+                {
+                    selectedUpgradeIndex = 12;
+                }
+
+                if (selectedUpgradeIndex == 10)
+                {
+                    selectedUpgradeIndex = 14;
+                }
+            }
             currentFrame = selectedUpgradeIndex; // Update current frame with selected upgrade index
             //Debug.LogError($"Showing Frame: {selectedUpgradeIndex}");
             // Update the Image component to display the correct card face

@@ -26,27 +26,23 @@ public class UpgradeManager : MonoBehaviour
     //        allUpgrades.Add(new Upgrade("Robot Factory Upgrade", "Improves the robot factory.", 10f));
 
     // DEFINE LIST WITH UPGRADES
-    Upgrade[] _Upgrades = new Upgrade[]
-    {
-        //Stat Upgrade
-        new Upgrade { Name = "Increase Damage"},
-        new Upgrade { Name = "Increase Reload"},
-        new Upgrade { Name = "Increase Special"},
-        new Upgrade { Name = "Crit Chance"},
-        new Upgrade { Name = "Crit Multiplier"},
+   Upgrade[] _Upgrades = new Upgrade[]
+{
+    new Upgrade { Name = "Increase Damage" },  // index 0
+    new Upgrade { Name = "Increase Reload" },  // index 1
+    new Upgrade { Name = "Increase Special" }, // index 2
+    new Upgrade { Name = "Crit Chance" },      // index 3
+    new Upgrade { Name = "Crit Multiplier" },  // index 4
+    new Upgrade { Name = "Piercing Sabot" },   // index 5
+    new Upgrade { Name = "High Explosive" },   // index 6
+    new Upgrade { Name = "Timed Fuse" },       // index 7
+    new Upgrade { Name = "Frag Shell" },       // index 8
+    new Upgrade { Name = "Robot Factory Module" }, // index 9
+    new Upgrade { Name = "Auto Cannon Module" },  // index 10
+    new Upgrade { Name = "Auto Loader Module" },  // index 11
+    new Upgrade { Name = "Shield Gen Module" }    // index 12
+};
 
-        //Bullet Type
-        new Upgrade { Name = "Timed Fuse"},
-        new Upgrade { Name = "High Explosive"},
-        new Upgrade { Name = "Piercing Sabot"},
-        new Upgrade { Name = "Frag Shell"},
-                
-        //Tower Modules
-        new Upgrade { Name = "Robot Factory Module" },
-        new Upgrade { Name = "Auto Cannon Module" },
-        new Upgrade { Name = "Auto Loader Module" },
-        new Upgrade { Name = "Shield Gen Module" },    
-    };
 
     [SerializeField] private Button Upgrade_button1;
     [SerializeField] private Button Upgrade_button2;
@@ -118,42 +114,25 @@ public class UpgradeManager : MonoBehaviour
 
     public void Card1Select()
     {
-        if (card1Index >= 0 && card1Index < _Upgrades.Length)
-        {
-            UpgradeChosen(_Upgrades[card1Index].Name);
-        }
-        else
-        {
-            Debug.LogError($"Invalid card1Index: {card1Index}. _Upgrades length: {_Upgrades.Length}");
-        }
+        Debug.Log($"Card 1 selected: {_Upgrades[card1Index].Name} at index {card1Index}");
+        UpgradeChosen(_Upgrades[card1Index].Name);
     }
 
     public void Card2Select()
     {
-        if (card2Index >= 0 && card2Index < _Upgrades.Length)
-        {
-            UpgradeChosen(_Upgrades[card2Index].Name);
-        }
-        else
-        {
-            Debug.LogError($"Invalid card2Index: {card2Index}. _Upgrades length: {_Upgrades.Length}");
-        }
+        Debug.Log($"Card 2 selected: {_Upgrades[card2Index].Name} at index {card2Index}");
+        UpgradeChosen(_Upgrades[card2Index].Name);
     }
 
     public void Card3Select()
     {
-        if (card3Index >= 0 && card3Index < _Upgrades.Length)
-        {
-            UpgradeChosen(_Upgrades[card3Index].Name);
-        }
-        else
-        {
-            Debug.LogError($"Invalid card3Index: {card3Index}. _Upgrades length: {_Upgrades.Length}");
-        }
+        Debug.Log($"Card 3 selected: {_Upgrades[card3Index].Name} at index {card3Index}");
+        UpgradeChosen(_Upgrades[card3Index].Name);
     }
+
+
     public void ButtonsSet()
     {
-        // CHOOSING UPGRADE FROM UPGRADE ARRAY
         List<int> availableUpgrades = new List<int>();
         for (int i = 0; i < _Upgrades.Length; i++)
         {
@@ -164,78 +143,88 @@ public class UpgradeManager : MonoBehaviour
         {
             ShuffleList(availableUpgrades);
 
-            
-            card1Index = translateFrameIndex(_Upgrades[availableUpgrades[0]].Name);
-            card2Index = translateFrameIndex(_Upgrades[availableUpgrades[1]].Name);
-            card3Index = translateFrameIndex(_Upgrades[availableUpgrades[2]].Name);
+            // Log the selected upgrades and their indices
+            card1Index = availableUpgrades[0];
+            card2Index = availableUpgrades[1];
+            card3Index = availableUpgrades[2];
 
-            Debug.Log($"Set indices: {card1Index}, {card2Index}, {card3Index}");
+            Debug.Log($"Upgrade 1: {_Upgrades[card1Index].Name} at index {card1Index}");
+            Debug.Log($"Upgrade 2: {_Upgrades[card2Index].Name} at index {card2Index}");
+            Debug.Log($"Upgrade 3: {_Upgrades[card3Index].Name} at index {card3Index}");
+
+            Debug.Log($"Set indices: card1Index={card1Index}, card2Index={card2Index}, card3Index={card3Index}");
         }
         else
         {
             Debug.LogError($"Not enough upgrades available. Current count: {availableUpgrades.Count}");
         }
     }
-    //Turn String Into Frame Number for Cards
+
+
+
     public int translateFrameIndex(string Upgrade_chosen)
     {
+        int index = 0; // Default to 0 if something goes wrong
+
         if (Upgrade_chosen == "Increase Damage")
         {
-            return 1;
+            index = 1;
         }
         else if (Upgrade_chosen == "Increase Reload")
         {
-            return 2;
+            index = 1;
         }
         else if (Upgrade_chosen == "Increase Special")
         {
-            return 3;
+            index = 2;
         }
         else if (Upgrade_chosen == "Crit Chance")
         {
-            return 9;
+            index = 3;
         }
         else if (Upgrade_chosen == "Crit Multiplier")
         {
-            return 0;
+            index = 4;
         }
         else if (Upgrade_chosen == "Piercing Sabot")
         {
-            return 7;
+            index = 5;
         }
         else if (Upgrade_chosen == "High Explosive")
         {
-            return 6;
+            index = 8;
         }
         else if (Upgrade_chosen == "Timed Fuse")
         {
-            return 5;
+            index = 7;
         }
         else if (Upgrade_chosen == "Frag Shell")
         {
-            return 8;
+            index = 6;
         }
         else if (Upgrade_chosen == "Robot Factory Module")
         {
-            return 15;
+            index = 9;
         }
         else if (Upgrade_chosen == "Auto Cannon Module")
         {
-            return 11;
+            index = 16;
         }
         else if (Upgrade_chosen == "Auto Loader Module")
         {
-            return 13;
+            index = 12;
         }
         else if (Upgrade_chosen == "Shield Gen Module")
         {
-            return 9;
+            index = 14;
         }
 
-        //Return 0 if something wrong or not made yet
-        Debug.Log("No Upgrade Selected");
-        return 0;
+        // Ensure the index is within bounds
+        Debug.Log($"Translated upgrade '{Upgrade_chosen}' to frame index: {index}");
+        return index;
     }
+
+
 
     // UPGRADES
     public void UpgradeChosen(string Upgrade_chosen)
@@ -344,7 +333,11 @@ public class UpgradeManager : MonoBehaviour
             list[i] = list[randomIndex];
             list[randomIndex] = temp;
         }
+
+        // Log the shuffled list for debugging
+        Debug.Log("Shuffled upgrade list: " + string.Join(", ", list));
     }
+
 
     public class Upgrade
     {

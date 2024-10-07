@@ -37,6 +37,7 @@ public class WaveBasedEnemySpawner : MonoBehaviour
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
+            UpgradeRequest = true;
         }
         StartCoroutine(SpawnWaves());
     }
@@ -53,19 +54,18 @@ public class WaveBasedEnemySpawner : MonoBehaviour
             yield return StartCoroutine(SpawnWave(waves[currentWaveIndex]));
 
             yield return new WaitUntil(() => defeatedEnemiesInWave >= totalEnemiesInWave);
-            UpgradeRequest = true;
             defeatedEnemiesInWave = 0;
             totalEnemiesInWave = 0;
 
-            // Check if the current wave is even and show upgrade request
-            if (currentWaveIndex % 2 == 1 && currentWaveIndex < waves.Count - 1)
+            // Check if the current wave index is odd and show upgrade request
+            if (currentWaveIndex % 2 == 0 && currentWaveIndex < waves.Count - 1)
             {
                 UpgradeRequest = true;
                 Debug.Log($"Upgrade requested after wave {currentWaveIndex + 1}");
             }
             else
             {
-                UpgradeRequest = false;  // Only reset if not showing upgrades
+                UpgradeRequest = false;  // Reset if not showing upgrades
             }
 
             float waitTime = waves[currentWaveIndex].timeBeforeNextWave;
@@ -87,6 +87,7 @@ public class WaveBasedEnemySpawner : MonoBehaviour
 
         Debug.Log("All waves completed!");
     }
+
 
     void PlayPreWaveSound()
     {
