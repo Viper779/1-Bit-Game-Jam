@@ -24,4 +24,6 @@ public class UpgradeTooltip : MonoBehaviour
             spriteRenderer.sortingOrder = 0;
         }
     }
+
+
 }

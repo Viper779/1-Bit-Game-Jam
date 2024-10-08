@@ -31,7 +31,9 @@ public class EnemyMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation; // Only freeze rotation, not Y movement
         playerTower = GameObject.FindGameObjectWithTag("Turret")?.transform;
+        turretTransform = playerTower;
         if (playerTower == null)
         {
             Debug.LogError("Turret not found. Make sure it's tagged correctly.");
@@ -54,7 +56,8 @@ public class EnemyMovement : MonoBehaviour
             Vector3 direction = (playerTower.position - transform.position).normalized;
 
             // Move the enemy
-            transform.position += direction * moveSpeed * Time.deltaTime;
+            rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y); // Only change x, not y
+
             PlayWalkAnimation();
         }
         if (currentHealth <= 0)
@@ -74,11 +77,11 @@ public class EnemyMovement : MonoBehaviour
         {
             touchTurret = true;
         }
-        else if (collision.contacts[0].normal.y < 0.1f)
-        {
-            Vector2 bounceDirection = Vector2.Reflect(rb.velocity, collision.contacts[0].normal);
-            rb.velocity = bounceDirection.normalized * moveSpeed;
-        }
+        //else if (collision.contacts[0].normal.y < 0.1f)
+        //{
+        //    Vector2 bounceDirection = Vector2.Reflect(rb.velocity, collision.contacts[0].normal);
+        //    rb.velocity = bounceDirection.normalized * moveSpeed;
+        //}
     }
 
     void OnTriggerEnter2D(Collider2D trigger)
@@ -124,7 +127,7 @@ public class EnemyMovement : MonoBehaviour
                     if (turretHealth != null)
                     {
                         Debug.Log("Attacking Turret");
-                        turretHealth.TakeDamage(attackDamage);
+                        turretHealth.TakeDamage(attackDamage); // Apply damage to the turret
                     }
                 }
             }
@@ -135,6 +138,7 @@ public class EnemyMovement : MonoBehaviour
             }
         }
     }
+
 
     void PlayDeathAnimation()
     {

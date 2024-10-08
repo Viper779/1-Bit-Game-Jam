@@ -99,7 +99,7 @@ MonoBehaviour:
   - {fileID: 4807754574170130741, guid: 9c50f9c9345fe124ebd8366365d76733, type: 3}
   - {fileID: 6004023315470985630, guid: 9c50f9c9345fe124ebd8366365d76733, type: 3}
   spriteRenderer: {fileID: 5743686469307722192}
-  spawnDelay: 2
+  spawnDelay: 5
   yOffset: 0.5
   smallBulletPrefab: {fileID: 4386000277028358810, guid: 7250d77ef49fae44bb52bcfcfc9477b5, type: 3}
 --- !u!212 &5743686469307722192
