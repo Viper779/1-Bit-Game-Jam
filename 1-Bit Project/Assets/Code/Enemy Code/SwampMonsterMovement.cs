@@ -126,7 +126,7 @@ public class EnemyMovement : MonoBehaviour
                     TurretHealth turretHealth = turretTransform.GetComponent<TurretHealth>();
                     if (turretHealth != null)
                     {
-                        Debug.Log("Attacking Turret");
+                        //Debug.Log("Attacking Turret");
                         turretHealth.TakeDamage(attackDamage); // Apply damage to the turret
                     }
                 }

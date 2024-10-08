@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class TurretHealth : MonoBehaviour
 {
-    public int maxHealth = 1000;
-    public int currentHealth;
+    public static int maxHealth = 1000;
+    public static int currentHealth;
+    public static bool isDestroyed = false;
+    public SpriteRenderer spriteRenderer; // Reference to the SpriteRenderer
 
     public AudioSource audioSource;
     public AudioClip GameOverSound;
@@ -15,6 +17,8 @@ public class TurretHealth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isDestroyed = false;
+        spriteRenderer.enabled = true;  // This shows the sprite again
         currentHealth = maxHealth;
         GameOverScreen.SetActive(false);
     }
@@ -48,8 +52,15 @@ public class TurretHealth : MonoBehaviour
 
     void GameOver()
     {
-        PlayGameOverSound();
-        GameOverScreen.SetActive(true);
-        Destroy(gameObject);
+        if (!isDestroyed) 
+        {
+            PlayGameOverSound();
+            GameOverScreen.SetActive(true);
+        }
+
+        isDestroyed = true;
+
+        spriteRenderer.enabled = false;  // Hide Sprite
+
     }
 }
