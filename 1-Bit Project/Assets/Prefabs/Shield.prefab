@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -7879789277464968670}
   m_Layer: 0
   m_Name: Shield
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,10 +144,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameRate: 0.1
-  animation:
-  - {fileID: 1810709665985660029, guid: 9647ce1d0d520604d98a69271f22de3c, type: 3}
-  - {fileID: -1985492677994942841, guid: 9647ce1d0d520604d98a69271f22de3c, type: 3}
-  - {fileID: 1408148485456356368, guid: 9647ce1d0d520604d98a69271f22de3c, type: 3}
-  - {fileID: 5974083454189310022, guid: 9647ce1d0d520604d98a69271f22de3c, type: 3}
+  shieldPrefabAnimation: []
   spriteRenderer: {fileID: -2645020384841508606}
   shieldTime: 5
