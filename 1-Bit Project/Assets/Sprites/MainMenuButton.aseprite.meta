@@ -121,7 +121,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: MainMenuButton
+  - name: Frame_0
     originalName: 
     pivot: {x: 0.504, y: -0.57894737}
     alignment: 9
@@ -132,7 +132,7 @@ ScriptedImporter:
       y: 4
       width: 125
       height: 19
-    spriteID: 2878301ebfe97a446ab63da872eeca32
+    spriteID: cf3922765a7027d47a043de60d281ab8
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -141,6 +141,26 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
+  - name: Frame_1
+    originalName: 
+    pivot: {x: 0.504, y: -0.57894737}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 31
+      width: 125
+      height: 19
+    spriteID: 750e880ec483a8f47a9e749b7f8dd0a6
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 31}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
@@ -150,7 +170,7 @@ ScriptedImporter:
     layerType: 0
     blendMode: 0
     cells:
-    - name: MainMenuButton
+    - name: Frame_0
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -158,7 +178,16 @@ ScriptedImporter:
         y: 11
         width: 125
         height: 19
-      spriteId: 2878301ebfe97a446ab63da872eeca32
+      spriteId: cf3922765a7027d47a043de60d281ab8
+    - name: Frame_1
+      frameIndex: 1
+      additiveSortOrder: 0
+      cellRect:
+        x: 1
+        y: 11
+        width: 125
+        height: 19
+      spriteId: 750e880ec483a8f47a9e749b7f8dd0a6
     linkedCells: []
     parentIndex: -1
   platformSettings:
