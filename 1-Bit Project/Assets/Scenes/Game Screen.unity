@@ -1755,7 +1755,7 @@ MonoBehaviour:
   audioSource: {fileID: 1079190845}
   GameOverSound: {fileID: 8300000, guid: 3e03c55f4d310ea479f09a5f7e8ffb1a, type: 3}
   SoundDelay: 2
-  GameOverScreen: {fileID: 0}
+  GameOverScreen: {fileID: 827439676}
 --- !u!82 &1079190845
 AudioSource:
   m_ObjectHideFlags: 0
