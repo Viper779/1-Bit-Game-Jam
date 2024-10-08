@@ -43,10 +43,13 @@ public class UpgradeManager : MonoBehaviour
     new Upgrade { Name = "Shield Gen Module" }    // index 12
 };
 
-
     [SerializeField] private Button Upgrade_button1;
     [SerializeField] private Button Upgrade_button2;
     [SerializeField] private Button Upgrade_button3;
+
+    public static int card1SpriteIndex;
+    public static int card2SpriteIndex;
+    public static int card3SpriteIndex;
 
     public static UpgradeManager instance; // Singleton instance
     public static bool DisplayUpgrades = false; //Request for cards to show
@@ -132,98 +135,63 @@ public class UpgradeManager : MonoBehaviour
 
 
     public void ButtonsSet()
-{
-    List<int> availableUpgrades = new List<int>();
-    for (int i = 0; i < _Upgrades.Length; i++)
     {
-        availableUpgrades.Add(i);
+        List<int> availableUpgrades = new List<int>();
+        for (int i = 0; i < _Upgrades.Length; i++)
+        {
+            availableUpgrades.Add(i);
+        }
+
+        if (availableUpgrades.Count >= 3)
+        {
+            ShuffleList(availableUpgrades);
+
+            card1Index = availableUpgrades[0];
+            card2Index = availableUpgrades[1];
+            card3Index = availableUpgrades[2];
+
+            // Translate upgrade indices to sprite indices
+            card1SpriteIndex = translateFrameIndex(_Upgrades[card1Index].Name);
+            card2SpriteIndex = translateFrameIndex(_Upgrades[card2Index].Name);
+            card3SpriteIndex = translateFrameIndex(_Upgrades[card3Index].Name);
+
+            Debug.Log($"Card 1: {_Upgrades[card1Index].Name}, Sprite Index: {card1SpriteIndex}");
+            Debug.Log($"Card 2: {_Upgrades[card2Index].Name}, Sprite Index: {card2SpriteIndex}");
+            Debug.Log($"Card 3: {_Upgrades[card3Index].Name}, Sprite Index: {card3SpriteIndex}");
+        }
+        else
+        {
+            Debug.LogError($"Not enough upgrades available. Current count: {availableUpgrades.Count}");
+        }
     }
-
-    if (availableUpgrades.Count >= 3)
-    {
-        ShuffleList(availableUpgrades);
-
-        // Log the selected upgrades and their indices
-        card1Index = availableUpgrades[0];
-        card2Index = availableUpgrades[1];
-        card3Index = availableUpgrades[2];
-
-        Debug.Log($"Upgrade 1: {_Upgrades[card1Index].Name} at index {card1Index}");
-        Debug.Log($"Upgrade 2: {_Upgrades[card2Index].Name} at index {card2Index}");
-        Debug.Log($"Upgrade 3: {_Upgrades[card3Index].Name} at index {card3Index}");
-
-        Debug.Log($"Set indices: card1Index={card1Index}, card2Index={card2Index}, card3Index={card3Index}");
-    }
-    else
-    {
-        Debug.LogError($"Not enough upgrades available. Current count: {availableUpgrades.Count}");
-    }
-}
-
-
 
     public int translateFrameIndex(string Upgrade_chosen)
     {
-        int index = 0; // Default to 0 if something goes wrong
+        Dictionary<string, int> upgradeToSpriteIndex = new Dictionary<string, int>
+        {
+            {"Increase Damage", 1},
+            {"Increase Reload", 2},
+            {"Increase Special", 3},
+            {"Crit Chance", 4},
+            {"Crit Multiplier", 5},
+            {"Timed Fuse", 6},
+            {"High Explosive", 7},
+            {"Piercing Sabot", 8},
+            {"Frag Shell", 9},
+            {"Shield Gen Module", 10},
+            {"Auto Cannon Module", 12},
+            {"Auto Loader Module", 14},
+            {"Robot Factory Module", 16}
+        };
 
-        if (Upgrade_chosen == "Increase Damage")
+        if (upgradeToSpriteIndex.TryGetValue(Upgrade_chosen, out int spriteIndex))
         {
-            index = 1;
-        }
-        else if (Upgrade_chosen == "Increase Reload")
-        {
-            index = 2;
-        }
-        else if (Upgrade_chosen == "Increase Special")
-        {
-            index = 3;
-        }
-        else if (Upgrade_chosen == "Crit Chance")
-        {
-            index = 4;
-        }
-        else if (Upgrade_chosen == "Crit Multiplier")
-        {
-            index = 5;
-        }
-        else if (Upgrade_chosen == "Piercing Sabot")
-        {
-            index = 8;
-        }
-        else if (Upgrade_chosen == "High Explosive")
-        {
-            index = 7;
-        }
-        else if (Upgrade_chosen == "Timed Fuse")
-        {
-            index = 6;
-        }
-        else if (Upgrade_chosen == "Frag Shell")
-        {
-            index = 9;
-        }
-        else if (Upgrade_chosen == "Robot Factory Module")
-        {
-            index = 16;
-        }
-        else if (Upgrade_chosen == "Auto Cannon Module")
-        {
-            index = 12;
-        }
-        else if (Upgrade_chosen == "Auto Loader Module")
-        {
-            index = 14;
-        }
-        else if (Upgrade_chosen == "Shield Gen Module")
-        {
-            index = 10;
+            return spriteIndex;
         }
 
-        // Ensure the index is within bounds
-        Debug.Log($"Translated upgrade '{Upgrade_chosen}' to frame index: {index}");
-        return index;
+        Debug.LogWarning($"No sprite index found for upgrade: {Upgrade_chosen}. Using default index 0.");
+        return 0;
     }
-
 
 
     // UPGRADES

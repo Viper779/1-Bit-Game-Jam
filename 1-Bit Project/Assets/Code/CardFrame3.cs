@@ -1,118 +1,47 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; // Import UI namespace
+using UnityEngine.UI;
 
 public class CardFrame : MonoBehaviour
 {
-    [SerializeField] private Sprite[] CardFaces; // Array of card face sprites
-    [SerializeField] private int cardNumber; // Identifies the card
-    public Image imageComponent; // The Image component to display card face
-    private int currentFrame; // The current frame to display
-    int selectedUpgradeIndex; // The index of the selected upgrade for the card
-    public bool manualOveride = true;
+    [SerializeField] private Sprite[] CardFaces;
+    [SerializeField] private int cardNumber;
+    public Image imageComponent;
+    public int currentFrame;
 
-    // Update is called once per frame
     void Start()
     {
         if (imageComponent == null)
         {
-            imageComponent = GetComponent<Image>(); // Ensure the Image component is attached
+            imageComponent = GetComponent<Image>();
         }
-
         if (imageComponent != null)
         {
-            imageComponent.color = Color.white; // Ensure the image is visible
-        }
-
-        if (imageComponent != null && CardFaces.Length > 0)
-        {
-            imageComponent.sprite = CardFaces[0]; // Display the first sprite initially
+            imageComponent.color = Color.white;
+            if (CardFaces.Length > 0)
+            {
+                imageComponent.sprite = CardFaces[0];
+            }
         }
     }
 
     void Update()
     {
-        if (UpgradeManager.DisplayUpgrades) // Check if upgrades are being displayed
+        if (UpgradeManager.DisplayUpgrades)
         {
             imageComponent.enabled = true;
-            SetUpgradeIndex(); // Set the current upgrade index
-            if (manualOveride == true) 
-            {
-                if (selectedUpgradeIndex == 2) 
-                {
-                    selectedUpgradeIndex = 1;
-                }
-
-                if (selectedUpgradeIndex == 3)
-                {
-                    selectedUpgradeIndex = 2;
-                }
-
-                if (selectedUpgradeIndex == 4)
-                {
-                    selectedUpgradeIndex = 3;
-                }
-
-                if (selectedUpgradeIndex == 5)
-                {
-                    selectedUpgradeIndex = 4;
-                }
-
-                if (selectedUpgradeIndex == 8)
-                {
-                    selectedUpgradeIndex = 5;
-                }
-
-                if (selectedUpgradeIndex == 7)
-                {
-                    selectedUpgradeIndex = 8;
-                }
-
-                if (selectedUpgradeIndex == 6)
-                {
-                    selectedUpgradeIndex = 7;
-                }
-
-                if (selectedUpgradeIndex == 9)
-                {
-                    selectedUpgradeIndex = 6;
-                }
-
-                if (selectedUpgradeIndex == 16)
-                {
-                    selectedUpgradeIndex = 9;
-                }
-
-                if (selectedUpgradeIndex == 12)
-                {
-                    selectedUpgradeIndex = 16;
-                }
-
-                if (selectedUpgradeIndex == 14)
-                {
-                    selectedUpgradeIndex = 12;
-                }
-
-                if (selectedUpgradeIndex == 10)
-                {
-                    selectedUpgradeIndex = 14;
-                }
-            }
-            currentFrame = selectedUpgradeIndex; // Update current frame with selected upgrade index
-            //Debug.LogError($"Showing Frame: {selectedUpgradeIndex}");
-            // Update the Image component to display the correct card face
-            imageComponent.sprite = CardFaces[currentFrame];
+            SetSpriteIndex();
 
             if (currentFrame >= 0 && currentFrame < CardFaces.Length)
             {
-                imageComponent.sprite = CardFaces[currentFrame]; // Update the sprite
+                imageComponent.sprite = CardFaces[currentFrame];
             }
             else
             {
                 Debug.LogError($"Invalid frame index: {currentFrame}. CardFaces length: {CardFaces.Length}");
             }
 
-            // Bring the card image to the front (useful if it overlaps with other UI elements)
             imageComponent.transform.SetAsLastSibling();
         }
         else
@@ -121,28 +50,22 @@ public class CardFrame : MonoBehaviour
         }
     }
 
-    private void SetUpgradeIndex()
+    private void SetSpriteIndex()
     {
-        // Set the correct upgrade index based on the cardNumber
         switch (cardNumber)
         {
             case 1:
-                selectedUpgradeIndex = UpgradeManager.card1Index;
+                currentFrame = UpgradeManager.card1SpriteIndex;
                 break;
             case 2:
-                selectedUpgradeIndex = UpgradeManager.card2Index;
+                currentFrame = UpgradeManager.card2SpriteIndex;
                 break;
             case 3:
-                selectedUpgradeIndex = UpgradeManager.card3Index;
+                currentFrame = UpgradeManager.card3SpriteIndex;
                 break;
             default:
                 Debug.LogError("Invalid card number. Please use 1, 2, or 3.");
                 break;
         }
-    }
-
-    void hideCards()
-    {
-        imageComponent.enabled = false;
     }
 }
