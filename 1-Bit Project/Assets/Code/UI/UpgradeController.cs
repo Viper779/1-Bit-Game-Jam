@@ -248,7 +248,7 @@ public class UpgradeManager : MonoBehaviour
             UpgradesMenu.SetActive(false);
             Debug.Log("Timed Fuse");
         }
-        else if (Upgrade_chosen == "FragBullet")
+        else if (Upgrade_chosen == "Frag Shell")
         {
             BulletType = 4;
             upgradedSpecStat++;
