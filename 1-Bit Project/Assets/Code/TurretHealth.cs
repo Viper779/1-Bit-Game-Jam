@@ -10,11 +10,13 @@ public class TurretHealth : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip GameOverSound;
     public float SoundDelay = 2f;
+    public GameObject GameOverScreen;
 
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
+        GameOverScreen.SetActive(false);
     }
 
     // Update is called once per frame
@@ -47,6 +49,7 @@ public class TurretHealth : MonoBehaviour
     void GameOver()
     {
         PlayGameOverSound();
+        GameOverScreen.SetActive(true);
         Destroy(gameObject);
     }
 }

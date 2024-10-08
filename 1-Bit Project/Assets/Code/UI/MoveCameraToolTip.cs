@@ -1,35 +1,74 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 
 public class MoveCameraToolTip : MonoBehaviour
 {
     public SpriteRenderer spriteRenderer;
-    private bool aPress = false;
-    private bool dPress = false;
-    // Start is called before the first frame update
+    public Sprite defaultFrame1;
+    public Sprite defaultFrame2;
+    public Sprite dPressFrame1;
+    public Sprite dPressFrame2;
+
+    private bool dPressed = false;
+    private bool aPressed = false;
+
+    [SerializeField]
+    private float animationSpeed = 0.5f; // Time in seconds between frame switches
+
+    private float animationTimer = 0f;
+    private bool isFrame1 = true;
+
     void Start()
     {
-        spriteRenderer.sortingOrder = 1; //show tooltip on start
+        if (spriteRenderer == null)
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        // Ensure we start with the first default frame
+        spriteRenderer.sprite = defaultFrame1;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (aPressed)
         {
-            aPress = true;
+            // Remove the game object when A is pressed
+            Destroy(gameObject);
+            return;
         }
 
-        if (Input.GetKey(KeyCode.D))
+        // Check for D press
+        if (Input.GetKeyDown(KeyCode.D) && !dPressed)
         {
-            dPress = true;
+            dPressed = true;
+            // Reset animation state when switching to D frames
+            isFrame1 = true;
+            animationTimer = 0f;
         }
-        
-        if (aPress && dPress)
+
+        // Check for A press
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            spriteRenderer.sortingOrder = 0; //hide tooltip
+            aPressed = true;
+        }
+
+        // Handle animation
+        animationTimer += Time.deltaTime;
+        if (animationTimer >= animationSpeed)
+        {
+            animationTimer = 0f;
+            isFrame1 = !isFrame1;
+
+            if (dPressed)
+            {
+                // Switch between D press frames
+                spriteRenderer.sprite = isFrame1 ? dPressFrame1 : dPressFrame2;
+            }
+            else
+            {
+                // Switch between default frames
+                spriteRenderer.sprite = isFrame1 ? defaultFrame1 : defaultFrame2;
+            }
         }
     }
 }
