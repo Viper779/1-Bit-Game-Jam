@@ -10,6 +10,8 @@ public class PauseMenuController : MonoBehaviour
 
     public void ReturnToMenu()
     {
+        TurretHealth.isDestroyed = false;
+
         SimplePauseManager.Instance.TogglePause();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1, LoadSceneMode.Single);
 
