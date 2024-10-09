@@ -15,13 +15,14 @@ public class DandelionMovement : MonoBehaviour
     public float explosionDelay = 2f;
     public int explosionDamage = 100;
     public float explosionRadius = 2f;
+    public int healAmount = 200;
+    private float distanceToTurret;
 
     public int BulletDamage = 50;
     public float critChance = 0.2f; // 20% chance to crit
     public float critMultiplier = 1.5f;
 
-    private bool isPlayingExplodeAnimation = false;
-
+    [SerializeField] private Sprite[] dandFrames;
     public SpriteRenderer spriteRenderer;
     private int currentFrame;
     private float frameTimer;
@@ -30,6 +31,7 @@ public class DandelionMovement : MonoBehaviour
     private Rigidbody2D rb;
     private float timeSinceLastBounce;
     private bool isExploding = false;
+    private bool isHealType = false;
 
     public AudioSource audioSource;
     public AudioClip BombSound;
@@ -41,12 +43,28 @@ public class DandelionMovement : MonoBehaviour
     private float verticalForceAmplitude = 1.5f; // Maximum vertical variation
     private float verticalSpeed = 0.5f; // Speed of vertical noise movement
 
+
     public GameObject explodePrefab;
 
     // Start is called before the first frame update
     void Start()
     {
+
         gameObject.transform.Translate(new Vector3(0, initHGT, 0));
+
+        if (UnityEngine.Random.Range(0f, 1f) <= 0.1f)
+        {
+            isHealType = true;
+        }
+
+        if (!isHealType)
+        {
+            spriteRenderer.sprite = dandFrames[0];
+        }
+        else
+        {
+            spriteRenderer.sprite = dandFrames[2];
+        }
 
         if (audioSource == null)
         {
@@ -94,6 +112,11 @@ public class DandelionMovement : MonoBehaviour
             Bounce();
             timeSinceLastBounce = 0f;
         }
+
+        if (transform.position.x < -17)
+        {
+            Die();
+        }
     }
 
     void Bounce()
@@ -115,10 +138,15 @@ public class DandelionMovement : MonoBehaviour
         {
             TakeDamage(BulletDamage); // Assume each bullet deals 50 damage
         }
-        else if (collision.contacts.Length > 0 && collision.contacts[0].normal.y < 0.1f)
+        else if (collision.contacts[0].normal.y < 0.1f)
         {
             Vector2 bounceDirection = Vector2.Reflect(rb.velocity, collision.contacts[0].normal);
             rb.velocity = bounceDirection.normalized * moveSpeed;
+        }
+        if (collision.gameObject.CompareTag("Turret"))
+        {
+            //Debug.Log("Hit");
+            StartCoroutine(Explode());
         }
     }
 
@@ -154,8 +182,11 @@ public class DandelionMovement : MonoBehaviour
         OnEnemyDestroyed?.Invoke();
 
         // Wait for a specific duration (e.g., 1 second) to allow the animation to play
-        yield return new WaitForSecondsRealtime(1f); // Adjust the time as needed
-        GameObject smallExplode = Instantiate(explodePrefab, transform.position, transform.rotation);
+        yield return new WaitForSecondsRealtime(0.01f); // Adjust the time as needed
+        if (!isHealType)
+        {
+            GameObject smallExplode = Instantiate(explodePrefab, transform.position, transform.rotation);
+        }
         Destroy(gameObject);
     }
 
@@ -168,13 +199,33 @@ public class DandelionMovement : MonoBehaviour
     {
         // Calculate the direction towards the turret
         Vector2 direction = (turretTransform.position - transform.position).normalized;
+        distanceToTurret = Vector2.Distance(transform.position, turretTransform.position);
+
+        //Debug.Log($"distance :{distanceToTurret}");
 
         // Update the verticalOffset based on Perlin noise
         verticalOffset += verticalSpeed * Time.deltaTime; // Increment offset over time
         float verticalNoise = Mathf.PerlinNoise(verticalOffset, 0f) * verticalForceAmplitude * 2 - verticalForceAmplitude; // Range from -1.5 to 1.5
 
         // Set the horizontal velocity towards the turret
-        rb.velocity = new Vector2(direction.x * moveSpeed, verticalNoise);
+        if (distanceToTurret < 5.0f)
+        {
+            if (isHealType)
+            {
+                rb.velocity = new Vector2(-3.0f, 0); // continue left off screen
+            }
+            else
+            {
+                rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y); //Dive behavior
+                spriteRenderer.sprite = dandFrames[1];
+            }
+            
+        }
+        else 
+        {
+           rb.velocity = new Vector2(direction.x * moveSpeed, 2*verticalNoise);  //Normal sine wave movement
+        }
+        
     }
 
     private IEnumerator Explode()
@@ -190,6 +241,12 @@ public class DandelionMovement : MonoBehaviour
             {
                 turretHealth.TakeDamage(explosionDamage);
             }
+        }
+
+        if (isHealType)
+        {
+            TurretHealth turretHealth = turretTransform.GetComponent<TurretHealth>();
+            turretHealth.TakeDamage(healAmount);
         }
 
         // Visual effect for explosion (you can replace this with a particle system)

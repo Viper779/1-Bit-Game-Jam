@@ -171,12 +171,16 @@ MonoBehaviour:
     m_Bits: 0
   maxHealth: 50
   currentHealth: 0
-  explosionDelay: 2
+  explosionDelay: 0
   explosionDamage: 100
   explosionRadius: 2
   BulletDamage: 50
   critChance: 0.2
   critMultiplier: 1.5
+  dandFrames:
+  - {fileID: 2677442774951038100, guid: 17f3a3fe95ffcc34ea011544535cc1da, type: 3}
+  - {fileID: 8472731074653801123, guid: 17f3a3fe95ffcc34ea011544535cc1da, type: 3}
+  - {fileID: -6686522197630619766, guid: 17f3a3fe95ffcc34ea011544535cc1da, type: 3}
   spriteRenderer: {fileID: 6169920696525801158}
   audioSource: {fileID: 7005496247919739374}
   BombSound: {fileID: 8300000, guid: 5b37f0b39c7eb4644a2028e3af4f69ff, type: 3}

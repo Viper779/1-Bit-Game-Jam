@@ -26,7 +26,7 @@ public class TurretHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //Debug.Log($"Current Health: {currentHealth}");
     }
 
     void PlayGameOverSound()
@@ -44,6 +44,7 @@ public class TurretHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        //Debug.Log("Hit");
         if (currentHealth <= 0)
         {
             GameOver();
