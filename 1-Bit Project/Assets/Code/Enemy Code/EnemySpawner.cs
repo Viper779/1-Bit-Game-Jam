@@ -7,31 +7,32 @@ public class WaveBasedEnemySpawner : MonoBehaviour
     [System.Serializable]
     public class EnemyType
     {
-        public GameObject bombWeedPrefab;
-        public GameObject kadzuKaijuPrefab;
-        public int baseEnemyCount;
+        public GameObject enemyPrefab; // Combined prefab for all enemy types
+        public int baseEnemyCount; // Base count of enemies to spawn
+        [Range(0, 1)]
+        public float spawnChance; // Probability of this enemy spawning
         [HideInInspector]
-        public int currentEnemyCount;
+        public int currentEnemyCount; // Current count of enemies spawned
     }
 
     [System.Serializable]
     public class Wave
     {
-        public List<EnemyType> enemies;
-        public float timeBetweenSpawns = 1f;
-        public float timeBeforeNextWave = 10f;        
+        public List<EnemyType> enemies; // List of enemy types in this wave
+        public float timeBetweenSpawns = 1f; // Time between enemy spawns
+        public float timeBeforeNextWave = 10f; // Time before the next wave starts
     }
 
-    public List<Wave> waves;
-    public Vector2 spawnAreaSize = new Vector2(5f, 2f);
-    public AudioSource audioSource;
-    public AudioClip preWaveSound;
-    private float preWaveSoundDelay = 2f;    
-    public int currentWaveIndex = 0;
-    private int totalEnemiesInWave = 0;
-    private int defeatedEnemiesInWave = 0;
-    public static bool UpgradeRequest = false;
-    
+    public List<Wave> waves; // List of all waves
+    public Vector2 spawnAreaSize = new Vector2(5f, 2f); // Spawn area size
+    public AudioSource audioSource; // Audio source for pre-wave sound
+    public AudioClip preWaveSound; // Pre-wave sound clip
+    private float preWaveSoundDelay = 2f; // Delay for pre-wave sound
+    public int currentWaveIndex = 0; // Current wave index
+    private int totalEnemiesInWave = 0; // Total enemies in the current wave
+    private int defeatedEnemiesInWave = 0; // Count of defeated enemies
+    public static bool UpgradeRequest = false; // Upgrade request flag
+
     void Start()
     {
         if (audioSource == null)
@@ -43,7 +44,7 @@ public class WaveBasedEnemySpawner : MonoBehaviour
     }
 
     private void Update()
-    { 
+    {
         if (SimplePauseManager.Instance.IsGamePaused()) return;
     }
 
@@ -57,7 +58,6 @@ public class WaveBasedEnemySpawner : MonoBehaviour
             defeatedEnemiesInWave = 0;
             totalEnemiesInWave = 0;
 
-            // Check if the current wave index is odd and show upgrade request
             if (currentWaveIndex % 2 == 0 && currentWaveIndex < waves.Count - 1)
             {
                 UpgradeRequest = true;
@@ -65,7 +65,7 @@ public class WaveBasedEnemySpawner : MonoBehaviour
             }
             else
             {
-                UpgradeRequest = false;  // Reset if not showing upgrades
+                UpgradeRequest = false;
             }
 
             float waitTime = waves[currentWaveIndex].timeBeforeNextWave;
@@ -73,7 +73,6 @@ public class WaveBasedEnemySpawner : MonoBehaviour
             {
                 yield return new WaitForSecondsRealtime(waitTime - preWaveSoundDelay);
                 PlayPreWaveSound();
-
                 yield return new WaitForSecondsRealtime(preWaveSoundDelay);
             }
             else
@@ -87,7 +86,6 @@ public class WaveBasedEnemySpawner : MonoBehaviour
 
         Debug.Log("All waves completed!");
     }
-
 
     void PlayPreWaveSound()
     {
@@ -113,45 +111,74 @@ public class WaveBasedEnemySpawner : MonoBehaviour
 
             for (int i = 0; i < enemiesToSpawn; i++)
             {
-                SpawnEnemy(enemyType);
+                SpawnEnemy(wave, enemyType); // Pass enemyType here
                 yield return new WaitForSecondsRealtime(wave.timeBetweenSpawns);
             }
         }
     }
 
-    void SpawnEnemy(EnemyType enemyType)
+    void SpawnEnemy(Wave wave, EnemyType enemyType)
     {
         Vector2 spawnPosition = (Vector2)transform.position + new Vector2(
             Random.Range(-spawnAreaSize.x / 2, spawnAreaSize.x / 2),
             Random.Range(-spawnAreaSize.y / 2, spawnAreaSize.y / 2)
         );
 
-        // Randomly choose between bombWeedPrefab and kadzuKaijuPrefab
-        GameObject enemyPrefab = Random.value > 0.5f ? enemyType.bombWeedPrefab : enemyType.kadzuKaijuPrefab;
+        // Calculate a random value for spawn chance
+        float randomValue = Random.value;
+        float cumulativeChance = 0f;
+        GameObject selectedPrefab = null;
+        EnemyType selectedType = null;
 
-        if (enemyPrefab != null)
+        // Loop through the available enemy types in the wave to select based on spawn chances
+        foreach (var type in wave.enemies)
         {
-            GameObject newEnemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-            enemyType.currentEnemyCount++;
+            if (type.enemyPrefab != null)
+            {
+                cumulativeChance += type.spawnChance;
 
+                if (randomValue <= cumulativeChance)
+                {
+                    selectedPrefab = type.enemyPrefab;
+                    selectedType = type;
+                    break;
+                }
+            }
+        }
+
+        if (selectedPrefab != null && selectedType != null)
+        {
+            // Spawn the selected enemy prefab
+            GameObject newEnemy = Instantiate(selectedPrefab, spawnPosition, Quaternion.identity);
+            selectedType.currentEnemyCount++; // Increment count for the selected enemy type
+
+            // Attach event listeners to handle enemy destruction
             BouncingEnemyAI bombWeedAI = newEnemy.GetComponent<BouncingEnemyAI>();
-            EnemyMovement KadzuAI = newEnemy.GetComponent<EnemyMovement>();
+            EnemyMovement kadzuAI = newEnemy.GetComponent<EnemyMovement>();
+            DandelionMovement dandelionAI = newEnemy.GetComponent<DandelionMovement>();
 
             if (bombWeedAI != null)
             {
-                bombWeedAI.OnEnemyDestroyed += () => HandleEnemyDestroyed(enemyType);
+                bombWeedAI.OnEnemyDestroyed += () => HandleEnemyDestroyed(selectedType);
             }
 
-            if (KadzuAI != null)
+            if (kadzuAI != null)
             {
-                KadzuAI.OnEnemyDestroyed += () => HandleEnemyDestroyed(enemyType);
+                kadzuAI.OnEnemyDestroyed += () => HandleEnemyDestroyed(selectedType);
+            }
+
+            if (dandelionAI != null)
+            {
+                dandelionAI.OnEnemyDestroyed += () => HandleEnemyDestroyed(selectedType);
             }
         }
         else
         {
-            Debug.LogError("Enemy prefab is missing!");
+            Debug.LogError("Enemy prefab is missing or not selected!");
+            defeatedEnemiesInWave++;
         }
     }
+
 
     void HandleEnemyDestroyed(EnemyType enemyType)
     {
