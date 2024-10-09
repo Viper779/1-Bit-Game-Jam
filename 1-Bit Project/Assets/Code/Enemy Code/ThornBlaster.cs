@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 
-public class EnemyMovement : MonoBehaviour
+public class ThornBlasterMovement : MonoBehaviour
 {
     public float moveSpeed = 2f;
     private Transform playerTower;
@@ -10,6 +10,7 @@ public class EnemyMovement : MonoBehaviour
     private Transform turretTransform;
     private bool isDying = false;
     private bool touchTurret = false;
+    private float distanceToTurret;
 
     public int maxHealth = 60;
     public int currentHealth;
@@ -58,28 +59,35 @@ public class EnemyMovement : MonoBehaviour
     private void Update()
     {
         if (SimplePauseManager.Instance.IsGamePaused()) return;
-        if (currentHealth > 0 && touchTurret == false)
-        {
-            // Calculate direction towards the player tower
-            Vector3 direction = (playerTower.position - transform.position).normalized;
 
+        // Declare the direction variable only once
+        Vector3 directionToTower = (playerTower.position - transform.position).normalized;
+
+        if (currentHealth > 0 && !touchTurret)
+        {
             // Move the enemy
-            rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y); // Only change x, not y
+            rb.velocity = new Vector2(directionToTower.x * moveSpeed, rb.velocity.y); // Only change x, not y
 
             PlayWalkAnimation();
         }
+
         if (currentHealth <= 0)
         {
-            rb.velocity = new Vector2(0, 0);
+            rb.velocity = Vector2.zero;
             rb.isKinematic = true;
             PlayDeathAnimation();
         }
 
-        if (currentHealth > 0 && touchTurret == true)
+        // Calculate distance to turret
+        distanceToTurret = Vector2.Distance(transform.position, turretTransform.position);
+
+        if (currentHealth > 0 && distanceToTurret < 10)
         {
+            rb.velocity = Vector2.zero;
             PlayAttackAnimation();
         }
     }
+
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -162,7 +170,7 @@ public class EnemyMovement : MonoBehaviour
                     audioSource.volume = 1.0f;
                     audioSource.PlayOneShot(HitSound);
                 }
-                
+
 
                 if (turretTransform != null)
                 {
@@ -219,19 +227,19 @@ public class EnemyMovement : MonoBehaviour
         }
 
         // Apply the damage
-        currentHealth -= damage;                  
-        
+        currentHealth -= damage;
+
         if (currentHealth <= 0 && isDying == false)
         {
             isDying = true;
-            
+
             StartCoroutine(HandleDeath());
         }
     }
 
     IEnumerator HandleDeath()
     {
-        
+
 
         // Wait for death animation to play before destroying the enemy
         yield return new WaitForSeconds(deathDelay);

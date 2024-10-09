@@ -70,7 +70,7 @@ public class WaveBasedEnemySpawner : MonoBehaviour
             defeatedEnemiesInWave = 0;
             totalEnemiesInWave = 0;
 
-            if (currentWaveIndex % 2 == 0 && currentWaveIndex < waves.Count - 1)
+            if (currentWaveIndex < waves.Count - 1)
             {
                 audioSource.Stop();
                 UpgradeRequest = true;
@@ -190,6 +190,7 @@ public class WaveBasedEnemySpawner : MonoBehaviour
             BouncingEnemyAI bombWeedAI = newEnemy.GetComponent<BouncingEnemyAI>();
             EnemyMovement kadzuAI = newEnemy.GetComponent<EnemyMovement>();
             DandelionMovement dandelionAI = newEnemy.GetComponent<DandelionMovement>();
+            ThornBlasterMovement thornBlasterAI = newEnemy.GetComponent<ThornBlasterMovement>();
 
             if (bombWeedAI != null)
             {
@@ -204,6 +205,11 @@ public class WaveBasedEnemySpawner : MonoBehaviour
             if (dandelionAI != null)
             {
                 dandelionAI.OnEnemyDestroyed += () => HandleEnemyDestroyed(selectedType);
+            }
+
+            if (thornBlasterAI != null)
+            {
+                thornBlasterAI.OnEnemyDestroyed += () => HandleEnemyDestroyed(selectedType);
             }
         }
         else

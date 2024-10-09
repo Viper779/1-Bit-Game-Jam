@@ -15,6 +15,7 @@ public class BouncingEnemyAI : MonoBehaviour
     public float explosionDelay = 2f;
     public int explosionDamage = 100;
     public float explosionRadius = 2f;
+    private CircleCollider2D circleCollider;
 
     public int BulletDamage = 50;
     public float critChance = 0.2f; // 20% chance to crit
@@ -56,7 +57,7 @@ public class BouncingEnemyAI : MonoBehaviour
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         rb.freezeRotation = true;
         currentHealth = maxHealth;
-
+        circleCollider = GetComponent<CircleCollider2D>();
         BulletDamage = UpgradeManager.instance.upgradedBulletDamage;
         critChance = UpgradeManager.instance.upgradedCritMult;
         critMultiplier = UpgradeManager.instance.upgradedCritDmg;
@@ -144,22 +145,42 @@ public class BouncingEnemyAI : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        // Return if already exploding
         if (isExploding) return;
 
+        // Check if the collision's GameObject has a collider
+        if (collision.collider == null)
+        {
+            Debug.LogWarning("Collision object does not have a collider.");
+            return; // Exit if there's no collider
+        }
+
+        // Ignore collision with objects tagged as "Enemy"
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Physics2D.IgnoreCollision(circleCollider, collision.collider); // Use Physics2D
+            return; // Exit after ignoring the collision
+        }
+
+        // Handle collision with bullets
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            TakeDamage(BulletDamage); // Assume each bullet deals 50 damage
+            TakeDamage(BulletDamage); // Assume each bullet deals damage
         }
-        else if (collision.contacts[0].normal.y < 0.1f)
+        // Handle bouncing off surfaces
+        else if (collision.contacts.Length > 0 && collision.contacts[0].normal.y < 0.1f)
         {
             Vector2 bounceDirection = Vector2.Reflect(rb.velocity, collision.contacts[0].normal);
             rb.velocity = bounceDirection.normalized * moveSpeed;
         }
+
+        // Handle collision with turrets
         if (collision.gameObject.CompareTag("Turret"))
         {
             StartCoroutine(ExplodeAfterDelay());
         }
     }
+
 
     void OnTriggerEnter2D(Collider2D trigger)
     {
