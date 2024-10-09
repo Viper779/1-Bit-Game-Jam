@@ -1693,7 +1693,7 @@ MonoBehaviour:
   preWaveSound: {fileID: 8300000, guid: 1467f7cb51a08e84cb19ed142d753435, type: 3}
   waveMusic: {fileID: 8300000, guid: 2c9397a6c4d80a144a47742a2f9a4415, type: 3}
   currentWaveIndex: 0
-  inspectorGameObject: {fileID: 0}
+  inspectorGameObject: {fileID: 827439676}
 --- !u!82 &924319092
 AudioSource:
   m_ObjectHideFlags: 0

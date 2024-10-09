@@ -104,6 +104,7 @@ public class WaveBasedEnemySpawner : MonoBehaviour
         GameOverScreen = inspectorGameObject;
         winCond = true;
         GameOverScreen.SetActive(true);
+        TurretHealth.isDestroyed = true;
     }
 
     void PlayPreWaveSound()

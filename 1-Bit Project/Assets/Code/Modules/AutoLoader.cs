@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class AutoLoader : MonoBehaviour
 {
@@ -12,13 +11,12 @@ public class AutoLoader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        while (ShootProjectile.shootNow)
+        // Only call PlayAnimation if shooting is happening
+        if (ShootProjectile.shootNow)
         {
             PlayAnimation();
         }
-
     }
-
 
     // Plays the frame animation
     void PlayAnimation()
