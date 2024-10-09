@@ -5,25 +5,7 @@ using UnityEngine.UI;
 
 public class UpgradeManager : MonoBehaviour
 {
-    //          allUpgrades.Add(new Upgrade("Increase Damage", "Increases your damage by 15.", 15f));
-    //        allUpgrades.Add(new Upgrade("Increase Reload", "Increases your reload rate.", 5f));
-    //        allUpgrades.Add(new Upgrade("Increase Special Effect", "Increases your special effect.", 5f));
-
-    //        allUpgrades.Add(new Upgrade("Timed Fuse", "Adds a timed explosion effect to the shell.", 4));
-    //        allUpgrades.Add(new Upgrade("High Explosive", "Adds an exploding to the shell.", 3));
-    //        allUpgrades.Add(new Upgrade("Piercing Sabot", "Adds a piercing effect to the shell.", 2));
     
-    //        allUpgrades.Add(new Upgrade("Shield Gen Module", "Adds a shield gen module below the turret.", ShieldGenPrefab));
-    //        allUpgrades.Add(new Upgrade("Shield Gen Upgrade", "Improves the shield gen.", 10f));
-
-    //        allUpgrades.Add(new Upgrade("Auto Cannon Module", "Adds an auto cannon module below the turret.", autoCannonPrefab));
-    //        allUpgrades.Add(new Upgrade("Auto Cannon Upgrade", "Improves the auto cannon.", 10f));
-
-    //        allUpgrades.Add(new Upgrade("Auto Loader Module", "Adds an auto loader module below the turret.", autoLoaderPrefab));
-    //        allUpgrades.Add(new Upgrade("Auto Loader Upgrade", "Improves the auto loader.", 10f));
-
-    //        allUpgrades.Add(new Upgrade("Robot Factory Module", "Adds a robot factory below the turret.", RobotFactPrefab));
-    //        allUpgrades.Add(new Upgrade("Robot Factory Upgrade", "Improves the robot factory.", 10f));
 
     // DEFINE LIST WITH UPGRADES
    Upgrade[] _Upgrades = new Upgrade[]
@@ -61,7 +43,7 @@ public class UpgradeManager : MonoBehaviour
     public static int towerTier = 0;
 
     public int BulletType = 0;
-    public int upgradedSpecStat = 0;
+    public int upgradedSpecStat = 1;
     public int upgradedReloadRate = 0;
 
     public int upgradedBulletDamage = 50;
@@ -72,6 +54,14 @@ public class UpgradeManager : MonoBehaviour
     public GameObject autoLoaderPrefab;
     public GameObject shieldGenPrefab;
     public GameObject botFactPrefab;
+
+    private int hasShield;
+    private int hasAC;
+    private int hasAL;
+    private int hasRF;
+
+    public AudioSource audioSource;
+    public AudioClip upgrade;
 
     void Awake()
     {
@@ -90,6 +80,11 @@ public class UpgradeManager : MonoBehaviour
     {
         ButtonsSet();
         UpgradesMenu.SetActive(false);
+        towerTier = 0;
+        hasShield = 0;
+        hasAC = 0;
+        hasAL = 0;
+        hasRF = 0;
     }
 
     void Update()
@@ -184,6 +179,66 @@ public class UpgradeManager : MonoBehaviour
             {"Robot Factory Module", 16}
         };
 
+        if (hasShield > 0)
+        {
+            // Loop through the dictionary and increase the index for all module upgrades by 1
+            List<string> keys = new List<string>(upgradeToSpriteIndex.Keys); // Collect keys to avoid modifying the dictionary during iteration
+
+            foreach (string key in keys)
+            {
+                // Increase the index for the module upgrades by 1
+                if (key.Contains("Shield Gen Module"))
+                {
+                    upgradeToSpriteIndex[key] = 11;
+                }
+            }
+        }
+
+        if (hasAC > 0)
+        {
+            // Loop through the dictionary and increase the index for all module upgrades by 1
+            List<string> keys = new List<string>(upgradeToSpriteIndex.Keys); // Collect keys to avoid modifying the dictionary during iteration
+
+            foreach (string key in keys)
+            {
+                // Increase the index for the module upgrades by 1
+                if (key.Contains("Auto Cannon Module"))
+                {
+                    upgradeToSpriteIndex[key] = 13;
+                }
+            }
+        }
+
+        if (hasAL > 0)
+        {
+            // Loop through the dictionary and increase the index for all module upgrades by 1
+            List<string> keys = new List<string>(upgradeToSpriteIndex.Keys); // Collect keys to avoid modifying the dictionary during iteration
+
+            foreach (string key in keys)
+            {
+                // Increase the index for the module upgrades by 1
+                if (key.Contains("Auto Loader Module"))
+                {
+                    upgradeToSpriteIndex[key] = 15;
+                }
+            }
+        }
+
+        if (hasRF > 0)
+        {
+            // Loop through the dictionary and increase the index for all module upgrades by 1
+            List<string> keys = new List<string>(upgradeToSpriteIndex.Keys); // Collect keys to avoid modifying the dictionary during iteration
+
+            foreach (string key in keys)
+            {
+                // Increase the index for the module upgrades by 1
+                if (key.Contains("Robot Factory Module"))
+                {
+                    upgradeToSpriteIndex[key] = 17;
+                }
+            }
+        }
+
         if (upgradeToSpriteIndex.TryGetValue(Upgrade_chosen, out int spriteIndex))
         {
             return spriteIndex;
@@ -230,69 +285,102 @@ public class UpgradeManager : MonoBehaviour
         else if (Upgrade_chosen == "Piercing Sabot")
         {
             BulletType = 3;
-            upgradedSpecStat++;
             UpgradesMenu.SetActive(false);
             Debug.Log("Piercing Sabot");
         }
         else if (Upgrade_chosen == "High Explosive")
         {
             BulletType = 2;
-            upgradedSpecStat++;
             UpgradesMenu.SetActive(false);
             Debug.Log("High Explosive");
         }
         else if (Upgrade_chosen == "Timed Fuse")
         {
             BulletType = 1;
-            upgradedSpecStat++;
             UpgradesMenu.SetActive(false);
             Debug.Log("Timed Fuse");
         }
         else if (Upgrade_chosen == "Frag Shell")
         {
             BulletType = 4;
-            upgradedSpecStat++;
             UpgradesMenu.SetActive(false);
             Debug.Log("Frag Shell");
         }
         else if (Upgrade_chosen == "Robot Factory Module")
         {
-            UpgradesMenu.SetActive(false);
-            Debug.Log("Robot Factory Module");
-            towerTier++;
-            Vector3 moduleSpawn = new Vector3(-16, -6.2f, 0);
-            GameObject smallExplode = Instantiate(botFactPrefab, moduleSpawn, Quaternion.identity);
+            if (hasRF == 0)
+            {
+                UpgradesMenu.SetActive(false);
+                Debug.Log("Robot Factory Module");
+                towerTier++;
+                Vector3 moduleSpawn = new Vector3(-16, -6.2f, 0);
+                GameObject smallExplode = Instantiate(botFactPrefab, moduleSpawn, Quaternion.identity);
+                hasRF = 1;
+            }
+            else
+            {
+                hasRF++;
+            }
         }
         else if (Upgrade_chosen == "Auto Cannon Module")
         {
-            UpgradesMenu.SetActive(false);
-            Debug.Log("Auto Cannon Module");
-            towerTier++;
-            Vector3 moduleSpawn = new Vector3(-16, -6.2f, 0);
-            GameObject smallExplode = Instantiate(autoCannonPrefab, moduleSpawn, Quaternion.identity);
+            if (hasAC == 0)
+            {
+                 UpgradesMenu.SetActive(false);
+                 Debug.Log("Auto Cannon Module");
+                 towerTier++;
+                 Vector3 moduleSpawn = new Vector3(-16, -6.2f, 0);
+                 GameObject smallExplode = Instantiate(autoCannonPrefab, moduleSpawn, Quaternion.identity);
+                 hasAC = 1;
+            }
+            else
+            {
+                hasAC++;
+            }
+           
         }
         else if (Upgrade_chosen == "Auto Loader Module")
         {
-            UpgradesMenu.SetActive(false);
-            Debug.Log("Auto Loader Module");
-            towerTier++;
-            Vector3 moduleSpawn = new Vector3(-16, -6.2f, 0);
-            GameObject smallExplode = Instantiate(autoLoaderPrefab, moduleSpawn, Quaternion.identity);
+            if (hasAL == 0)
+            {
+                UpgradesMenu.SetActive(false);
+                Debug.Log("Auto Loader Module");
+                towerTier++;
+                Vector3 moduleSpawn = new Vector3(-16, -6.2f, 0);
+                GameObject smallExplode = Instantiate(autoLoaderPrefab, moduleSpawn, Quaternion.identity);
+                hasAL = 1;
+            }
+            else
+            {
+                hasAL++;
+            }
+            
         }
         else if (Upgrade_chosen == "Shield Gen Module")
         {
-            UpgradesMenu.SetActive(false);
-            Debug.Log("Shield Gen Module");
-            towerTier++;
-            Vector3 moduleSpawn = new Vector3(-16, -6.2f, 0);
-            GameObject smallExplode = Instantiate(shieldGenPrefab, moduleSpawn, Quaternion.identity);
+            if (hasShield == 0)
+            {
+                UpgradesMenu.SetActive(false);
+                Debug.Log("Shield Gen Module");
+                towerTier++;
+                Vector3 moduleSpawn = new Vector3(-16, -6.2f, 0);
+                GameObject smallExplode = Instantiate(shieldGenPrefab, moduleSpawn, Quaternion.identity);
+                hasShield = 1;
+            }
+            else
+            {
+                hasShield++;
+            }
+            
         }
+        audioSource.volume = 0.7f;
+        audioSource.PlayOneShot(upgrade);
         WaveBasedEnemySpawner.UpgradeRequest = false;
         DisplayUpgrades = false;
     }
 
-    // SHUFFLE LIST
-    public void ShuffleList(List<int> list)
+        // SHUFFLE LIST
+        public void ShuffleList(List<int> list)
     {
         for (int i = 0; i < list.Count; i++)
         {
@@ -303,7 +391,7 @@ public class UpgradeManager : MonoBehaviour
         }
 
         // Log the shuffled list for debugging
-        Debug.Log("Shuffled upgrade list: " + string.Join(", ", list));
+        //Debug.Log("Shuffled upgrade list: " + string.Join(", ", list));
     }
 
 

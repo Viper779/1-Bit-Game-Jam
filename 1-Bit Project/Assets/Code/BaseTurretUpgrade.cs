@@ -12,6 +12,8 @@ public class BaseTurretUpgrade : MonoBehaviour
     void Start()
     {
         gameObject.transform.position = new Vector3(-16, -4.5f, 0); // Reset to initial position
+        currentTier = 0;
+        UpgradeManager.towerTier = 0;
     }
 
     // Update is called once per frame
@@ -27,6 +29,12 @@ public class BaseTurretUpgrade : MonoBehaviour
             {
                 StartCoroutine(MoveDown());
             }
+        }
+
+        if (TurretHealth.isDestroyed)
+        {
+            currentTier = 0;
+            UpgradeManager.towerTier = 0;
         }
     }
 

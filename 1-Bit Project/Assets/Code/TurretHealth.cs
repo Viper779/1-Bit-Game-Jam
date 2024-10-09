@@ -56,6 +56,12 @@ public class TurretHealth : MonoBehaviour
         }
     }
 
+    public void GainHealth(int heal)
+    {
+        currentHealth += heal;
+
+    }
+
     void GameOver()
     {
         if (!isDestroyed) 

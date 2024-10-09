@@ -26,7 +26,10 @@ public class EnemyMovement : MonoBehaviour
 
     public int BulletDamage = 50;
     public float critChance = 0.2f; // 20% chance to crit
-    public float critMultiplier = 1.5f; 
+    public float critMultiplier = 1.5f;
+
+    public AudioSource audioSource;
+    public AudioClip HitSound;
 
     private void Start()
     {
@@ -45,6 +48,11 @@ public class EnemyMovement : MonoBehaviour
         BulletDamage = UpgradeManager.instance.upgradedBulletDamage;
         critChance = UpgradeManager.instance.upgradedCritMult;
         critMultiplier = UpgradeManager.instance.upgradedCritDmg;
+
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
     }
 
     private void Update()
@@ -120,6 +128,12 @@ public class EnemyMovement : MonoBehaviour
             {
                 currentFrame = 4;
                 spriteRenderer.sprite = KadzuAnimation[4];
+                if (!TurretHealth.isDestroyed)
+                {
+                    audioSource.volume = 1.0f;
+                    audioSource.PlayOneShot(HitSound);
+                }
+                
 
                 if (turretTransform != null)
                 {
@@ -167,6 +181,8 @@ public class EnemyMovement : MonoBehaviour
     public void TakeDamage(int damage)
     {
         // Check if this hit is a critical hit
+        audioSource.volume = 1.0f;
+        audioSource.PlayOneShot(HitSound);
         if (UnityEngine.Random.value < critChance)  // Random.value returns a float between 0.0 and 1.0
         {
             damage = Mathf.RoundToInt(damage * critMultiplier); // Apply crit multiplier

@@ -144,6 +144,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameRate: 0.1
-  shieldPrefabAnimation: []
+  shieldPrefabAnimation:
+  - {fileID: 1810709665985660029, guid: 9647ce1d0d520604d98a69271f22de3c, type: 3}
+  - {fileID: -1985492677994942841, guid: 9647ce1d0d520604d98a69271f22de3c, type: 3}
+  - {fileID: 1408148485456356368, guid: 9647ce1d0d520604d98a69271f22de3c, type: 3}
+  - {fileID: 5974083454189310022, guid: 9647ce1d0d520604d98a69271f22de3c, type: 3}
   spriteRenderer: {fileID: -2645020384841508606}
   shieldTime: 5

@@ -27,11 +27,13 @@ public class WaveBasedEnemySpawner : MonoBehaviour
     public Vector2 spawnAreaSize = new Vector2(5f, 2f); // Spawn area size
     public AudioSource audioSource; // Audio source for pre-wave sound
     public AudioClip preWaveSound; // Pre-wave sound clip
+    public AudioClip waveMusic;
     private float preWaveSoundDelay = 2f; // Delay for pre-wave sound
     public int currentWaveIndex = 0; // Current wave index
     private int totalEnemiesInWave = 0; // Total enemies in the current wave
     private int defeatedEnemiesInWave = 0; // Count of defeated enemies
     public static bool UpgradeRequest = false; // Upgrade request flag
+    public static bool winCond = false;
 
     void Start()
     {
@@ -46,52 +48,80 @@ public class WaveBasedEnemySpawner : MonoBehaviour
     private void Update()
     {
         if (SimplePauseManager.Instance.IsGamePaused()) return;
+        if (TurretHealth.isDestroyed)
+        {
+            audioSource.Stop();
+        }
     }
 
     IEnumerator SpawnWaves()
     {
         while (currentWaveIndex < waves.Count)
         {
+            float waitTime = waves[currentWaveIndex].timeBeforeNextWave;
             yield return StartCoroutine(SpawnWave(waves[currentWaveIndex]));
-
+            PlayPreWaveSound();
+            yield return new WaitForSecondsRealtime(waitTime);
+            PlayMusic();
             yield return new WaitUntil(() => defeatedEnemiesInWave >= totalEnemiesInWave);
+            audioSource.Stop();
             defeatedEnemiesInWave = 0;
             totalEnemiesInWave = 0;
 
             if (currentWaveIndex % 2 == 0 && currentWaveIndex < waves.Count - 1)
             {
+                audioSource.Stop();
                 UpgradeRequest = true;
                 Debug.Log($"Upgrade requested after wave {currentWaveIndex + 1}");
             }
             else
             {
+                audioSource.Stop();
                 UpgradeRequest = false;
             }
 
-            float waitTime = waves[currentWaveIndex].timeBeforeNextWave;
+            waitTime = waves[currentWaveIndex].timeBeforeNextWave;
             if (waitTime > preWaveSoundDelay)
             {
                 yield return new WaitForSecondsRealtime(waitTime - preWaveSoundDelay);
                 PlayPreWaveSound();
                 yield return new WaitForSecondsRealtime(preWaveSoundDelay);
+                PlayMusic();
             }
             else
             {
                 PlayPreWaveSound();
                 yield return new WaitForSecondsRealtime(waitTime);
+                PlayMusic();
             }
 
             currentWaveIndex++;
         }
-
+        audioSource.Stop();
         Debug.Log("All waves completed!");
+
+        winCond = true;
     }
 
     void PlayPreWaveSound()
     {
         if (preWaveSound != null && audioSource != null)
         {
+            audioSource.volume = 0.8f;
             audioSource.PlayOneShot(preWaveSound);
+        }
+        else
+        {
+            Debug.LogWarning("Pre-wave sound or AudioSource is missing!");
+        }
+    }
+
+    void PlayMusic()
+    {
+        if (preWaveSound != null && audioSource != null)
+        {
+            audioSource.volume = 0.7f;
+            audioSource.PlayOneShot(waveMusic);
         }
         else
         {

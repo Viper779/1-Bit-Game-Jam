@@ -39,9 +39,18 @@ public class DandelionMovement : MonoBehaviour
     public float initHGT = 15;
 
     private float verticalOffset = 0f; // To store the vertical offset based on noise
-    private float noiseScale = 0.5f; // Scale of the Perlin noise
+    private float noiseScale = 2.5f; // Scale of the Perlin noise
     private float verticalForceAmplitude = 1.5f; // Maximum vertical variation
     private float verticalSpeed = 0.5f; // Speed of vertical noise movement
+
+    public float rotationAmplitude = 10f; // Maximum rotation angle in degrees
+    public float rotationSpeed = 1f;      // Speed of the dithering motion
+
+    private float initialRotation = 0f; // Store the initial rotation of the sprite
+
+
+    public AudioClip flyingSounds;
+    public AudioClip healthUp;
 
 
     public GameObject explodePrefab;
@@ -79,7 +88,7 @@ public class DandelionMovement : MonoBehaviour
         }
         rb.gravityScale = 1;
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-        rb.freezeRotation = true;
+        rb.freezeRotation = false;
         currentHealth = maxHealth;
 
         // Assuming UpgradeManager.instance provides valid values
@@ -172,6 +181,10 @@ public class DandelionMovement : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            if (isHealType)
+            {
+                StartCoroutine(Explode());
+            }
             Die();
         }
     }
@@ -201,32 +214,40 @@ public class DandelionMovement : MonoBehaviour
         Vector2 direction = (turretTransform.position - transform.position).normalized;
         distanceToTurret = Vector2.Distance(transform.position, turretTransform.position);
 
-        //Debug.Log($"distance :{distanceToTurret}");
-
         // Update the verticalOffset based on Perlin noise
         verticalOffset += verticalSpeed * Time.deltaTime; // Increment offset over time
-        float verticalNoise = Mathf.PerlinNoise(verticalOffset, 0f) * verticalForceAmplitude * 2 - verticalForceAmplitude; // Range from -1.5 to 1.5
+        float verticalNoise = Mathf.PerlinNoise(verticalOffset, 0f) * verticalForceAmplitude * noiseScale - verticalForceAmplitude; // Range from -1.5 to 1.5
 
         // Set the horizontal velocity towards the turret
         if (distanceToTurret < 5.0f)
         {
             if (isHealType)
             {
-                rb.velocity = new Vector2(-3.0f, 0); // continue left off screen
+                rb.velocity = new Vector2(-3.0f, 0); // Continue left off screen
             }
             else
             {
-                rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y); //Dive behavior
+                rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y); // Dive behavior
                 spriteRenderer.sprite = dandFrames[1];
             }
-            
         }
-        else 
+        else
         {
-           rb.velocity = new Vector2(direction.x * moveSpeed, 2*verticalNoise);  //Normal sine wave movement
+            rb.velocity = new Vector2(direction.x * moveSpeed, 2 * verticalNoise - 0.4f); // Normal sine wave movement
+
+            // Only play the audio if it's not already playing
+            if (!audioSource.isPlaying && !TurretHealth.isDestroyed)
+            {
+                audioSource.volume = 0.2f;
+                audioSource.PlayOneShot(flyingSounds);
+            }
+
+            // Dithering rotation
+            float rotationAngle = Mathf.Sin(Time.time * rotationSpeed) * rotationAmplitude;
+            transform.rotation = Quaternion.Euler(0, 0, initialRotation + rotationAngle);
         }
-        
     }
+
 
     private IEnumerator Explode()
     {
@@ -246,7 +267,9 @@ public class DandelionMovement : MonoBehaviour
         if (isHealType)
         {
             TurretHealth turretHealth = turretTransform.GetComponent<TurretHealth>();
-            turretHealth.TakeDamage(healAmount);
+            turretHealth.GainHealth(healAmount);
+            audioSource.volume = 1.0f;
+            audioSource.PlayOneShot(healthUp);
         }
 
         // Visual effect for explosion (you can replace this with a particle system)

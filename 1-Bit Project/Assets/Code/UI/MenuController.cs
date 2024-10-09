@@ -5,6 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
+    public AudioSource audioSource;
+    public AudioClip titleMusic;
+
+    void Start()
+    {
+        // Set the audio source to loop the title music
+        audioSource.volume = 0.6f;
+        audioSource.clip = titleMusic; // Assign the title music to the audio source
+        audioSource.loop = true;       // Enable looping
+        audioSource.Play();            // Play the music
+    }
+
     public void PlayGame()
     {
         StartCoroutine(WaitOneSecond());       
