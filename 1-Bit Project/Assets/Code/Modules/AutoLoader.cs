@@ -12,7 +12,11 @@ public class AutoLoader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayAnimation();
+        while (ShootProjectile.shootNow)
+        {
+            PlayAnimation();
+        }
+
     }
 
 

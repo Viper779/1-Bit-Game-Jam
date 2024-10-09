@@ -315,6 +315,7 @@ GameObject:
   - component: {fileID: 342088549}
   - component: {fileID: 342088551}
   - component: {fileID: 342088550}
+  - component: {fileID: 342088552}
   m_Layer: 5
   m_Name: ResumeButton (1)
   m_TagString: Untagged
@@ -379,6 +380,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 342088548}
   m_CullTransparentMesh: 1
+--- !u!114 &342088552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342088548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627379642fc63554fbb5b9a48e41f801, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image:
+  - {fileID: -214826430979183243, guid: 1084894eea0764c4f9a1247d1b9dc2ed, type: 3}
+  - {fileID: 3543215468976423905, guid: 1084894eea0764c4f9a1247d1b9dc2ed, type: 3}
+  imageNumber: 0
+  imageComponent: {fileID: 342088550}
+  currentFrame: 0
 --- !u!1 &383648307
 GameObject:
   m_ObjectHideFlags: 0
@@ -1674,6 +1693,7 @@ MonoBehaviour:
   preWaveSound: {fileID: 8300000, guid: 1467f7cb51a08e84cb19ed142d753435, type: 3}
   waveMusic: {fileID: 8300000, guid: 2c9397a6c4d80a144a47742a2f9a4415, type: 3}
   currentWaveIndex: 0
+  inspectorGameObject: {fileID: 0}
 --- !u!82 &924319092
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2310,6 +2330,7 @@ GameObject:
   - component: {fileID: 1162393933}
   - component: {fileID: 1162393935}
   - component: {fileID: 1162393934}
+  - component: {fileID: 1162393936}
   m_Layer: 5
   m_Name: GameObject
   m_TagString: Untagged
@@ -2374,6 +2395,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1162393932}
   m_CullTransparentMesh: 1
+--- !u!114 &1162393936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1162393932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 671fbe435d5368c4da85251ca5b5a6cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiImage: {fileID: 1162393934}
 --- !u!1 &1393207815
 GameObject:
   m_ObjectHideFlags: 0

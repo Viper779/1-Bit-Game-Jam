@@ -121,7 +121,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: GameOver
+  - name: Frame_0
     originalName: 
     pivot: {x: 0.4803922, y: -0.35}
     alignment: 9
@@ -132,7 +132,7 @@ ScriptedImporter:
       y: 4
       width: 102
       height: 20
-    spriteID: 9ef1399fbe2495445892d9d67a3aa528
+    spriteID: 609df26027f2c0447ba79188c959c9f8
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -141,6 +141,26 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
+  - name: Frame_1
+    originalName: 
+    pivot: {x: 0.49038464, y: -0.36842105}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 32
+      width: 104
+      height: 19
+    spriteID: 4a182f15c89a9fc458e8e3bebab45e51
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 32}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
@@ -150,7 +170,7 @@ ScriptedImporter:
     layerType: 0
     blendMode: 0
     cells:
-    - name: GameOver
+    - name: Frame_0
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -158,7 +178,16 @@ ScriptedImporter:
         y: 7
         width: 102
         height: 20
-      spriteId: 9ef1399fbe2495445892d9d67a3aa528
+      spriteId: 609df26027f2c0447ba79188c959c9f8
+    - name: Frame_1
+      frameIndex: 1
+      additiveSortOrder: 0
+      cellRect:
+        x: 13
+        y: 7
+        width: 104
+        height: 19
+      spriteId: 4a182f15c89a9fc458e8e3bebab45e51
     linkedCells: []
     parentIndex: -1
   platformSettings:
