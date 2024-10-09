@@ -1316,7 +1316,7 @@ GameObject:
   - component: {fileID: 827439677}
   m_Layer: 5
   m_Name: GameOverScreen
-  m_TagString: Untagged
+  m_TagString: GameOver
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1920,7 +1920,7 @@ MonoBehaviour:
   audioSource: {fileID: 1079190845}
   GameOverSound: {fileID: 8300000, guid: 3e03c55f4d310ea479f09a5f7e8ffb1a, type: 3}
   SoundDelay: 2
-  GameOverScreen: {fileID: 827439676}
+  inspectorGameObject: {fileID: 827439676}
 --- !u!82 &1079190845
 AudioSource:
   m_ObjectHideFlags: 0

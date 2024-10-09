@@ -4,7 +4,7 @@ public class SimplePauseManager : MonoBehaviour
 {
     public static SimplePauseManager Instance { get; private set; }
 
-    private bool isPaused = false;
+    public static bool isPaused = false;
 
     // Reference to your pause menu UI
     public GameObject pauseMenuUI;

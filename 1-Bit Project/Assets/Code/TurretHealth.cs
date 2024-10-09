@@ -9,14 +9,19 @@ public class TurretHealth : MonoBehaviour
     public static bool isDestroyed = false;
     public SpriteRenderer spriteRenderer; // Reference to the SpriteRenderer
 
+
+
     public AudioSource audioSource;
     public AudioClip GameOverSound;
     public float SoundDelay = 2f;
-    public GameObject GameOverScreen;
+
+    [SerializeField] private GameObject inspectorGameObject;
+    public static GameObject GameOverScreen;
 
     // Start is called before the first frame update
     void Start()
     {
+        GameOverScreen = inspectorGameObject;
         isDestroyed = false;
         spriteRenderer.enabled = true;  // This shows the sprite again
         currentHealth = maxHealth;
@@ -62,6 +67,5 @@ public class TurretHealth : MonoBehaviour
         isDestroyed = true;
 
         spriteRenderer.enabled = false;  // Hide Sprite
-
     }
 }
