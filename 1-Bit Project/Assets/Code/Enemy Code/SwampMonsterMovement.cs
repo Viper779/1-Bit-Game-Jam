@@ -70,6 +70,8 @@ public class EnemyMovement : MonoBehaviour
         }
         if (currentHealth <= 0)
         {
+            rb.velocity = new Vector2(0, 0);
+            rb.isKinematic = true;
             PlayDeathAnimation();
         }
 

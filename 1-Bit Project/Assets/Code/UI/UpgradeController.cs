@@ -55,10 +55,10 @@ public class UpgradeManager : MonoBehaviour
     public GameObject shieldGenPrefab;
     public GameObject botFactPrefab;
 
-    private int hasShield;
-    private int hasAC;
-    private int hasAL;
-    private int hasRF;
+    public static int hasShield;
+    public static int hasAC;
+    public static int hasAL;
+    public static int hasRF;
 
     public AudioSource audioSource;
     public AudioClip upgrade;

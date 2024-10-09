@@ -21,6 +21,7 @@ public class GunTurretAnimations : MonoBehaviour
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.enabled = true;
         if (spriteRenderer == null)
         {
             Debug.LogError("SpriteRenderer component not found on this GameObject!");
@@ -70,6 +71,11 @@ public class GunTurretAnimations : MonoBehaviour
             PlayFiringAnimation();
 
         }
+
+        if (TurretHealth.isDestroyed)
+        {
+            spriteRenderer.enabled = false;
+        }
     }
 
     void PlayChargeSound()
@@ -117,7 +123,7 @@ public class GunTurretAnimations : MonoBehaviour
     void PlayFiringAnimation()
     {
         frameTimer -= Time.deltaTime;
-        if (frameTimer <= 0f)
+        if (frameTimer <= 0f && ShootProjectile.shootNow)
         {
             frameTimer += frameRate;
 
@@ -132,6 +138,8 @@ public class GunTurretAnimations : MonoBehaviour
                 isFiring = false;
                 audioSource.Stop();
                 currentFrame = 0;
+                spriteRenderer.sprite = reloadAnimation[currentFrame];
+                ShootProjectile.shootNow = false;
             }
         }
     }

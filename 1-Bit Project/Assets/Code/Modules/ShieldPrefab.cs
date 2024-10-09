@@ -10,12 +10,16 @@ public class ShieldPrefab : MonoBehaviour
     private int currentFrame = 0;                   // Tracks the current frame in animation
     private float frameTimer;                       // Timer to control frame rate
 
-    [SerializeField] private float shieldTime = 5f; // Duration the shield will exist for
+    private float shieldTime = 3f; // Duration the shield will exist for
+
+
 
     // Start is called before the first frame update
     void Start()
     {
         frameTimer = frameRate;
+        shieldTime = UpgradeManager.hasShield * 3f;
+
     }
 
     // Update is called once per frame
@@ -29,6 +33,7 @@ public class ShieldPrefab : MonoBehaviour
         // Destroy the shield prefab when shieldTime runs out
         if (shieldTime <= 0f)
         {
+            ShieldGenerator.numShields--;
             Destroy(gameObject);
         }
     }

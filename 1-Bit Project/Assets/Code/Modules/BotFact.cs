@@ -36,11 +36,14 @@ public class BotFactory : MonoBehaviour
             Debug.Log("No enemies present.");
             spriteRenderer.sprite = factoryAnimation[0]; // Display default frame when no enemies
         }
+
+        
     }
 
     // Fire the bullet at the enemy
     void SpawnBot()
     {
+        spawnDelay = 3f / (float)UpgradeManager.hasRF;
         // Set the next time the bullet can fire
         nextFireTime = Time.time + spawnDelay;
 

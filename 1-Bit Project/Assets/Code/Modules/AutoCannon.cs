@@ -39,6 +39,9 @@ public class NearestEnemyDetector : MonoBehaviour
             Debug.Log("No enemies present.");
             spriteRenderer.sprite = Dakka[0];  // Display default frame when no enemies
         }
+
+        bulletSpeed = (float)UpgradeManager.hasAC * 10;
+        fireDelay = 0.5f / (float)UpgradeManager.hasAC;
     }
 
     // Fire the bullet at the enemy
@@ -104,7 +107,8 @@ public class NearestEnemyDetector : MonoBehaviour
     // Calculates the direction to the nearest enemy
     Vector3 GetDirectionToEnemy(GameObject enemy)
     {
-        Vector3 direction = (enemy.transform.position - transform.position).normalized;
+        Vector3 adjust = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z);
+        Vector3 direction = (enemy.transform.position - adjust).normalized;
         return direction;
     }
 }

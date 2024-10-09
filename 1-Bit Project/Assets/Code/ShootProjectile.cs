@@ -17,9 +17,14 @@ public class ShootProjectile : MonoBehaviour
     private float chargeTime = 0f;         // Time the mouse button is held down
     public float minChargeTime = 0f;     // Minimum time to consider as a charge
 
+    public static bool shootNow = false;
+
+    private int bulletCount = 0;
+
     void Start()
     {
         canFire = true;                    // Initially, the player can fire
+        shootNow = false;
     }
 
     void PlayShootSound()
@@ -72,14 +77,44 @@ public class ShootProjectile : MonoBehaviour
         }
     }
 
+    IEnumerator RapidFire()
+    {
+        if(bulletCount%3 == 0)
+        {
+            for (int i = 0; i < UpgradeManager.hasAL; i++)
+            {
+                yield return new WaitForSeconds(0.3f);
+                GameObject bullet = Instantiate(BaseBullet, fireLocation.position, fireLocation.rotation);
+
+                BulletBehavior bulletBehavior = bullet.GetComponent<BulletBehavior>();
+                if (bulletBehavior != null)
+                {
+                    bulletBehavior.Initialize(chargeTime); // Pass charge time to the bullet
+                }
+                else
+                {
+                    Debug.LogWarning("BulletBehavior component not found on the instantiated bullet!");
+                }
+                Debug.Log("RapidFire");
+                PlayShootSound();
+            }
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
     void Shoot()
     {
+        shootNow = true;
         // Play shoot sound
         PlayShootSound();
 
         // Instantiate the bullet with the fireLocation's rotation
         GameObject bullet = Instantiate(BaseBullet, fireLocation.position, fireLocation.rotation);
-
+        bulletCount++;
+        StartCoroutine(RapidFire());
         // Retrieve the BulletBehavior component and initialize it with the charge time
         BulletBehavior bulletBehavior = bullet.GetComponent<BulletBehavior>();
         if (bulletBehavior != null)

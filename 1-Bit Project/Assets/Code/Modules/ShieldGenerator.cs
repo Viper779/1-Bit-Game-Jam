@@ -9,13 +9,18 @@ public class ShieldGenerator : MonoBehaviour
     private int currentFrame;
     private float frameTimer;
     public GameObject shieldPrefab;
+    static public int numShields;
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            MakeShield();
+            if(numShields < UpgradeManager.hasShield)
+            {
+                MakeShield();
+                numShields++;
+            }
         }
 
         PlayAnimation(); // If you want the animation to continuously play

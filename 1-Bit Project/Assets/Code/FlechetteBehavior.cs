@@ -11,7 +11,6 @@ public class FlechetteBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         boxCollider = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         // Check if Rigidbody2D is found
@@ -19,6 +18,9 @@ public class FlechetteBehavior : MonoBehaviour
         {
             Debug.LogError("Rigidbody2D not found!");
         }
+
+        // Destroy the prefab after 5 seconds
+        Destroy(gameObject, 5f);
     }
 
     // Update is called once per frame

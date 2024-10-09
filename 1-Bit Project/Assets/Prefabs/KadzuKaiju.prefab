@@ -51,7 +51,7 @@ MonoBehaviour:
   moveSpeed: 3
   maxHealth: 60
   currentHealth: 0
-  deathDelay: 3
+  deathDelay: 1.3
   attackDamage: 100
   frameRate: 0.4
   KadzuAnimation:
@@ -72,7 +72,6 @@ MonoBehaviour:
   critMultiplier: 1.5
   audioSource: {fileID: -2784799536249861717}
   HitSound: {fileID: 8300000, guid: 0535601139d16f44e952d8b07bf6be67, type: 3}
-  Roar: {fileID: 8300000, guid: e1533108b7d61a046a5679a5a42d4060, type: 3}
 --- !u!50 &5886639512258024264
 Rigidbody2D:
   serializedVersion: 4
