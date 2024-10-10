@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CustomCursor : MonoBehaviour
 {
@@ -26,6 +27,12 @@ public class CustomCursor : MonoBehaviour
 
     private void Update()
     {
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            // Enable the cursor and make it visible
+            currentFrame = 0;
+        }
+
         if (cursorTextureArray.Length == 0) return;
 
         if (isPlayingClickAnimation)
