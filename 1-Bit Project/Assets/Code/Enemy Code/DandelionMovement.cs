@@ -58,6 +58,7 @@ public class DandelionMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        moveSpeed = 2f + ((float)WaveBasedEnemySpawner.currentWaveIndex*0.5f);
 
         gameObject.transform.Translate(new Vector3(0, initHGT, 0));
 

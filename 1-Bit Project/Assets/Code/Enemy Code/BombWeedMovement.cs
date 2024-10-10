@@ -61,6 +61,9 @@ public class BouncingEnemyAI : MonoBehaviour
         BulletDamage = UpgradeManager.instance.upgradedBulletDamage;
         critChance = UpgradeManager.instance.upgradedCritMult;
         critMultiplier = UpgradeManager.instance.upgradedCritDmg;
+
+        moveSpeed = 2f + ((float)WaveBasedEnemySpawner.currentWaveIndex * 0.5f);
+        bounceForce = 3f + ((float)WaveBasedEnemySpawner.currentWaveIndex * 0.5f);
     }
 
     void Update()

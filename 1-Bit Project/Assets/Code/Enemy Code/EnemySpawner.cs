@@ -29,7 +29,7 @@ public class WaveBasedEnemySpawner : MonoBehaviour
     public AudioClip preWaveSound; // Pre-wave sound clip
     public AudioClip waveMusic;
     private float preWaveSoundDelay = 2f; // Delay for pre-wave sound
-    public int currentWaveIndex = 0; // Current wave index
+    public static int currentWaveIndex = 0; // Current wave index
     private int totalEnemiesInWave = 0; // Total enemies in the current wave
     private int defeatedEnemiesInWave = 0; // Count of defeated enemies
     public static bool UpgradeRequest = false; // Upgrade request flag
@@ -40,6 +40,8 @@ public class WaveBasedEnemySpawner : MonoBehaviour
 
     void Start()
     {
+        currentWaveIndex = 0;
+
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
@@ -56,6 +58,7 @@ public class WaveBasedEnemySpawner : MonoBehaviour
         {
             audioSource.Stop();
         }
+
     }
 
     IEnumerator SpawnWaves()

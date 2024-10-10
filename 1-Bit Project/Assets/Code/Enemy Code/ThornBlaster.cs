@@ -12,12 +12,12 @@ public class ThornBlasterMovement : MonoBehaviour
     private bool touchTurret = false;
     private float distanceToTurret;
 
-    public int maxHealth = 60;
+    public int maxHealth = 150;
     public int currentHealth;
     public float deathDelay = 1f; // Time to delay before destroying the enemy after death
 
     public event Action OnEnemyDestroyed;
-    public int attackDamage = 100;
+    public int attackDamage = 50;
 
     [SerializeField] private float frameRate = 0.1f;
     [SerializeField] private Sprite[] KadzuAnimation;
@@ -34,6 +34,7 @@ public class ThornBlasterMovement : MonoBehaviour
 
     private void Start()
     {
+        maxHealth = 150 + (WaveBasedEnemySpawner.currentWaveIndex * 15);
         rb = GetComponent<Rigidbody2D>();
         rb.constraints = RigidbodyConstraints2D.FreezeRotation; // Only freeze rotation, not Y movement
         playerTower = GameObject.FindGameObjectWithTag("Turret")?.transform;

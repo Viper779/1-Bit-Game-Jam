@@ -33,6 +33,8 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
+        moveSpeed = 2f + ((float)WaveBasedEnemySpawner.currentWaveIndex * 0.25f);
+        maxHealth = 60 + (WaveBasedEnemySpawner.currentWaveIndex * 10);
         rb = GetComponent<Rigidbody2D>();
         rb.constraints = RigidbodyConstraints2D.FreezeRotation; // Only freeze rotation, not Y movement
         playerTower = GameObject.FindGameObjectWithTag("Turret")?.transform;
