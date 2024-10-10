@@ -163,7 +163,8 @@ public class BulletBehavior : MonoBehaviour
            
             if (bulletType == 2) //If Timed Fuse Imbed Shell Into Ground
             {
-                boxCollider.size = new Vector2(boxCollider.size.x * (specialStat * 5), boxCollider.size.y * (specialStat * 3));
+                Debug.Log($"SpecialStat: {specialStat}");
+                boxCollider.size = new Vector2(boxCollider.size.x * ((specialStat+1) * 2), boxCollider.size.y * ((specialStat+1) * 2));
                 if (!isExploding)
                 {
                     GameObject smallExplode = Instantiate(explodePrefab, transform.position, transform.rotation);
@@ -194,7 +195,7 @@ public class BulletBehavior : MonoBehaviour
 
             if (bulletType == 2) //Exploding Shell Logic
             {
-                boxCollider.size = new Vector2(boxCollider.size.x * (specialStat*5), boxCollider.size.y * (specialStat*3));
+                boxCollider.size = new Vector2(boxCollider.size.x * ((specialStat + 1) * 2), boxCollider.size.y * ((specialStat + 1) * 2));
                 if (!isExploding) 
                 { 
                     GameObject smallExplode = Instantiate(explodePrefab, transform.position, transform.rotation);
