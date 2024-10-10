@@ -186,7 +186,7 @@ MonoBehaviour:
   audioSource: {fileID: 7005496247919739374}
   BombSound: {fileID: 8300000, guid: 5b37f0b39c7eb4644a2028e3af4f69ff, type: 3}
   BombSoundDelay: 2
-  initHGT: 6
+  initHGT: 5
   rotationAmplitude: 10
   rotationSpeed: 1
   flyingSounds: {fileID: 8300000, guid: 73d6e22fcf1dae249898f1b7012763a2, type: 3}

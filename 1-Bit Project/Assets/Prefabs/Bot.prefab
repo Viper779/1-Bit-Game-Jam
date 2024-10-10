@@ -134,7 +134,7 @@ MonoBehaviour:
   moveSpeed: 2
   currentHealth: 100
   bulletSpeed: 20
-  fireDelay: 0.6
+  fireDelay: 1
   yOffset: 0.3
   explodePrefab: {fileID: 8164761126315784280, guid: 3dcdd80bf9a51db41afa52354f7b9c2e, type: 3}
   smallBulletPrefab: {fileID: 329379305069630311, guid: f91b8241727a57645afe1e18abe1f40b, type: 3}
