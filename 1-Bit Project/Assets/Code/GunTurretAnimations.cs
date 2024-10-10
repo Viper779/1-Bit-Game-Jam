@@ -51,7 +51,7 @@ public class GunTurretAnimations : MonoBehaviour
         {
             isFiring = true;
             StartCoroutine(PlayFiringAnimation());
-            Debug.Log("Fire");
+            //Debug.Log("Fire");
             isMouseHeld = false;
             audioSource.Stop();
         }

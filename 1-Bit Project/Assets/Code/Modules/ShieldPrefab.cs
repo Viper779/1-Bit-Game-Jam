@@ -12,11 +12,14 @@ public class ShieldPrefab : MonoBehaviour
 
     private float shieldTime = 3f; // Duration the shield will exist for
 
-
+    public AudioSource audioSource;
+    public AudioClip shieldSound;
 
     // Start is called before the first frame update
     void Start()
     {
+        audioSource.volume = 0.7f;
+        audioSource.PlayOneShot(shieldSound);
         frameTimer = frameRate;
         shieldTime = UpgradeManager.hasShield * 3f;
 

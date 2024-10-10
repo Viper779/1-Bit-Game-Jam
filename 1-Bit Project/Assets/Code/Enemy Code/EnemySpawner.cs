@@ -58,7 +58,6 @@ public class WaveBasedEnemySpawner : MonoBehaviour
         {
             audioSource.Stop();
         }
-
     }
 
     IEnumerator SpawnWaves()
@@ -75,14 +74,22 @@ public class WaveBasedEnemySpawner : MonoBehaviour
 
             if (currentWaveIndex < waves.Count - 1)
             {
+                yield return new WaitForSecondsRealtime(2);
                 audioSource.Stop();
                 UpgradeRequest = true;
                 Debug.Log($"Upgrade requested after wave {currentWaveIndex + 1}");
+
+                // Wait until the upgrades are no longer displayed
+                while (UpgradeManager.DisplayUpgrades)
+                {
+                    Debug.Log("waiting");
+                    yield return null; // Yield until the next frame
+                }
             }
             else
             {
                 audioSource.Stop();
-                UpgradeRequest = false;
+                //UpgradeRequest = false;
             }
 
             waitTime = waves[currentWaveIndex].timeBeforeNextWave;
@@ -125,20 +132,20 @@ public class WaveBasedEnemySpawner : MonoBehaviour
 
     void PlayMusic()
     {
-        if (preWaveSound != null && audioSource != null)
+        if (waveMusic != null && audioSource != null)
         {
             audioSource.volume = 0.7f;
             audioSource.PlayOneShot(waveMusic);
         }
         else
         {
-            Debug.LogWarning("Pre-wave sound or AudioSource is missing!");
+            Debug.LogWarning("Wave music or AudioSource is missing!");
         }
     }
 
     IEnumerator SpawnWave(Wave wave)
     {
-        UpgradeRequest = false;
+        //UpgradeRequest = false;
         Debug.Log($"Starting Wave {currentWaveIndex + 1}");
 
         foreach (var enemyType in wave.enemies)
@@ -221,7 +228,6 @@ public class WaveBasedEnemySpawner : MonoBehaviour
             defeatedEnemiesInWave++;
         }
     }
-
 
     void HandleEnemyDestroyed(EnemyType enemyType)
     {

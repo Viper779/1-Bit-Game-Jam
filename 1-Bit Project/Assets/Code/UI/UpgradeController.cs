@@ -113,7 +113,7 @@ public class UpgradeManager : MonoBehaviour
         {
             WaveBasedEnemySpawner.UpgradeRequest = true;
         }
-        Debug.Log($"Forbid: {string.Join(", ", forbid)}");
+        //Debug.Log($"Forbid: {string.Join(", ", forbid)}");
 
     }
 
