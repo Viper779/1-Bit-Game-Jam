@@ -3,15 +3,12 @@ using System.Collections;
 
 public class NearestEnemyDetector : MonoBehaviour
 {
-    [SerializeField] private float frameRate = 0.1f;
     [SerializeField] private Sprite[] Dakka;
     public SpriteRenderer spriteRenderer;
     private int currentFrame;
-    private float frameTimer;
     public float bulletSpeed = 10f;
     public float fireDelay = 0.5f; // Delay between shots
     public float yOffset = 1.0f; // Y offset for projectiles
-    private bool isFiring = false;
 
     private float nextFireTime = 0f; // Time when the next shot can be fired
 
@@ -27,12 +24,8 @@ public class NearestEnemyDetector : MonoBehaviour
             
             // Start coroutine to fire bullets with delay
             FireAtEnemy(directionToEnemy);
-            if (!isFiring)
-            {
-                isFiring = true;
-                PlayAnimation();
-            }
-            
+            StartCoroutine(PlayAnimation());
+
         }
         else if (nearestEnemy == null)
         {
@@ -41,6 +34,12 @@ public class NearestEnemyDetector : MonoBehaviour
         }
 
         bulletSpeed = (float)UpgradeManager.hasAC * 10;
+
+        if (bulletSpeed > 25)
+        {
+            bulletSpeed = 25;
+        }
+
         fireDelay = 0.5f / (float)UpgradeManager.hasAC;
     }
 
@@ -84,24 +83,21 @@ public class NearestEnemyDetector : MonoBehaviour
     // Plays the frame animation
     IEnumerator PlayAnimation()
     {
-        frameTimer -= Time.deltaTime;
-        if (frameTimer <= 0f)
-        {
-            frameTimer += frameRate;
-            if (currentFrame < Dakka.Length)
-            {
-                spriteRenderer.sprite = Dakka[currentFrame];
-                currentFrame++;
-            }
-            else
-            {
-                currentFrame = 0; // Reset to the beginning of the animation
-                spriteRenderer.sprite = Dakka[currentFrame];
-                isFiring = false;
+        spriteRenderer.sprite = Dakka[0];
+        currentFrame++;
+        yield return new WaitForSeconds(0.1f);
 
-                yield return new WaitForSeconds(fireDelay);
-            }
-        }
+        spriteRenderer.sprite = Dakka[1];
+        currentFrame++;
+        yield return new WaitForSeconds(0.1f);
+
+        spriteRenderer.sprite = Dakka[2];
+        currentFrame++;
+        yield return new WaitForSeconds(0.1f);
+
+        spriteRenderer.sprite = Dakka[3];
+        currentFrame++;
+        yield return new WaitForSeconds(0.1f);
     }
 
     // Calculates the direction to the nearest enemy

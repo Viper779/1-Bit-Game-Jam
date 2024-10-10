@@ -18,6 +18,7 @@ public class ShootProjectile : MonoBehaviour
     public float minChargeTime = 0f;     // Minimum time to consider as a charge
 
     public static bool shootNow = false;
+    public int relRate;
 
     private int bulletCount = 0;
 
@@ -41,6 +42,8 @@ public class ShootProjectile : MonoBehaviour
 
     void Update()
     {
+        relRate = UpgradeManager.instance.upgradedReloadRate;
+        ShootingCD = 1.4f/(relRate+1);
         // Handle the cooldown timer
         if (!canFire)
         {
@@ -61,7 +64,7 @@ public class ShootProjectile : MonoBehaviour
 
         if (isMouseHeld)
         {
-            chargeTime += Time.deltaTime; // Increment charge time
+            chargeTime += Time.deltaTime*(1+relRate); // Increment charge time
         }
 
         if (Input.GetMouseButtonUp(0))

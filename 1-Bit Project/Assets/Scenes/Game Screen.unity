@@ -1037,7 +1037,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameRate: 0.16
-  cooldownTime: 1.4
   reloadAnimation:
   - {fileID: -2487029646971413728, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
   - {fileID: 6110389892029801017, guid: 81ea0d99817b6354a856bb42c4184892, type: 3}
@@ -1051,6 +1050,7 @@ MonoBehaviour:
   audioSource: {fileID: 712300925}
   ChargeSound: {fileID: 8300000, guid: bbc1ecfe9053c644a9cb23daf722d6c2, type: 3}
   ChargeSoundDelay: 2
+  cycle: 0
 --- !u!82 &712300925
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1249,6 +1249,7 @@ MonoBehaviour:
   audioSource: {fileID: 924319092}
   ShootSound: {fileID: 8300000, guid: 1a78fae8b2747c84d8649a9af83a18c1, type: 3}
   minChargeTime: 0
+  relRate: 0
 --- !u!1 &783915437
 GameObject:
   m_ObjectHideFlags: 0
@@ -1601,116 +1602,116 @@ MonoBehaviour:
   - enemies:
     - enemyPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
       baseEnemyCount: 2
-      spawnChance: 0.503
+      spawnChance: 0.5
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 4386000277028358810, guid: 6b38773158f954240af7b6d543a7e8f5, type: 3}
       baseEnemyCount: 1
-      spawnChance: 0.462
+      spawnChance: 0.5
       currentEnemyCount: 0
     timeBetweenSpawns: 0.5
     timeBeforeNextWave: 8
   - enemies:
     - enemyPrefab: {fileID: 4386000277028358810, guid: 6b38773158f954240af7b6d543a7e8f5, type: 3}
       baseEnemyCount: 4
-      spawnChance: 0.487
+      spawnChance: 0.5
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
       baseEnemyCount: 2
-      spawnChance: 0.439
+      spawnChance: 0.5
       currentEnemyCount: 0
     timeBetweenSpawns: 0.5
     timeBeforeNextWave: 10
   - enemies:
     - enemyPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
       baseEnemyCount: 2
-      spawnChance: 0.306
+      spawnChance: 0.333
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 4386000277028358810, guid: 6b38773158f954240af7b6d543a7e8f5, type: 3}
       baseEnemyCount: 3
-      spawnChance: 0.312
+      spawnChance: 0.333
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 1767287629799816917, guid: e36c402cc9bb645418c3a26df1ba6fc5, type: 3}
       baseEnemyCount: 1
-      spawnChance: 0.599
+      spawnChance: 0.333
       currentEnemyCount: 0
     timeBetweenSpawns: 0.5
     timeBeforeNextWave: 10
   - enemies:
     - enemyPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
       baseEnemyCount: 2
-      spawnChance: 0.338
+      spawnChance: 0.333
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 4386000277028358810, guid: 6b38773158f954240af7b6d543a7e8f5, type: 3}
       baseEnemyCount: 3
-      spawnChance: 0.315
+      spawnChance: 0.333
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 1767287629799816917, guid: e36c402cc9bb645418c3a26df1ba6fc5, type: 3}
       baseEnemyCount: 2
-      spawnChance: 0.382
+      spawnChance: 0.333
       currentEnemyCount: 0
     timeBetweenSpawns: 0.5
     timeBeforeNextWave: 10
   - enemies:
     - enemyPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
       baseEnemyCount: 10
-      spawnChance: 0.36
+      spawnChance: 0.333
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 4386000277028358810, guid: 6b38773158f954240af7b6d543a7e8f5, type: 3}
       baseEnemyCount: 5
-      spawnChance: 0.366
+      spawnChance: 0.333
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 1767287629799816917, guid: e36c402cc9bb645418c3a26df1ba6fc5, type: 3}
       baseEnemyCount: 4
-      spawnChance: 0.354
+      spawnChance: 0.333
       currentEnemyCount: 0
     timeBetweenSpawns: 0.6
     timeBeforeNextWave: 10
   - enemies:
     - enemyPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
       baseEnemyCount: 8
-      spawnChance: 0.322
+      spawnChance: 0.333
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 4386000277028358810, guid: 6b38773158f954240af7b6d543a7e8f5, type: 3}
       baseEnemyCount: 12
-      spawnChance: 0.344
+      spawnChance: 0.333
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 1767287629799816917, guid: e36c402cc9bb645418c3a26df1ba6fc5, type: 3}
       baseEnemyCount: 5
-      spawnChance: 0.315
+      spawnChance: 0.333
       currentEnemyCount: 0
     timeBetweenSpawns: 0.8
     timeBeforeNextWave: 10
   - enemies:
     - enemyPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
       baseEnemyCount: 8
-      spawnChance: 0.322
+      spawnChance: 0.333
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 4386000277028358810, guid: 6b38773158f954240af7b6d543a7e8f5, type: 3}
       baseEnemyCount: 12
-      spawnChance: 0.344
+      spawnChance: 0.333
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 1767287629799816917, guid: e36c402cc9bb645418c3a26df1ba6fc5, type: 3}
       baseEnemyCount: 5
-      spawnChance: 0.315
+      spawnChance: 0.333
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 4386000277028358810, guid: 068f97b86ae84f44ba9d856c2a921377, type: 3}
       baseEnemyCount: 2
-      spawnChance: 0.315
+      spawnChance: 0.333
       currentEnemyCount: 0
     timeBetweenSpawns: 0.8
     timeBeforeNextWave: 10
   - enemies:
     - enemyPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
       baseEnemyCount: 8
-      spawnChance: 0.322
+      spawnChance: 0.33
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 4386000277028358810, guid: 6b38773158f954240af7b6d543a7e8f5, type: 3}
       baseEnemyCount: 12
-      spawnChance: 0.344
+      spawnChance: 0.33
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 1767287629799816917, guid: e36c402cc9bb645418c3a26df1ba6fc5, type: 3}
       baseEnemyCount: 5
-      spawnChance: 0.315
+      spawnChance: 0.33
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 4386000277028358810, guid: 068f97b86ae84f44ba9d856c2a921377, type: 3}
       baseEnemyCount: 2
@@ -1721,38 +1722,38 @@ MonoBehaviour:
   - enemies:
     - enemyPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
       baseEnemyCount: 16
-      spawnChance: 0.322
+      spawnChance: 0.25
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 4386000277028358810, guid: 6b38773158f954240af7b6d543a7e8f5, type: 3}
       baseEnemyCount: 15
-      spawnChance: 0.344
+      spawnChance: 0.25
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 1767287629799816917, guid: e36c402cc9bb645418c3a26df1ba6fc5, type: 3}
       baseEnemyCount: 5
-      spawnChance: 0.315
+      spawnChance: 0.25
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 4386000277028358810, guid: 068f97b86ae84f44ba9d856c2a921377, type: 3}
       baseEnemyCount: 5
-      spawnChance: 0.315
+      spawnChance: 0.25
       currentEnemyCount: 0
     timeBetweenSpawns: 0.6
     timeBeforeNextWave: 10
   - enemies:
     - enemyPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
       baseEnemyCount: 20
-      spawnChance: 0.322
+      spawnChance: 0.25
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 4386000277028358810, guid: 6b38773158f954240af7b6d543a7e8f5, type: 3}
       baseEnemyCount: 20
-      spawnChance: 0.344
+      spawnChance: 0.25
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 1767287629799816917, guid: e36c402cc9bb645418c3a26df1ba6fc5, type: 3}
       baseEnemyCount: 8
-      spawnChance: 0.315
+      spawnChance: 0.25
       currentEnemyCount: 0
     - enemyPrefab: {fileID: 4386000277028358810, guid: 068f97b86ae84f44ba9d856c2a921377, type: 3}
       baseEnemyCount: 12
-      spawnChance: 0.315
+      spawnChance: 0.25
       currentEnemyCount: 0
     timeBetweenSpawns: 0.5
     timeBeforeNextWave: 10
@@ -2817,6 +2818,7 @@ MonoBehaviour:
   botFactPrefab: {fileID: 1240043477673720693, guid: 4d96214c0527ed547b48757f9833c8ab, type: 3}
   audioSource: {fileID: 1631468351}
   upgrade: {fileID: 8300000, guid: 6dafa2f1f95d0e64baf2dddc5e986757, type: 3}
+  forbid: 
 --- !u!82 &1631468351
 AudioSource:
   m_ObjectHideFlags: 0

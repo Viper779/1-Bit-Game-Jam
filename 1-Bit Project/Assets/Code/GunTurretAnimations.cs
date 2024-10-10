@@ -1,15 +1,14 @@
 using UnityEngine;
+using System.Collections;
 
 public class GunTurretAnimations : MonoBehaviour
 {
-    [SerializeField] private float frameRate = 0.1f;
-    [SerializeField] private float cooldownTime = 0.5f;
+    [SerializeField] private float frameRate = 0.2f;
     [SerializeField] private Sprite[] reloadAnimation;
 
     private SpriteRenderer spriteRenderer;
     private int currentFrame;
     private float frameTimer;
-    private bool isPlayingReloadAnimation = false;
     private bool isFiring = false;
     private float cooldownTimer = 0f;
     private bool isMouseHeld = false;
@@ -17,6 +16,7 @@ public class GunTurretAnimations : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip ChargeSound;
     public float ChargeSoundDelay = 2f;
+    public int cycle = 0;
 
     void Start()
     {
@@ -30,6 +30,7 @@ public class GunTurretAnimations : MonoBehaviour
 
     void Update()
     {
+        frameRate = 0.2f / (UpgradeManager.instance.upgradedReloadRate + 1);
         if (SimplePauseManager.Instance.IsGamePaused()) return;
 
         if (cooldownTimer > 0)
@@ -45,31 +46,23 @@ public class GunTurretAnimations : MonoBehaviour
         {
             isMouseHeld = false;
         }
-        if (!isMouseHeld && !isPlayingReloadAnimation)
+        
+        if (ShootProjectile.shootNow && !isFiring)
         {
-            spriteRenderer.sprite = reloadAnimation[0];
-            currentFrame = 0;
-            
+            isFiring = true;
+            StartCoroutine(PlayFiringAnimation());
+            Debug.Log("Fire");
+            isMouseHeld = false;
+            audioSource.Stop();
         }
-        if (Input.GetMouseButtonDown(0) && !isPlayingReloadAnimation && cooldownTimer <= 0)
-        {
-            StartReloadAnimation();
-        }
-        if (isPlayingReloadAnimation && isMouseHeld)
+
+        if (isMouseHeld && !ShootProjectile.shootNow)
         {
             PlayReloadAnimation();
         }
-        if (isPlayingReloadAnimation && !isMouseHeld)
+        else
         {
-            if (!isFiring)
-            {
-                Debug.LogWarning("set frame 6");
-                spriteRenderer.sprite = reloadAnimation[6];
-                currentFrame = 6;
-            }
-            isFiring = true;
-            PlayFiringAnimation();
-
+            audioSource.Stop();
         }
 
         if (TurretHealth.isDestroyed)
@@ -88,15 +81,6 @@ public class GunTurretAnimations : MonoBehaviour
         {
             Debug.LogWarning("Chargning Sound or AudioSource is missing!");
         }
-    }
-
-    void StartReloadAnimation()
-    {
-        if (reloadAnimation.Length == 0) return;
-        isPlayingReloadAnimation = true;
-        currentFrame = 0;
-        cooldownTimer = cooldownTime;
-        frameTimer = frameRate;
     }
 
     void PlayReloadAnimation()
@@ -120,9 +104,28 @@ public class GunTurretAnimations : MonoBehaviour
         }
     }
 
-    void PlayFiringAnimation()
+    IEnumerator PlayFiringAnimation()
     {
-        frameTimer -= Time.deltaTime;
+        spriteRenderer.sprite = reloadAnimation[6];
+        currentFrame=6;
+        yield return new WaitForSeconds(frameRate);
+
+        spriteRenderer.sprite = reloadAnimation[7];
+        currentFrame=7;
+        yield return new WaitForSeconds(frameRate);
+
+        spriteRenderer.sprite = reloadAnimation[8];
+        currentFrame=8;
+        yield return new WaitForSeconds(frameRate);
+
+        spriteRenderer.sprite = reloadAnimation[0];
+        currentFrame=0;
+        yield return new WaitForSeconds(frameRate);
+
+        isFiring = false;
+        ShootProjectile.shootNow = false;
+
+        /*frameTimer -= Time.deltaTime;
         if (frameTimer <= 0f && ShootProjectile.shootNow)
         {
             frameTimer += frameRate;
@@ -142,5 +145,6 @@ public class GunTurretAnimations : MonoBehaviour
                 ShootProjectile.shootNow = false;
             }
         }
+        */
     }
 }

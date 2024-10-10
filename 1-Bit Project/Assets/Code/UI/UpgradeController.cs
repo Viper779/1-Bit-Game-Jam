@@ -62,6 +62,7 @@ public class UpgradeManager : MonoBehaviour
 
     public AudioSource audioSource;
     public AudioClip upgrade;
+    public List<int> forbid;
 
     void Awake()
     {
@@ -78,6 +79,9 @@ public class UpgradeManager : MonoBehaviour
 
     private void Start()
     {
+        // Initialize the forbid list at the class level
+        forbid = new List<int>();
+
         ButtonsSet();
         UpgradesMenu.SetActive(false);
         towerTier = 0;
@@ -87,12 +91,13 @@ public class UpgradeManager : MonoBehaviour
         hasRF = 0;
     }
 
+
     void Update()
     {
         // Ensure the Upgrade Menu is only activated once when an upgrade is requested
         if (WaveBasedEnemySpawner.UpgradeRequest && !DisplayUpgrades)
         {
-            Debug.Log("Showing Cards");
+            //Debug.Log("Showing Cards");
             ButtonsSet();
             DisplayUpgrades = true;
             UpgradesMenu.SetActive(true);
@@ -100,7 +105,7 @@ public class UpgradeManager : MonoBehaviour
         else if (!WaveBasedEnemySpawner.UpgradeRequest && DisplayUpgrades)
         {
             // Close the upgrades menu after it's been shown and upgrades are applied
-            Debug.Log("Hiding Cards");
+            //Debug.Log("Hiding Cards");
             DisplayUpgrades = false;
             UpgradesMenu.SetActive(false);
         }
@@ -108,23 +113,25 @@ public class UpgradeManager : MonoBehaviour
         {
             WaveBasedEnemySpawner.UpgradeRequest = true;
         }
+        Debug.Log($"Forbid: {string.Join(", ", forbid)}");
+
     }
 
     public void Card1Select()
     {
-        Debug.Log($"Card 1 selected: {_Upgrades[card1Index].Name} at index {card1Index}");
+        //Debug.Log($"Card 1 selected: {_Upgrades[card1Index].Name} at index {card1Index}");
         UpgradeChosen(_Upgrades[card1Index].Name);
     }
 
     public void Card2Select()
     {
-        Debug.Log($"Card 2 selected: {_Upgrades[card2Index].Name} at index {card2Index}");
+        //Debug.Log($"Card 2 selected: {_Upgrades[card2Index].Name} at index {card2Index}");
         UpgradeChosen(_Upgrades[card2Index].Name);
     }
 
     public void Card3Select()
     {
-        Debug.Log($"Card 3 selected: {_Upgrades[card3Index].Name} at index {card3Index}");
+        //Debug.Log($"Card 3 selected: {_Upgrades[card3Index].Name} at index {card3Index}");
         UpgradeChosen(_Upgrades[card3Index].Name);
     }
 
@@ -132,33 +139,54 @@ public class UpgradeManager : MonoBehaviour
     public void ButtonsSet()
     {
         List<int> availableUpgrades = new List<int>();
+
+        // Populate the list of available upgrades
         for (int i = 0; i < _Upgrades.Length; i++)
         {
             availableUpgrades.Add(i);
         }
 
+        // Remove indices from availableUpgrades that are in the forbid list
+        availableUpgrades.RemoveAll(index => forbid.Contains(index));
+
         if (availableUpgrades.Count >= 3)
         {
-            ShuffleList(availableUpgrades);
+            bool validSelection = false;
 
-            card1Index = availableUpgrades[0];
-            card2Index = availableUpgrades[1];
-            card3Index = availableUpgrades[2];
+            // Continue reshuffling until valid selection is made (none of the selected cards are in the forbid list)
+            while (!validSelection)
+            {
+                ShuffleList(availableUpgrades);
+
+                card1Index = availableUpgrades[0];
+                card2Index = availableUpgrades[1];
+                card3Index = availableUpgrades[2];
+
+                card1SpriteIndex = translateFrameIndex(_Upgrades[card1Index].Name);
+                card2SpriteIndex = translateFrameIndex(_Upgrades[card2Index].Name);
+                card3SpriteIndex = translateFrameIndex(_Upgrades[card3Index].Name);
+
+                // Check if any of the card indices are in the forbid list
+                if (!forbid.Contains(card1SpriteIndex) && !forbid.Contains(card2SpriteIndex) && !forbid.Contains(card3SpriteIndex))
+                {
+                    validSelection = true;  // All indices are valid, break the loop
+                }
+            }
 
             // Translate upgrade indices to sprite indices
-            card1SpriteIndex = translateFrameIndex(_Upgrades[card1Index].Name);
-            card2SpriteIndex = translateFrameIndex(_Upgrades[card2Index].Name);
-            card3SpriteIndex = translateFrameIndex(_Upgrades[card3Index].Name);
+            
 
-            Debug.Log($"Card 1: {_Upgrades[card1Index].Name}, Sprite Index: {card1SpriteIndex}");
-            Debug.Log($"Card 2: {_Upgrades[card2Index].Name}, Sprite Index: {card2SpriteIndex}");
-            Debug.Log($"Card 3: {_Upgrades[card3Index].Name}, Sprite Index: {card3SpriteIndex}");
+            //Debug.Log($"Card 1: {_Upgrades[card1Index].Name}, Sprite Index: {card1SpriteIndex}");
+            //Debug.Log($"Card 2: {_Upgrades[card2Index].Name}, Sprite Index: {card2SpriteIndex}");
+            //Debug.Log($"Card 3: {_Upgrades[card3Index].Name}, Sprite Index: {card3SpriteIndex}");
         }
         else
         {
             Debug.LogError($"Not enough upgrades available. Current count: {availableUpgrades.Count}");
         }
     }
+
+
 
     public int translateFrameIndex(string Upgrade_chosen)
     {
@@ -284,24 +312,28 @@ public class UpgradeManager : MonoBehaviour
         }
         else if (Upgrade_chosen == "Piercing Sabot")
         {
+            forbid.Add(8);
             BulletType = 3;
             UpgradesMenu.SetActive(false);
             Debug.Log("Piercing Sabot");
         }
         else if (Upgrade_chosen == "High Explosive")
         {
+            forbid.Add(7);
             BulletType = 2;
             UpgradesMenu.SetActive(false);
             Debug.Log("High Explosive");
         }
         else if (Upgrade_chosen == "Timed Fuse")
         {
+            forbid.Add(6);
             BulletType = 1;
             UpgradesMenu.SetActive(false);
             Debug.Log("Timed Fuse");
         }
         else if (Upgrade_chosen == "Frag Shell")
         {
+            forbid.Add(9);
             BulletType = 4;
             UpgradesMenu.SetActive(false);
             Debug.Log("Frag Shell");

@@ -30,7 +30,6 @@ public class BulletBehavior : MonoBehaviour
 
     void Start()
     {
-        numberOfBullets = 3 + specialStat;
         isExploding = false;
         boxCollider = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
@@ -44,6 +43,8 @@ public class BulletBehavior : MonoBehaviour
         specialStat = UpgradeManager.instance.upgradedSpecStat;
         bulletType = UpgradeManager.instance.BulletType;
         //Render Projectile Sprite
+        numberOfBullets = (2*specialStat) + 3;
+
         if (bulletType == 0)
         {
             spriteRenderer.sprite = BulletSprites[0];
