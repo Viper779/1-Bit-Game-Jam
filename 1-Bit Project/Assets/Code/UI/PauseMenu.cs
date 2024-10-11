@@ -16,12 +16,13 @@ public class PauseMenuController : MonoBehaviour
             TurretHealth.isDestroyed = false;
             SimplePauseManager.Instance.TogglePause();
         }
+        
 
         if (TurretHealth.isDestroyed == false)
         {
             TurretHealth.GameOverScreen.SetActive(false);
             TurretHealth.isDestroyed = false;
-            SimplePauseManager.Instance.TogglePause();
+            
         }
 
 
