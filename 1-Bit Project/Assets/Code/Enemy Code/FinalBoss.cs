@@ -11,7 +11,7 @@ public class FinalBossMovement : MonoBehaviour
     private bool isDying = false;
     private float distanceToTurret;
 
-    public int maxHealth = 15000;
+    public int maxHealth = 50000;
     public int currentHealth;
     public float deathDelay = 1f; // Time to delay before destroying the enemy after death
 
