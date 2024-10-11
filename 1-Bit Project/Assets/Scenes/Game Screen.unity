@@ -807,7 +807,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2087420714}
-  - {fileID: 988734212}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &519420033
@@ -1868,10 +1867,68 @@ MonoBehaviour:
       currentEnemyCount: 0
     timeBetweenSpawns: 0.5
     timeBeforeNextWave: 10
+  - enemies:
+    - enemyPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
+      baseEnemyCount: 20
+      spawnChance: 0.25
+      currentEnemyCount: 0
+    - enemyPrefab: {fileID: 4386000277028358810, guid: 6b38773158f954240af7b6d543a7e8f5, type: 3}
+      baseEnemyCount: 20
+      spawnChance: 0.25
+      currentEnemyCount: 0
+    - enemyPrefab: {fileID: 1767287629799816917, guid: e36c402cc9bb645418c3a26df1ba6fc5, type: 3}
+      baseEnemyCount: 8
+      spawnChance: 0.25
+      currentEnemyCount: 0
+    - enemyPrefab: {fileID: 4386000277028358810, guid: 068f97b86ae84f44ba9d856c2a921377, type: 3}
+      baseEnemyCount: 12
+      spawnChance: 0.25
+      currentEnemyCount: 0
+    timeBetweenSpawns: 0.5
+    timeBeforeNextWave: 10
+  - enemies:
+    - enemyPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
+      baseEnemyCount: 20
+      spawnChance: 0.25
+      currentEnemyCount: 0
+    - enemyPrefab: {fileID: 4386000277028358810, guid: 6b38773158f954240af7b6d543a7e8f5, type: 3}
+      baseEnemyCount: 20
+      spawnChance: 0.25
+      currentEnemyCount: 0
+    - enemyPrefab: {fileID: 1767287629799816917, guid: e36c402cc9bb645418c3a26df1ba6fc5, type: 3}
+      baseEnemyCount: 8
+      spawnChance: 0.25
+      currentEnemyCount: 0
+    - enemyPrefab: {fileID: 4386000277028358810, guid: 068f97b86ae84f44ba9d856c2a921377, type: 3}
+      baseEnemyCount: 12
+      spawnChance: 0.25
+      currentEnemyCount: 0
+    timeBetweenSpawns: 0.5
+    timeBeforeNextWave: 10
+  - enemies:
+    - enemyPrefab: {fileID: 5919916801216324133, guid: 58d3648bf0443594cabf68d42bebb127, type: 3}
+      baseEnemyCount: 20
+      spawnChance: 0.25
+      currentEnemyCount: 0
+    - enemyPrefab: {fileID: 4386000277028358810, guid: 6b38773158f954240af7b6d543a7e8f5, type: 3}
+      baseEnemyCount: 20
+      spawnChance: 0.25
+      currentEnemyCount: 0
+    - enemyPrefab: {fileID: 1767287629799816917, guid: e36c402cc9bb645418c3a26df1ba6fc5, type: 3}
+      baseEnemyCount: 8
+      spawnChance: 0.25
+      currentEnemyCount: 0
+    - enemyPrefab: {fileID: 4386000277028358810, guid: 068f97b86ae84f44ba9d856c2a921377, type: 3}
+      baseEnemyCount: 12
+      spawnChance: 0.25
+      currentEnemyCount: 0
+    timeBetweenSpawns: 0.5
+    timeBeforeNextWave: 10
   spawnAreaSize: {x: 1, y: 1}
   audioSource: {fileID: 924319092}
   preWaveSound: {fileID: 8300000, guid: 1467f7cb51a08e84cb19ed142d753435, type: 3}
   waveMusic: {fileID: 8300000, guid: 2c9397a6c4d80a144a47742a2f9a4415, type: 3}
+  finalBossPrefab: {fileID: 4386000277028358810, guid: 926436932aa916f49bd3bb5bf71ac970, type: 3}
   inspectorGameObject: {fileID: 827439676}
 --- !u!82 &924319092
 AudioSource:
@@ -1996,15 +2053,15 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 988734211}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.66977024, y: 0.7485325, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 519420032}
+  m_Father: {fileID: 1079190841}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5.18, y: 0.16}
+  m_AnchoredPosition: {x: 0.18753576, y: 1.7553086}
   m_SizeDelta: {x: 135.0545, y: 79.8956}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &988734214
@@ -2224,6 +2281,7 @@ Transform:
   m_Children:
   - {fileID: 782800494}
   - {fileID: 658291916}
+  - {fileID: 988734212}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1079190842

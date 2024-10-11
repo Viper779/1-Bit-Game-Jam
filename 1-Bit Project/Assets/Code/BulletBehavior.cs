@@ -109,7 +109,7 @@ public class BulletBehavior : MonoBehaviour
 
         if (bulletType == 3)
         {
-            chargeAdjust = 1.5f;
+            chargeAdjust = 1.2f;
         }
 
         if (bulletType == 4)

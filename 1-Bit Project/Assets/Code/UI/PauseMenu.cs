@@ -15,7 +15,15 @@ public class PauseMenuController : MonoBehaviour
             TurretHealth.GameOverScreen.SetActive(false);
             TurretHealth.isDestroyed = false;
             SimplePauseManager.Instance.TogglePause();
-        }        
+        }
+
+        if (TurretHealth.isDestroyed == false)
+        {
+            TurretHealth.GameOverScreen.SetActive(false);
+            TurretHealth.isDestroyed = false;
+            SimplePauseManager.Instance.TogglePause();
+        }
+
 
         SimplePauseManager.Instance.TogglePause();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1, LoadSceneMode.Single);

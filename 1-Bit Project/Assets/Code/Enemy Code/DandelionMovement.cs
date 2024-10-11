@@ -197,9 +197,13 @@ public class DandelionMovement : MonoBehaviour
 
         // Wait for a specific duration (e.g., 1 second) to allow the animation to play
         yield return new WaitForSecondsRealtime(0.01f); // Adjust the time as needed
-        if (!isHealType)
+        if (isHealType)
         {
             yield return new WaitForSecondsRealtime(0.5f);
+            
+        }
+        else
+        {
             GameObject smallExplode = Instantiate(explodePrefab, transform.position, transform.rotation);
         }
         Destroy(gameObject);

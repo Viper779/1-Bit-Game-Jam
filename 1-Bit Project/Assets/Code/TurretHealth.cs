@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TurretHealth : MonoBehaviour
 {
-    public static int maxHealth = 1500;
+    public static int maxHealth = 2000;
     public static int currentHealth;
     public static bool isDestroyed = false;
     public SpriteRenderer spriteRenderer; // Reference to the SpriteRenderer

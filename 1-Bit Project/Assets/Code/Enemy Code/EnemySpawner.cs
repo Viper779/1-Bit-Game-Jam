@@ -34,6 +34,7 @@ public class WaveBasedEnemySpawner : MonoBehaviour
     private int defeatedEnemiesInWave = 0; // Count of defeated enemies
     public static bool UpgradeRequest = false; // Upgrade request flag
     public static bool winCond = false;
+    public GameObject finalBossPrefab;
 
     [SerializeField] private GameObject inspectorGameObject;
     public static GameObject GameOverScreen;
@@ -51,13 +52,23 @@ public class WaveBasedEnemySpawner : MonoBehaviour
         StartCoroutine(SpawnWaves());
     }
 
-    private void Update()
+    public void Update()
     {
         if (SimplePauseManager.Instance.IsGamePaused()) return;
         if (TurretHealth.isDestroyed)
         {
             audioSource.Stop();
         }
+
+        if (winCond == true)
+        {
+            Debug.Log("All waves completed!");
+            GameOverScreen = inspectorGameObject;
+            GameOverScreen.SetActive(true);
+            audioSource.Stop();
+            Destroy(gameObject);
+        }
+       
     }
 
     IEnumerator SpawnWaves()
@@ -71,6 +82,11 @@ public class WaveBasedEnemySpawner : MonoBehaviour
             audioSource.Stop();
             defeatedEnemiesInWave = 0;
             totalEnemiesInWave = 0;
+
+            if (currentWaveIndex == 11)
+            {
+                GameObject finalBoss = Instantiate(finalBossPrefab, transform.position, transform.rotation);
+            }
 
             if (currentWaveIndex < waves.Count - 1)
             {
@@ -109,12 +125,7 @@ public class WaveBasedEnemySpawner : MonoBehaviour
 
             currentWaveIndex++;
         }
-        audioSource.Stop();
-        Debug.Log("All waves completed!");
-        GameOverScreen = inspectorGameObject;
-        winCond = true;
-        GameOverScreen.SetActive(true);
-        TurretHealth.isDestroyed = true;
+
     }
 
     void PlayPreWaveSound()
