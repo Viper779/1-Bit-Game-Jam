@@ -9,7 +9,6 @@ public class ThornBlasterMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Transform turretTransform;
     private bool isDying = false;
-    private bool touchTurret = false;
     private float distanceToTurret;
 
     public int maxHealth = 150;
@@ -17,7 +16,7 @@ public class ThornBlasterMovement : MonoBehaviour
     public float deathDelay = 1f; // Time to delay before destroying the enemy after death
 
     public event Action OnEnemyDestroyed;
-    public int attackDamage = 50;
+    public int attackDamage = 0;
 
     [SerializeField] private float frameRate = 0.1f;
     [SerializeField] private Sprite[] KadzuAnimation;
@@ -31,6 +30,8 @@ public class ThornBlasterMovement : MonoBehaviour
 
     public AudioSource audioSource;
     public AudioClip HitSound;
+
+    public GameObject smallBulletPrefab;
 
     private void Start()
     {
@@ -63,8 +64,10 @@ public class ThornBlasterMovement : MonoBehaviour
 
         // Declare the direction variable only once
         Vector3 directionToTower = (playerTower.position - transform.position).normalized;
+        // Calculate distance to turret
+        distanceToTurret = Vector2.Distance(transform.position, turretTransform.position);
 
-        if (currentHealth > 0 && !touchTurret)
+        if (currentHealth > 0 && distanceToTurret > 15)
         {
             // Move the enemy
             rb.velocity = new Vector2(directionToTower.x * moveSpeed, rb.velocity.y); // Only change x, not y
@@ -79,10 +82,9 @@ public class ThornBlasterMovement : MonoBehaviour
             PlayDeathAnimation();
         }
 
-        // Calculate distance to turret
-        distanceToTurret = Vector2.Distance(transform.position, turretTransform.position);
+       
 
-        if (currentHealth > 0 && distanceToTurret < 10)
+        if (currentHealth > 0 && distanceToTurret < 15)
         {
             rb.velocity = Vector2.zero;
             PlayAttackAnimation();
@@ -112,12 +114,6 @@ public class ThornBlasterMovement : MonoBehaviour
             {
                 Debug.LogWarning("No BoxCollider2D found on this object!");
             }
-        }
-
-        // Set touchTurret if colliding with "Turret"
-        if (collision.gameObject.CompareTag("Turret"))
-        {
-            touchTurret = true;
         }
 
         // Uncomment if you want to handle bouncing logic
@@ -162,14 +158,22 @@ public class ThornBlasterMovement : MonoBehaviour
         if (frameTimer <= 0f)
         {
             frameTimer += frameRate;
-            if (currentFrame == 8)
+            if (currentFrame == 6)
             {
-                currentFrame = 4;
-                spriteRenderer.sprite = KadzuAnimation[4];
                 if (!TurretHealth.isDestroyed)
                 {
                     audioSource.volume = 1.0f;
                     audioSource.PlayOneShot(HitSound);
+
+                    Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+                    GameObject smallBullet = Instantiate(smallBulletPrefab, spawnPosition, Quaternion.identity);
+                    Rigidbody2D smallBulletRb = smallBullet.GetComponent<Rigidbody2D>();
+
+                    // Apply velocity to the smaller bullet
+
+                    Vector2 leftUpwardDirection = new Vector2(-1, 1).normalized; // 45-degree angle to the left and up
+                    float randomSpeedFactor = UnityEngine.Random.Range(0.95f, 1.05f);
+                    smallBulletRb.velocity = leftUpwardDirection * 12.0f * randomSpeedFactor;
                 }
 
 
@@ -182,6 +186,12 @@ public class ThornBlasterMovement : MonoBehaviour
                         turretHealth.TakeDamage(attackDamage); // Apply damage to the turret
                     }
                 }
+            }
+            if (currentFrame == 8)
+            {
+                currentFrame = 4;
+                spriteRenderer.sprite = KadzuAnimation[4];
+                
             }
             else
             {

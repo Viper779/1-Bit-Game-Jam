@@ -273,7 +273,7 @@ MonoBehaviour:
   currentHealth: 0
   deathDelay: 1
   attackDamage: 100
-  frameRate: 0.4
+  frameRate: 0.3
   KadzuAnimation:
   - {fileID: -7501788372397992282, guid: d9a9fac1be261f74ba2aa839394d59cd, type: 3}
   - {fileID: 8061623677067025358, guid: d9a9fac1be261f74ba2aa839394d59cd, type: 3}
@@ -292,3 +292,4 @@ MonoBehaviour:
   critMultiplier: 1.5
   audioSource: {fileID: -2784799536249861717}
   HitSound: {fileID: 8300000, guid: 0535601139d16f44e952d8b07bf6be67, type: 3}
+  smallBulletPrefab: {fileID: 4914338605585373298, guid: aaca5d44336a16e46bfeaab8c5d88efd, type: 3}

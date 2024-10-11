@@ -199,6 +199,7 @@ public class DandelionMovement : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.01f); // Adjust the time as needed
         if (!isHealType)
         {
+            yield return new WaitForSecondsRealtime(0.5f);
             GameObject smallExplode = Instantiate(explodePrefab, transform.position, transform.rotation);
         }
         Destroy(gameObject);

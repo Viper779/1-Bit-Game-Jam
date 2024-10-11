@@ -161,11 +161,11 @@ public class BulletBehavior : MonoBehaviour
                 rb.velocity = Vector2.zero;
                 rb.isKinematic = true;
             }
-           
+
             if (bulletType == 2) //If Timed Fuse Imbed Shell Into Ground
             {
                 Debug.Log($"SpecialStat: {specialStat}");
-                boxCollider.size = new Vector2(boxCollider.size.x * ((specialStat+1) * 2), boxCollider.size.y * ((specialStat+1) * 2));
+                boxCollider.size = new Vector2(boxCollider.size.x * ((specialStat + 1) * 2), boxCollider.size.y * ((specialStat + 1) * 2));
                 if (!isExploding)
                 {
                     GameObject smallExplode = Instantiate(explodePrefab, transform.position, transform.rotation);
@@ -173,37 +173,47 @@ public class BulletBehavior : MonoBehaviour
                 }
                 yield return new WaitForSeconds(0.2f);
                 Destroy(gameObject);
-            }  
-            
-            if (bulletType == 0 || bulletType == 3 || bulletType == 4)
+            }
+
+            if (bulletType == 3) // Reflection Logic
+            {
+                if (specialStat >= 0)
+                {
+                    // Reflect the bullet's velocity off the ground
+                    Vector2 reflection = Vector2.Reflect(rb.velocity, Vector2.up);
+                    rb.velocity = reflection; // Update the bullet's velocity to the reflection vector
+                                          // Optional: You may want to reduce the speed slightly upon reflection to simulate energy loss
+                    rb.velocity *= 0.8f; // Adjust this factor as needed
+                    specialStat--;
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
+                
+            }
+
+            if (bulletType == 0 || bulletType == 4)
             {
                 Destroy(gameObject); // Destroy the bullet on impact with the ground
             }
-
         }
 
         if (trigger.gameObject.CompareTag("Enemy")) // Destroy the bullet on impact with the enemy
         {
-            if (bulletType == 0)
+            if (bulletType == 0 || bulletType == 1)
             {
                 Destroy(gameObject);
             }
 
-            if (bulletType == 1)
-            {
-                Destroy(gameObject);
-            }
-
-            if (bulletType == 2) //Exploding Shell Logic
+            if (bulletType == 2) // Exploding Shell Logic
             {
                 boxCollider.size = new Vector2(boxCollider.size.x * ((specialStat + 1) * 2), boxCollider.size.y * ((specialStat + 1) * 2));
-                if (!isExploding) 
-                { 
+                if (!isExploding)
+                {
                     GameObject smallExplode = Instantiate(explodePrefab, transform.position, transform.rotation);
                     isExploding = true;
                 }
-
-               
                 yield return new WaitForSeconds(0.2f);
                 Destroy(gameObject);
             }
@@ -219,7 +229,6 @@ public class BulletBehavior : MonoBehaviour
                     specialStat--;
                     Debug.Log($"SpecStat: {specialStat}");
                 }
-
             }
 
             if (bulletType == 4)
@@ -231,8 +240,13 @@ public class BulletBehavior : MonoBehaviour
         }
     }
 
+
     void Update()
     {
+        if (transform.position.y < -20)
+        {
+            Destroy(gameObject); // Destroy the GameObject
+        }
         // Rotate the bullet according to its velocity
         if (rb.velocity != Vector2.zero)
         {
